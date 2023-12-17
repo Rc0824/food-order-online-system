@@ -42,7 +42,7 @@
             let password = document.getElementById('password').value;
             if(email == storedEmail && password == storedPassword){
                 alert('登入成功');
-                localStorage.setItem('loggedInUser', JSON.stringify({name: storedName/* 其他用戶信息 */ }));
+                localStorage.setItem('loggedInUser', JSON.stringify({name: storedName,phone: storedPhone,email: storedEmail,password: storedPassword}));
                 window.location.href = 'index.html';
             }else{
                 alert('登入失敗');
