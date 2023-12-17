@@ -16,9 +16,9 @@
                 <li><a href="#order">訂單</a></li>
                 <li><a href="#about">關於我們</a></li>
                 <li><a href="#contact">聯繫我們</a></li>
-                <li><a href="register.html">註冊會員</a></li>
-                <li><a href="login.html">會員登入</a></li>
-                <li><a href="#" onclick="logout()">登出</a></li> 
+                <li><a id="registerLink" href="register.html">註冊會員</a></li>
+                <li><a id="loginLink" href="login.html">會員登入</a></li>
+                <li><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
             </ul>
         </nav>
     </header>
@@ -68,6 +68,10 @@
         window.onload = function () {
             const header = document.getElementById('header');
             const userInfo = document.getElementById('user-info');
+
+            const registerLink = document.getElementById('registerLink');
+            const loginLink = document.getElementById('loginLink');
+            const logoutLink = document.getElementById('logoutLink');
             
             // 在此處檢查用戶是否已登入，並顯示相應的內容
             const loggedInUser = getLoggedInUser(); // 假設此函數從 localStorage 中獲取已登入用戶信息
@@ -75,9 +79,17 @@
             if (loggedInUser) {
                 // 用戶已登入，顯示歡迎信息
                 userInfo.textContent = `歡迎回來，${loggedInUser.name}！`; // 顯示用戶名稱
+
+                registerLink.style.display = 'none';
+                loginLink.style.display = 'none';
+                logoutLink.style.display = 'inline';
             } else {
                 // 用戶未登入，顯示登入提示   
                 userInfo.textContent = '請登入以獲取更多功能。'; // 顯示登入提示
+                
+                registerLink.style.display = 'inline';
+                loginLink.style.display = 'inline';
+                logoutLink.style.display = 'none'; 
             }
         };
 
