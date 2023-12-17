@@ -23,16 +23,16 @@
         <h3>編輯會員資料</h3>
         <form id="editForm">
             <label for="name">姓名：</label>
-            <input type="text" id="name" required pattern="[\u4e00-\u9fffA-Za-z]{1,30}"><br><br>
+            <input type="text" id="name" required pattern="[\u4e00-\u9fffA-Za-z]{1,30}" title="請輸入小於30個中英文字符"><br><br>
 
             <label for="email">電子郵件：</label>
             <input type="email" id="email" required readonly><br><br>
 
             <label for="phone">電話：</label>
-            <input type="tel" id="phone" required pattern="09\d{8}"><br><br>
+            <input type="tel" id="phone" required pattern="09\d{8}" title="請輸入09開頭的10位數字電話號碼"><br><br>
 
             <label for="password">密碼：</label>
-            <input type="password" id="password" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}"><br><br>
+            <input type="password" id="password" required pattern="(?=.*\d)(?=.*[a-zA-Z]).{8,}" title="請輸入至少8個字符，包含一個英文字母和一個數字"><br><br>
 
             <input type="submit" value="保存">
             <p id="loginMessage"></p>
