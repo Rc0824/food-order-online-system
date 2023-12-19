@@ -24,6 +24,7 @@ header {
 
 /* 將連結放置在左邊 */
 .left-links {
+    margin-left: 20px;
     float: left;
 }
 

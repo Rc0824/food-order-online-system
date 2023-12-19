@@ -12,12 +12,15 @@ header {
 }
 
 /* 將連結放置在左邊 */
-.left-links {
+.left-link {
+    margin-right: 20px;
     float: left;
 }
 
 /* 將連結放置在右邊 */
-.right-links {
+.right-link {
+    margin-right: 0;
+    margin-left: 20px;
     float: right;
 }
 
@@ -44,6 +47,11 @@ nav ul li a {
     text-decoration: none;
 }
 
+nav ul li div{
+    display: inline;
+    padding-right: auto;
+}
+
 main {
     padding: 20px;
 }
@@ -59,9 +67,10 @@ footer {
 }
 
 #searchInput {
+    display: block;
+    margin: 0 auto;
     padding: 8px;
-    margin-bottom: 10px;
-    width: 100%;
+    width: 70%;
     box-sizing: border-box;
 }
 

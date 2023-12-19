@@ -11,30 +11,26 @@
 <body>
     <header>
         <nav>
-            <div class="left-links">
-                <ul>
-                    <li><a href="#home">首頁</a></li>               
-                    <li><a href="#order">訂單</a></li>
-                    <li><a href="#about">關於我們</a></li>
-                    <li><a href="#contact">聯繫我們</a></li>
-                    <li><a id="profileLink" href="profile.html">會員資料</a></li>
-                </ul>
-            </div>
-            <div class="right-links">
-                <ul>
-                    <li><a id="registerLink" href="register.html">註冊會員</a></li>
-                    <li><a id="loginLink" href="login.html">會員登入</a></li>
-                    <li><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
-                </ul>
-            </div>
+            <ul>
+                <li class="left-link"><a href="#home">首頁</a></li>               
+                <li class="left-link"><a href="#order">訂單</a></li>
+                <li class="left-link"><a href="#about">關於我們</a></li>
+                <li class="left-link"><a href="#contact">聯繫我們</a></li>
+                <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+            </ul>
+
+            <ul>
+                <li class="right-link"><a id="registerLink" href="register.html">註冊會員</a></li>
+                <li class="right-link"><a id="loginLink" href="login.html">會員登入</a></li>
+                <li class="right-link"><div id="user-info"><!-- 這裡會顯示用戶名稱，初始為空 --></div></li>
+                <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
+            </ul>
         </nav>
     </header>
 
     <main>
         <section id="home">
-            <div id="user-info">
-                <!-- 這裡會顯示用戶名稱，初始為空 -->
-            </div>
+            <input type="text" id="searchInput" placeholder="搜尋餐點...">
             <h1>歡迎來到XX線上訂餐系統</h1>
             <p>在這裡您可以輕鬆訂購美味的食物！</p>
         </section>
@@ -42,7 +38,7 @@
         <section id="menu">
             <h2>菜單</h2>
             <!-- 在這裡添加您的菜單內容 -->
-            <input type="text" id="searchInput" placeholder="搜尋餐點...">
+            
             <ul id="menuList">                
                 <li>餐點 1</li>
                 <li>餐點 2</li>
@@ -91,10 +87,7 @@
                 loginLink.style.display = 'none';
                 profileLink.style.display = 'inline';
                 logoutLink.style.display = 'inline';
-            } else {
-                // 用戶未登入，顯示登入提示   
-                userInfo.textContent = '請登入以獲取更多功能。'; // 顯示登入提示
-                
+            } else {              
                 registerLink.style.display = 'inline';
                 loginLink.style.display = 'inline';
                 profileLink.style.display = 'none';
