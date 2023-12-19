@@ -10,8 +10,23 @@
 
 <body>
     <div id="header">
-        <!-- 其他頭部內容 -->
-
+        <header>
+            <nav>
+                <div class="left-links">
+                    <ul>
+                        <li><a href="index.html">首頁</a></li>               
+                        <li><a href="#order">訂單</a></li>
+                        <li><a href="#about">關於我們</a></li>
+                        <li><a href="#contact">聯繫我們</a></li>
+                    </ul>
+                </div>
+                <div class="right-links">
+                    <ul>
+                        <li><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
+                    </ul>
+                </div>
+            </nav>
+        </header>
     </div>
 
     <div id="profile">
@@ -39,6 +54,10 @@
             <button onclick="goBack()" type="button">離開</button>
         </form>
     </div>
+
+    <footer>
+        <p>版權所有 &copy; 2023 XX線上訂餐系統</p>
+    </footer>
 
     <script>
         function goBack() {
@@ -84,6 +103,12 @@
             saveToLocalStorage(updatedInfo);
             alert('資料已更新！');
         });
+
+        function logout() {
+            localStorage.removeItem('loggedInUser'); // 移除登入信息
+            location.reload(); // 重新加載頁面
+            window.location.href = 'index.html'; // 返回index.html
+        }
 
         // 假設此函數從 localStorage 中獲取已登入用戶信息
         function getLoggedInUser() {

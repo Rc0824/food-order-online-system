@@ -14,6 +14,58 @@ body {
     margin-bottom: 20px;
 }
 
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+/* 將連結放置在左邊 */
+.left-links {
+    float: left;
+}
+
+/* 將連結放置在右邊 */
+.right-links {
+    float: right;
+}
+
+/* 清除浮動，確保 header 的高度正確 */
+nav:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
 #register {
     text-align: center;
     padding: 20px;
