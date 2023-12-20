@@ -1,8 +1,8 @@
 package app;
 
-import java.sql.Timestamp;
+import java.sql.*;
 
-abstract class User {
+public class User {
     private int id;
     private String name;
     private String email;
@@ -48,5 +48,7 @@ abstract class User {
     public String getRole() {
         return role;
     }
+
+
 }
 

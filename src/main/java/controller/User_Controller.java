@@ -14,11 +14,6 @@ public class User_Controller extends HttpServlet {
 
     Admin admin = new Admin();
 
-    @Override
-    // public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    //     response.getWriter().write("Hello from User_Controller!");
-    // }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
         JsonReader jsr = new JsonReader(request);

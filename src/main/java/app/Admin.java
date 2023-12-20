@@ -2,7 +2,7 @@ package app;
 
 
 import java.sql.*;
-import java.sql.Timestamp;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import util.DBMgr;
@@ -20,7 +20,6 @@ public class Admin extends User{
         super(id,name, email, password, phone,update_time ,role);
     }
     
-
     public JSONObject getAll() {
         /** 新建一個 Member 物件之 m 變數，用於紀錄每一位查詢回之會員資料 */
         Member m = null;
@@ -95,4 +94,5 @@ public class Admin extends User{
 
         return response;
     }
+
 }

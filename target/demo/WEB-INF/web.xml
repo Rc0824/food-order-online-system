@@ -8,6 +8,6 @@
 
     <servlet-mapping>
         <servlet-name>User_Controller</servlet-name>
-        <url-pattern>/user</url-pattern>
+        <url-pattern>/api/user</url-pattern>
     </servlet-mapping>
 </web-app>
