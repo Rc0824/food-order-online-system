@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>線上訂餐系統</title>
-    <link rel="stylesheet" href="styles/stylesInd.css">
+    <title>餐點 1</title>
+    <link rel="stylesheet" href="styles/stylesMea.css">
 </head>
-
 <body>
     <header>
         <nav>
             <ul>     
-                <li class="left-link"><a href="#home">首頁</a></li>               
+                <li class="left-link"><a href="index.html">首頁</a></li>               
                 <li class="left-link"><a href="#order">訂單</a></li>
                 <li class="left-link"><a href="#about">關於我們</a></li>
                 <li class="left-link"><a href="#contact">聯繫我們</a></li>
@@ -24,46 +22,27 @@
                 <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
                 <li class="right-link"><a id="registerLink" href="register.html">註冊會員</a></li>
                 <li class="right-link"><a id="loginLink" href="login.html">會員登入</a></li>
-                <li class="right-link"><div id="user-info"><!-- 這裡會顯示用戶名稱，初始為空 --></div></li> 
+                <li class="right-link"><div id="user-info"><!-- 這裡會顯示用戶名稱，初始為空 --></div></li>
                 <li class="right-link"><a id="cartLink" href="cart.html">購物車</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section id="home">
-            <input type="text" id="searchInput" placeholder="搜尋餐點...">
-            <h1>歡迎來到XX線上訂餐系統</h1>
-            <p>在這裡您可以輕鬆訂購美味的食物！</p>
-        </section>
+    <div class="meal-info">
+        <img src="pics/meal1.jpg" alt="餐點 1 圖片">
+        <h2>白飯</h2>
+        <p>一碗白色的飯</p>
+        <p>價格：$15</p>
+        <!-- 可以添加更多相關的餐點信息 -->
 
-        <section id="menu">
-            <h2>菜單</h2>
-            <!-- 在這裡添加您的菜單內容 -->
-            
-            <ul id="menuList">                
-                <li><a href="meal1.html">白飯</a></li>
-                <li><a href="meal2.html">白麵</a></li>
-                <li><a href="#meal3">餐點 3</a></li>
-                <!-- 舉例，您可以用li標籤列出各種餐點 -->
-            </ul>
-        </section>
+        <div class="order-section">
+            <label for="quantity">數量：</label>
+            <input type="number" id="quantity" name="quantity" value="1" min="1">
+    
+            <button onclick="addToCart()">加入購物車</button>
+        </div>
 
-        <section id="order">
-            <h2>訂單</h2>
-            <!-- 在這裡添加訂單表格或訂購功能 -->
-        </section>
-
-        <section id="about">
-            <h2>關於我們</h2>
-            <p>在這裡介紹您的餐廳或服務的相關資訊。</p>
-        </section>
-
-        <section id="contact">
-            <h2>聯繫我們</h2>
-            <!-- 在這裡添加您的聯繫資訊和表單 -->
-        </section>
-    </main>
+    </div>
 
     <footer>
         <p>版權所有 &copy; 2023 XX線上訂餐系統</p>
@@ -108,8 +87,33 @@
         function getLoggedInUser() {
             return JSON.parse(localStorage.getItem('loggedInUser'));
         }
+
+        function addToCart() {
+            const quantity = document.getElementById('quantity').value;
+            const itemName = '白飯'; // 餐點名稱，可以根據實際情況修改
+            const itemPrice = 15; // 餐點價格，可以根據實際情況修改
+
+            // 在這裡可以把餐點加入購物車，例如使用 localStorage 存儲購物車信息
+            // 這裡僅為示例，具體的實現需要與後端交互或使用資料庫
+            const cartItem = {
+                name: itemName,
+                price: itemPrice,
+                quantity: parseInt(quantity)
+            };
+
+            // 範例：將餐點添加至購物車（使用 localStorage）
+            let cart = localStorage.getItem('cart');
+            if (!cart) {
+                cart = [];
+            } else {
+                cart = JSON.parse(cart);
+            }
+            cart.push(cartItem);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            alert('已加入購物車');
+        }
     </script>
 
 </body>
-
 </html>
