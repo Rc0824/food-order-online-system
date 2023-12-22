@@ -1,12 +1,27 @@
 package app;
 
 import org.json.JSONObject;
+
+import util.DBMgr;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class Member extends User{
 
+    private Connection conn = null;
+    private PreparedStatement pres = null;
+
     public Member(int id , String name, String email, String password, String phone, Timestamp update_time ,String role) {
         super(id,name, email, password, phone, update_time ,role);
+    }
+    
+    public Member(String email, String password, String name, String phone){
+        super(email, password, name, phone);
     }
 
     public JSONObject getData() {
@@ -21,5 +36,5 @@ public class Member extends User{
         jso.put("user_role", getRole());
         return jso;
     }
-    
+
 }
