@@ -79,7 +79,7 @@ public class User_Controller extends HttpServlet {
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
-            resp.put("message", "成功! 註冊會員資料...");
+            resp.put("message", "成功註冊會員資料!");
             resp.put("response", data);
             
             /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
@@ -113,6 +113,7 @@ public class User_Controller extends HttpServlet {
         if(id != 0) {
             data = m.update(m);
         }
+        /** 透過Member物件的update()方法至資料庫更新該名會員資料，回傳之資料為JSONObject物件 */
         
         /** 新建一個JSONObject用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();

@@ -62,10 +62,20 @@
     <script type="text/javascript">
 
         // 處理表單點擊事件
-        var $form = $('#submit');
-            $form.click(function() {
-                 submit();
-            });
+        // var $form = $('#submit');
+        //     $form.click(function() {
+        //          submit();
+        //     });
+
+        $('#registrationForm').on('submit', function(e) {
+            if (!submit()) {
+                e.preventDefault();
+                // $('#user_name').val('');
+                // $('#user_phone').val('');
+                $('#user_email').val('');
+                $('#user_password').val('');
+            }
+        });
 
         function submit() {
             var name = $('#user_name').val();
@@ -110,13 +120,15 @@
                                 alert("註冊失敗：" + response.message);
                             }
                             else{
+                                console.log(response);
                                 alert(response.message);
                                 window.location.href = 'login.html'; // 跳轉到login.html
                             }
                         },
                         error: function () {
+                            console.log('fail');
                             alert("無法連線到伺服器！");
-                        }
+                        },
                 });
             }
         }        

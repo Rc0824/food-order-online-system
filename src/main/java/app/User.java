@@ -137,7 +137,7 @@ public class User {
             pres.setString(3, password);
             pres.setString(4, phone);
             pres.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
-            pres.setString(6,"Member");
+            pres.setString(6,"member");
             
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
