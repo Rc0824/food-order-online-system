@@ -93,8 +93,55 @@ public class User_Controller extends HttpServlet {
         }
     }
 
-    public void doPut( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doPut(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
         /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
+        JsonReader jsr = new JsonReader(request);
+        JSONObject jso = jsr.getObject();
+        
+        /** 取出經解析到JSONObject之Request參數 */
+        int id = jso.getInt("user_id");
+        String email = jso.getString("user_email");
+        String password = jso.getString("user_password");
+        String name = jso.getString("user_name");
+        String phone = jso.getString("user_phone");
 
+        /** 透過傳入之參數，新建一個以這些參數之會員Member物件 */
+        Member m = new Member(email, password, name, phone);
+        
+        /** 透過Member物件的update()方法至資料庫更新該名會員資料，回傳之資料為JSONObject物件 */
+        JSONObject data = m.update();
+        
+        /** 新建一個JSONObject用於將回傳之資料進行封裝 */
+        JSONObject resp = new JSONObject();
+        resp.put("status", "200");
+        resp.put("message", "成功! 更新會員資料...");
+        resp.put("response", data);
+        
+        /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+        jsr.response(resp, response);
+    }
+
+    public void doDelete(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+        /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
+        JsonReader jsr = new JsonReader(request);
+        JSONObject jso = jsr.getObject();
+        Member m = new Member();
+        
+        /** 取出經解析到JSONObject之Request參數 */
+        int id = jso.getInt("user_id");
+        
+        /** 透過MemberHelper物件的deleteByID()方法至資料庫刪除該名會員，回傳之資料為JSONObject物件 */
+        JSONObject query = m.deleteByID(id);
+        
+        /** 新建一個JSONObject用於將回傳之資料進行封裝 */
+        JSONObject resp = new JSONObject();
+        resp.put("status", "200");
+        resp.put("message", "會員移除成功！");
+        resp.put("response", query);
+
+        /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+        jsr.response(resp, response);
     }
 }

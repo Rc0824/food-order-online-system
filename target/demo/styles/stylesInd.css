@@ -1,0 +1,85 @@
+/* 基本的樣式設定 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+}
+
+/* 將連結放置在左邊 */
+.left-link {
+    margin-right: 20px;
+    float: left;
+}
+
+/* 將連結放置在右邊 */
+.right-link {
+    margin-right: 0;
+    margin-left: 20px;
+    float: right;
+}
+
+/* 清除浮動，確保 header 的高度正確 */
+nav:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li div{
+    display: inline;
+    padding-right: auto;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#searchInput {
+    display: block;
+    margin: 0 auto;
+    padding: 8px;
+    width: 70%;
+    box-sizing: border-box;
+}
+
+#menuList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#menuList li {
+    margin-bottom: 8px;
+}
+
