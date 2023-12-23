@@ -57,7 +57,7 @@ public class Admin extends User{
                 /** 將 ResultSet 之資料取出 */
                 int id = rs.getInt("user_id");
                 String name = rs.getString("user_name");
-                String email = rs.getString("user_gmail");
+                String email = rs.getString("user_email");
                 String password = rs.getString("user_password");
                 String phone = rs.getString("user_phone");
                 Timestamp update_time = rs.getTimestamp("user_update_time");
