@@ -1,5 +1,4 @@
 package app;
-//test
 
 import java.sql.*;
 
