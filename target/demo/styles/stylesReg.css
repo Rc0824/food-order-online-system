@@ -1,0 +1,119 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column; /* 垂直居中排列 */
+    font-family: Arial, sans-serif; /* 設定字體 */
+}
+
+#title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+/* 將連結放置在左邊 */
+.left-links {
+    margin-left: 20px;
+    float: left;
+}
+
+/* 將連結放置在右邊 */
+.right-links {
+    float: right;
+}
+
+/* 清除浮動，確保 header 的高度正確 */
+nav:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#register {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px; /* 設定註冊區域的寬度 */
+}
+
+/* 調整 label 和 input 的樣式 */
+#register label {
+    text-align: center;
+    display: inline-block;
+    width: 30%; /* 調整標籤的寬度 */
+    margin-right: 1%; /* 調整標籤與輸入框之間的間距 */
+}
+
+#register input[type="text"],
+#register input[type="password"],
+#register input[type="email"],
+#register input[type="tel"]{
+    width: 60%; /* 調整輸入框的寬度 */
+    padding: 8px; /* 調整輸入框的內邊距 */
+    margin-bottom: 10px; /* 調整輸入框間的間距 */
+    border-radius: 3px; /* 圓角 */
+    border: 1px solid #ccc; /* 邊框 */
+}
+
+#register input[type="submit"],
+#register button[type="button"] {
+    width: 100%; /* 讓提交按鈕填滿整個寬度 */
+    padding: 10px; /* 調整按鈕的內邊距 */
+    border: none; /* 移除按鈕邊框 */
+    background-color: #c7c7c7; /* 按鈕背景顏色為灰色 */
+    color: black; /* 文字顏色 */
+    border-radius: 10px; /* 圓角 */
+    cursor: pointer; /* 鼠標指針 */
+    transition: background-color 0.3s; /* 平滑過渡效果 */
+
+    font-weight: bold; /* 變為粗體 */
+    font-size: 14px; /* 調大文字大小 */
+}
+
+#register input[type="submit"]:hover {
+    background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
+}
+
+#register button[type="button"]:hover {
+    background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
+}
+
+/* ...（其他可能的樣式） */
