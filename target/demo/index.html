@@ -21,10 +21,11 @@
             </ul>
 
             <ul>
+                <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
                 <li class="right-link"><a id="registerLink" href="register.html">註冊會員</a></li>
                 <li class="right-link"><a id="loginLink" href="login.html">會員登入</a></li>
-                <li class="right-link"><div id="user-info"><!-- 這裡會顯示用戶名稱，初始為空 --></div></li>
-                <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
+                <li class="right-link"><div id="user-info"><!-- 這裡會顯示用戶名稱，初始為空 --></div></li> 
+                <li class="right-link"><a id="cartLink" href="cart.html">購物車</a></li>
             </ul>
         </nav>
     </header>
@@ -41,9 +42,9 @@
             <!-- 在這裡添加您的菜單內容 -->
             
             <ul id="menuList">                
-                <li>餐點 1</li>
-                <li>餐點 2</li>
-                <li>餐點 3</li>
+                <li><a href="meal1.html">白飯</a></li>
+                <li><a href="meal2.html">白麵</a></li>
+                <li><a href="#meal3">餐點 3</a></li>
                 <!-- 舉例，您可以用li標籤列出各種餐點 -->
             </ul>
         </section>
@@ -88,11 +89,13 @@
                 loginLink.style.display = 'none';
                 profileLink.style.display = 'inline';
                 logoutLink.style.display = 'inline';
+                cartLink.style.display = 'inline';
             } else {              
                 registerLink.style.display = 'inline';
                 loginLink.style.display = 'inline';
                 profileLink.style.display = 'none';
                 logoutLink.style.display = 'none'; 
+                cartLink.style.display = 'none';
             }
         };
 
