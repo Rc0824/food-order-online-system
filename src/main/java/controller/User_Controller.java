@@ -27,8 +27,8 @@ public class User_Controller extends HttpServlet {
             
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
             JSONObject resp = new JSONObject();
-            resp.put("status", "200");
             resp.put("message", "所有資料取得成功");
+            resp.put("status", "200");
             resp.put("response", query);
     
             /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
@@ -109,10 +109,15 @@ public class User_Controller extends HttpServlet {
         /** 透過傳入之參數，新建一個以這些參數之會員Member物件 */
         Member m = new Member(email, password, name, phone);
         
+<<<<<<< HEAD
         JSONObject data = new JSONObject(); // Initialize the data variable
         if(id != 0) {
             data = m.update(m);
         }
+=======
+        /** 透過Member物件的update()方法至資料庫更新該名會員資料，回傳之資料為JSONObject物件 */
+        JSONObject data = m.update(m);
+>>>>>>> bad1870af06cc52d2e8821bb19feeed84cc80184
         
         /** 新建一個JSONObject用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();

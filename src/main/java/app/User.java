@@ -74,7 +74,7 @@ public class User {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT count(*) FROM tbl_user WHERE `user_gmail` = ?";
+            String sql = "SELECT count(*) FROM tbl_user WHERE `user_email` = ?";
             
             /** 取得所需之參數 */
             String email = m.getEmail();
@@ -121,7 +121,7 @@ public class User {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO tbl_user (`user_name`, `user_gmail`, `user_password`, `user_phone`, `user_update_time`, `user_role`)"
+            String sql = "INSERT INTO tbl_user (`user_name`, `user_email`, `user_password`, `user_phone`, `user_update_time`, `user_role`)"
                     + " VALUES(?, ?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
@@ -237,7 +237,7 @@ public class User {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update tbl_user SET `user_name` = ? ,`user_password` = ? , `user_phone` = ? , `user_update_time` = ? WHERE `user_gmail` = ?";
+            String sql = "Update tbl_user SET `user_name` = ? ,`user_password` = ? , `user_phone` = ? , `user_update_time` = ? WHERE `user_email` = ?";
             /** 取得所需之參數 */
             String name = m.getName();
             String email = m.getEmail();
