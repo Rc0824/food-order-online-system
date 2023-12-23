@@ -1,30 +1,19 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    font-family: Arial, sans-serif;
     margin: 0;
-    flex-direction: column; /* 垂直居中排列 */
-    font-family: Arial, sans-serif; /* 設定字體 */
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-#title {
-    font-size: 24px;
-    margin-bottom: 20px;
-}
-
-header {
+#header {
     background-color: #333;
     color: #fff;
     padding: 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
+    text-align: left;
 }
 
 /* 將連結放置在左邊 */
 .left-links {
-    margin-left: 20px;
     float: left;
 }
 
@@ -66,34 +55,52 @@ footer {
     width: 100%;
 }
 
-#login {
-    text-align: center;
+a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+#profile {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
     padding: 20px;
-    border: 1px solid #ccc;
     border-radius: 5px;
-    width: 300px; /* 設定登入區域的寬度 */
 }
 
-/* 調整 label 和 input 的樣式 */
-#login label {
-    text-align: center;
-    display: inline-block;
-    width: 30%; /* 調整標籤的寬度 */
-    margin-right: 1%; /* 調整標籤與輸入框之間的間距 */
+h2 {
+    font-size: 24px;
 }
 
-#login input[type="text"],
-#login input[type="password"],
-#login input[type="email"] {
-    width: 60%; /* 調整輸入框的寬度 */
-    padding: 8px; /* 調整輸入框的內邊距 */
-    margin-bottom: 10px; /* 調整輸入框間的間距 */
-    border-radius: 3px; /* 圓角 */
-    border: 1px solid #ccc; /* 邊框 */
+h3 {
+    font-size: 20px;
+    margin-top: 20px;
 }
 
-#login input[type="submit"],
-#login button[type="button"] {
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="submit"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+input[type="email"][readonly] {
+    background-color: #dadada; 
+}
+
+input[type="submit"],#editForm button[type="button"] {
     width: 100%; /* 讓提交按鈕填滿整個寬度 */
     padding: 10px; /* 調整按鈕的內邊距 */
     border: none; /* 移除按鈕邊框 */
@@ -107,10 +114,14 @@ footer {
     font-size: 14px; /* 調大文字大小 */
 }
 
-#login input[type="submit"]:hover {
+input[type="submit"]:hover {
+    background-color: #aaaaaa;
+}
+
+#editForm button[type="button"]:hover {
     background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
 }
 
-#login button[type="button"]:hover {
-    background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
+#userInfo p {
+    margin-bottom: 10px;
 }

@@ -5,7 +5,6 @@ app\Order.class
 controller\User_Controller.class
 tools\JsonReader.class
 app\Shop.class
-controller\MyServlet.class
 app\Member.class
 app\Cart.class
 util\DBMgr.class

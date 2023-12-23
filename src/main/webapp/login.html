@@ -9,6 +9,24 @@
 </head>
 
 <body>
+    <header>
+        <nav>
+            <div class="left-links">
+                <ul>
+                    <li><a href="index.html">首頁</a></li>               
+                    <li><a href="#order">訂單</a></li>
+                    <li><a href="#about">關於我們</a></li>
+                    <li><a href="#contact">聯繫我們</a></li>
+                </ul>
+            </div>
+            <div class="right-links">
+                <ul>
+                    <li><a id="registerLink" href="register.html">註冊會員</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
     <div id="title">
         <h1>XX線上點餐系統</h1>
     </div>
@@ -28,6 +46,10 @@
         </form>
     </section>
 
+    <footer>
+        <p>版權所有 &copy; 2023 XX線上訂餐系統</p>
+    </footer>
+
     <script>
         function goBack() {
             window.location.href = 'index.html'; // 返回index.html
@@ -42,7 +64,7 @@
             let password = document.getElementById('password').value;
             if(email == storedEmail && password == storedPassword){
                 alert('登入成功');
-                localStorage.setItem('loggedInUser', JSON.stringify({name: storedName/* 其他用戶信息 */ }));
+                localStorage.setItem('loggedInUser', JSON.stringify({name: storedName,phone: storedPhone,email: storedEmail,password: storedPassword}));
                 window.location.href = 'index.html';
             }else{
                 alert('登入失敗');

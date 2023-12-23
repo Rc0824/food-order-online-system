@@ -11,35 +11,40 @@
 <body>
     <header>
         <nav>
+            <ul>     
+                <li class="left-link"><a href="#home">首頁</a></li>               
+                <li class="left-link"><a href="#order">訂單</a></li>
+                <li class="left-link"><a href="#about">關於我們</a></li>
+                <li class="left-link"><a href="#contact">聯繫我們</a></li>
+                <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+                <li class="left-link"><a href="check.html">查看會員</a></li>
+            </ul>
+
             <ul>
-                <li><a href="#home">首頁123</a></li>               
-                <li><a href="#order">訂單</a></li>
-                <li><a href="#about">關於我們</a></li>
-                <li><a href="#contact">聯繫我們</a></li>
-                <li><a href="register.html">註冊會員</a></li>
-                <li><a href="login.html">會員登入</a></li>
-                <li><a href="#" onclick="logout()">登出</a></li> 
+                <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
+                <li class="right-link"><a id="registerLink" href="register.html">註冊會員</a></li>
+                <li class="right-link"><a id="loginLink" href="login.html">會員登入</a></li>
+                <li class="right-link"><div id="user-info"><!-- 這裡會顯示用戶名稱，初始為空 --></div></li> 
+                <li class="right-link"><a id="cartLink" href="cart.html">購物車</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section id="home">
-            <div id="user-info">
-                <!-- 這裡會顯示用戶名稱，初始為空 -->
-            </div>
-            <h1>歡迎來到線上訂餐系統</h1>
+            <input type="text" id="searchInput" placeholder="搜尋餐點...">
+            <h1>歡迎來到XX線上訂餐系統</h1>
             <p>在這裡您可以輕鬆訂購美味的食物！</p>
         </section>
 
         <section id="menu">
             <h2>菜單</h2>
             <!-- 在這裡添加您的菜單內容 -->
-            <input type="text" id="searchInput" placeholder="搜尋餐點...">
+            
             <ul id="menuList">                
-                <li>餐點 1</li>
-                <li>餐點 2</li>
-                <li>餐點 3</li>
+                <li><a href="meal1.html">白飯</a></li>
+                <li><a href="meal2.html">白麵</a></li>
+                <li><a href="#meal3">餐點 3</a></li>
                 <!-- 舉例，您可以用li標籤列出各種餐點 -->
             </ul>
         </section>
@@ -68,6 +73,10 @@
         window.onload = function () {
             const header = document.getElementById('header');
             const userInfo = document.getElementById('user-info');
+
+            const registerLink = document.getElementById('registerLink');
+            const loginLink = document.getElementById('loginLink');
+            const logoutLink = document.getElementById('logoutLink');
             
             // 在此處檢查用戶是否已登入，並顯示相應的內容
             const loggedInUser = getLoggedInUser(); // 假設此函數從 localStorage 中獲取已登入用戶信息
@@ -75,9 +84,18 @@
             if (loggedInUser) {
                 // 用戶已登入，顯示歡迎信息
                 userInfo.textContent = `歡迎回來，${loggedInUser.name}！`; // 顯示用戶名稱
-            } else {
-                // 用戶未登入，顯示登入提示   
-                userInfo.textContent = '請登入以獲取更多功能。'; // 顯示登入提示
+
+                registerLink.style.display = 'none';
+                loginLink.style.display = 'none';
+                profileLink.style.display = 'inline';
+                logoutLink.style.display = 'inline';
+                cartLink.style.display = 'inline';
+            } else {              
+                registerLink.style.display = 'inline';
+                loginLink.style.display = 'inline';
+                profileLink.style.display = 'none';
+                logoutLink.style.display = 'none'; 
+                cartLink.style.display = 'none';
             }
         };
 

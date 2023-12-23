@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>線上訂餐系統</title>
-    <link rel="stylesheet" href="styles/stylesInd.css">
+    <title>購物車</title>
+    <link rel="stylesheet" href="styles/stylesCar.css">
 </head>
 
 <body>
     <header>
         <nav>
             <ul>     
-                <li class="left-link"><a href="#home">首頁</a></li>               
+                <li class="left-link"><a href="index.html">首頁</a></li>               
                 <li class="left-link"><a href="#order">訂單</a></li>
                 <li class="left-link"><a href="#about">關於我們</a></li>
                 <li class="left-link"><a href="#contact">聯繫我們</a></li>
@@ -28,44 +28,18 @@
             </ul>
         </nav>
     </header>
+    <h1>購物車</h1>
 
-    <main>
-        <section id="home">
-            <input type="text" id="searchInput" placeholder="搜尋餐點...">
-            <h1>歡迎來到XX線上訂餐系統</h1>
-            <p>在這裡您可以輕鬆訂購美味的食物！</p>
-        </section>
+    <div id="cart-items">
+        <!-- 這裡將顯示購物車內容 -->
+    </div>
 
-        <section id="menu">
-            <h2>菜單</h2>
-            <!-- 在這裡添加您的菜單內容 -->
-            
-            <ul id="menuList">                
-                <li>餐點 1</li>
-                <li>餐點 2</li>
-                <li>餐點 3</li>
-                <!-- 舉例，您可以用li標籤列出各種餐點 -->
-            </ul>
-        </section>
+    <p id="emptyCartMessage"></p>
 
-        <section id="order">
-            <h2>訂單</h2>
-            <!-- 在這裡添加訂單表格或訂購功能 -->
-        </section>
-
-        <section id="about">
-            <h2>關於我們</h2>
-            <p>在這裡介紹您的餐廳或服務的相關資訊。</p>
-        </section>
-
-        <section id="contact">
-            <h2>聯繫我們</h2>
-            <!-- 在這裡添加您的聯繫資訊和表單 -->
-        </section>
-    </main>
+    <button id="clearCartBtn">清除購物車</button>
 
     <footer>
-        <p>版權所有 &copy; 2023 線上訂餐系統</p>
+        <p>版權所有 &copy; 2023 XX線上訂餐系統</p>
     </footer>
 
     <script>
@@ -88,25 +62,64 @@
                 loginLink.style.display = 'none';
                 profileLink.style.display = 'inline';
                 logoutLink.style.display = 'inline';
+                cartLink.style.display = 'inline';
             } else {              
                 registerLink.style.display = 'inline';
                 loginLink.style.display = 'inline';
                 profileLink.style.display = 'none';
                 logoutLink.style.display = 'none'; 
+                cartLink.style.display = 'none';
             }
         };
 
         function logout() {
             localStorage.removeItem('loggedInUser'); // 移除登入信息
             location.reload(); // 重新加載頁面
+            window.location.href = 'index.html'; // 返回index.html
+            localStorage.removeItem('cart'); // 移除購物車內容
         }
 
         // 假設此函數從 localStorage 中獲取已登入用戶信息
         function getLoggedInUser() {
             return JSON.parse(localStorage.getItem('loggedInUser'));
         }
-    </script>
 
+        // 取得購物車內容
+        let cart = localStorage.getItem('cart');
+        if (cart) {
+            cart = JSON.parse(cart);
+        
+            const cartItemsDiv = document.getElementById('cart-items');
+            let totalPrice = 0;
+        
+            // 顯示購物車內容並計算總價
+            cart.forEach(item => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.textContent = `餐點名稱：${item.name} - 價格：$${item.price} - 數量：${item.quantity}`;
+                cartItemsDiv.appendChild(cartItemDiv);
+        
+                // 計算總價
+                totalPrice += item.price * item.quantity;
+            });
+        
+            // 顯示總價
+            const totalDiv = document.createElement('div');
+            totalDiv.textContent = `總計：$${totalPrice.toFixed(2)}`;
+            cartItemsDiv.appendChild(totalDiv);
+        } else {
+            const emptyCartMessage = document.createElement('p');
+            emptyCartMessage.textContent = '購物車是空的';
+            document.body.appendChild(emptyCartMessage);
+        }
+
+        document.getElementById('clearCartBtn').addEventListener('click', function() {
+            // 清除購物車資料
+            localStorage.removeItem('cart');
+        
+            // 重新載入或重整頁面
+            location.reload();
+        });
+    </script>
 </body>
 
 </html>
