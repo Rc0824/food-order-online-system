@@ -110,7 +110,7 @@ public class User_Controller extends HttpServlet {
         Member m = new Member(email, password, name, phone);
         
         /** 透過Member物件的update()方法至資料庫更新該名會員資料，回傳之資料為JSONObject物件 */
-        JSONObject data = m.update();
+        JSONObject data = m.update(m);
         
         /** 新建一個JSONObject用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();

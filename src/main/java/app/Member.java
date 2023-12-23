@@ -33,7 +33,7 @@ public class Member extends User{
         JSONObject jso = new JSONObject();
         jso.put("user_id", getId());
         jso.put("user_name", getName());
-        jso.put("user_gmail", getEmail());
+        jso.put("user_email", getEmail());
         jso.put("user_password", getPassword());
         jso.put("user_phone", getPhone());
         jso.put("user_update_time", getUpdate_time());
