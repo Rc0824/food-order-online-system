@@ -11,8 +11,8 @@
         <nav>
             <ul>     
                 <li class="left-link"><a href="index.html">首頁</a></li>               
-                <li class="left-link"><a href="#order">訂單</a></li>
                 <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+                <li class="left-link"><a id="historyLink" href="history.html">歷史訂單</a></li>
                 <li class="left-link"><a href="check.html">查看會員</a></li>
             </ul>
 
@@ -66,12 +66,14 @@
                 profileLink.style.display = 'inline';
                 logoutLink.style.display = 'inline';
                 cartLink.style.display = 'inline';
+                historyLink.style.display = 'inline';
             } else {              
                 registerLink.style.display = 'inline';
                 loginLink.style.display = 'inline';
                 profileLink.style.display = 'none';
                 logoutLink.style.display = 'none'; 
                 cartLink.style.display = 'none';
+                historyLink.style.display = 'none';
             }
         };
 

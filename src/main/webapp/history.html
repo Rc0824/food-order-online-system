@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歷史訂單</title>
+    <!-- 這裡添加你的樣式表連結或樣式 -->
+    <link rel="stylesheet" href="styles/stylesHis.css">
+    <style>
+        /* 在這裡可以添加自定義的樣式 */
+    </style>
+</head>
+<body>
+    <h1>歷史訂單</h1>
+    <div id="order-history">
+    </div>
+
+    <script>
+        window.onload = function() {
+            const orderHistory = JSON.parse(localStorage.getItem('orderHistory'));
+        
+            if (orderHistory && orderHistory.length > 0) {
+                const orderHistoryDiv = document.getElementById('order-history');
+        
+                orderHistory.forEach(order => {
+                    const orderDiv = document.createElement('div');
+                    orderDiv.classList.add('order-container'); // 新增這行來設置外框
+        
+                    const cartItems = document.createElement('div');
+                    cartItems.classList.add('order-details'); // 新增這行來設置訂單細節樣式
+                    const timestamp = document.createElement('div');
+                    timestamp.classList.add('timestamp'); // 新增這行來設置時間戳樣式
+        
+                    cartItems.innerHTML = order.cartItems;
+                    timestamp.textContent = `訂單時間：${order.timestamp}`;
+        
+                    orderDiv.appendChild(cartItems);
+                    orderDiv.appendChild(timestamp);
+        
+                    orderHistoryDiv.appendChild(orderDiv);
+                });
+            }
+        };
+    </script>
+</body>
+</html>

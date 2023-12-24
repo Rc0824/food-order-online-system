@@ -13,8 +13,8 @@
         <nav>
             <ul>     
                 <li class="left-link"><a href="index.html">首頁</a></li>               
-                <li class="left-link"><a href="#order">訂單</a></li>
                 <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+                <li class="left-link"><a id="historyLink" href="history.html">歷史訂單</a></li>
                 <li class="left-link"><a href="check.html">查看會員</a></li>
             </ul>
 
@@ -76,12 +76,14 @@
                 profileLink.style.display = 'inline';
                 logoutLink.style.display = 'inline';
                 cartLink.style.display = 'inline';
+                historyLink.style.display = 'inline';
             } else {              
                 registerLink.style.display = 'inline';
                 loginLink.style.display = 'inline';
                 profileLink.style.display = 'none';
                 logoutLink.style.display = 'none'; 
                 cartLink.style.display = 'none';
+                historyLink.style.display = 'none';
             }
         };
 
@@ -141,8 +143,25 @@
 
         // 送出訂單按鈕的事件
         document.getElementById('submitOrderBtn').addEventListener('click', function() {
-            // 在此處執行送出訂單的操作，例如傳送訂單到後端或執行其他相關操作
-            // 這裡僅是一個範例
+            const cartItems = document.getElementById('cart-items').innerHTML;
+            const timestamp = new Date().toLocaleString() // 添加時間戳記
+        
+            // 建立訂單物件
+            const orderData = {
+                timestamp: timestamp,
+                cartItems: cartItems
+            };
+        
+            // 取得歷史訂單資料
+            let orderHistory = localStorage.getItem('orderHistory');
+            orderHistory = orderHistory ? JSON.parse(orderHistory) : [];
+        
+            // 新增新訂單到歷史訂單資料
+            orderHistory.push(orderData);
+        
+            // 更新歷史訂單資料到 localStorage 中
+            localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
+
             alert('訂單已送出！');
             // 導向到其他頁面或做其他操作
         });
