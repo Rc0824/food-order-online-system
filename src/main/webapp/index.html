@@ -96,6 +96,25 @@
         function getLoggedInUser() {
             return JSON.parse(localStorage.getItem('loggedInUser'));
         }
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase().trim(); // 取得輸入值並轉為小寫
+        
+            const menuList = document.getElementById('menuList');
+            const menuItems = menuList.getElementsByTagName('li');
+        
+            for (let i = 0; i < menuItems.length; i++) {
+                const menuItem = menuItems[i];
+                const itemText = menuItem.textContent.toLowerCase(); // 取得餐點項目的文字並轉為小寫
+        
+                if (itemText.includes(searchValue)) {
+                    menuItem.style.display = 'block'; // 顯示符合條件的餐點項目
+                } else {
+                    menuItem.style.display = 'none'; // 隱藏不符合條件的餐點項目
+                }
+            }
+        });
+
     </script>
 
 </body>
