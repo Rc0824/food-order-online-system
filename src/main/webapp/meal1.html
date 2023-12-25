@@ -11,10 +11,8 @@
         <nav>
             <ul>     
                 <li class="left-link"><a href="index.html">首頁</a></li>               
-                <li class="left-link"><a href="#order">訂單</a></li>
-                <li class="left-link"><a href="#about">關於我們</a></li>
-                <li class="left-link"><a href="#contact">聯繫我們</a></li>
                 <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+                <li class="left-link"><a id="historyLink" href="history.html">歷史訂單</a></li>
                 <li class="left-link"><a href="check.html">查看會員</a></li>
             </ul>
 
@@ -34,13 +32,13 @@
         <p>一碗白色的飯</p>
         <p>價格：$15</p>
         <!-- 可以添加更多相關的餐點信息 -->
-
-        <div class="order-section">
+    
+        <div class="order-section" id="cartSection" style="display: none;">
             <label for="quantity">數量：</label>
             <input type="number" id="quantity" name="quantity" value="1" min="1">
-    
             <button onclick="addToCart()">加入購物車</button>
         </div>
+    </div>
 
     </div>
 
@@ -69,12 +67,14 @@
                 profileLink.style.display = 'inline';
                 logoutLink.style.display = 'inline';
                 cartLink.style.display = 'inline';
+                historyLink.style.display = 'inline';
             } else {              
                 registerLink.style.display = 'inline';
                 loginLink.style.display = 'inline';
                 profileLink.style.display = 'none';
                 logoutLink.style.display = 'none'; 
                 cartLink.style.display = 'none';
+                historyLink.style.display = 'none';
             }
         };
 
@@ -88,6 +88,15 @@
             return JSON.parse(localStorage.getItem('loggedInUser'));
         }
 
+        document.addEventListener("DOMContentLoaded", function() {
+            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+            const cartSection = document.getElementById('cartSection');
+    
+            if (loggedInUser) {
+                cartSection.style.display = 'block'; // 顯示加入購物車的部分
+            }
+        });
+        
         function addToCart() {
             const quantity = document.getElementById('quantity').value;
             const itemName = '白飯'; // 餐點名稱，可以根據實際情況修改

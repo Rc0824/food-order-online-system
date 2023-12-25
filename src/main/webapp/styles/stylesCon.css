@@ -12,7 +12,7 @@ h1 {
     text-align: center;
 }
 
-#cart-items {
+#order-details {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
@@ -21,33 +21,26 @@ h1 {
     background-color: #f9f9f9;
 }
 
-#clearCartBtn, #payBtn{
-    width: 5%; /* 讓提交按鈕填滿整個寬度 */
-    padding: 10px; /* 調整按鈕的內邊距 */
-    border: none; /* 移除按鈕邊框 */
-    background-color: #c7c7c7; /* 按鈕背景顏色 */
-    color: black; /* 文字顏色 */
-    border-radius: 10px; /* 圓角 */
-    cursor: pointer; /* 鼠標指針 */
-    transition: background-color 0.3s; /* 平滑過渡效果 */
-
-    font-weight: bold; /* 變為粗體 */
-    font-size: 14px; /* 調大文字大小 */
-}
-
-#clearCartBtn:hover {
-    background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
-}
-
-#payBtn:hover {
-    background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
-}
-
-#cart-items div {
+#order-details div {
     margin-bottom: 10px;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+}
+
+#submitOrderBtn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #c7c7c7;
+    color: black;
+    font-size: 14px;
+    font-weight: bold; /* 變為粗體 */
+    cursor: pointer;
+    transition: background-color 0.3s; /* 平滑過渡效果 */
+}
+
+#submitOrderBtn:hover {
+    background-color: #aaaaaa;
 }
 
 header {
@@ -98,10 +91,6 @@ nav ul li a {
 nav ul li div{
     display: inline;
     padding-right: auto;
-}
-
-main {
-    padding: 20px;
 }
 
 footer {

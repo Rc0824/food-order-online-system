@@ -1,0 +1,26 @@
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 每筆訂單的外框 */
+.order-container {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+/* 訂單內容 */
+.order-details {
+    /* 訂單細節的樣式 */
+    font-size: 16px;
+    /* 添加更多樣式來美化訂單內容 */
+}
+
+/* 訂單時間戳 */
+.timestamp {
+    color: #888;
+    font-style: italic;
+    font-size: 14px;
+    /* 添加更多樣式來美化時間戳 */
+}
