@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>登入</title>
     <link rel="stylesheet" href="styles/stylesLog.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -54,22 +55,62 @@
         function goBack() {
             window.location.href = 'index.html'; // 返回index.html
         }
-        const storedName = localStorage.getItem('userName');
-        const storedPhone = localStorage.getItem('userPhone');
-        const storedEmail = localStorage.getItem('userEmail');
-        const storedPassword = localStorage.getItem('userPassword');
+        // const storedName = localStorage.getItem('userName');
+        // const storedPhone = localStorage.getItem('userPhone');
+        // const storedEmail = localStorage.getItem('userEmail');
+        // const storedPassword = localStorage.getItem('userPassword');
 
-        function login(){
-            let email = document.getElementById('email').value;
-            let password = document.getElementById('password').value;
-            if(email == storedEmail && password == storedPassword){
-                alert('登入成功');
-                localStorage.setItem('loggedInUser', JSON.stringify({name: storedName,phone: storedPhone,email: storedEmail,password: storedPassword}));
-                window.location.href = 'index.html';
-            }else{
-                alert('登入失敗');
-            }
-        }
+        function login() {
+            var email = $('#user_email').val();
+            var password = $('#user_password').val();
+                // 將資料組成JSON格式
+                var data_object = {
+                    "user_email": email,
+                    "user_password": password,
+                };
+
+                // 將JSON格式轉換成字串
+                var data_string = JSON.stringify(data_object);
+
+                // 發出POST的AJAX請求
+                $.ajax({
+                        type: "POST",
+                        url: "api/login",
+                        data: data_string,
+                        crossDomain: true,
+                        cache: false,
+                        dataType: 'json',
+                        timeout: 5000,
+                        success: function (response) {
+                            console.log('success');
+                            console.log(response);
+                            if (response.status == 200) {
+                                alert(responser.message);
+                                window.location.href = 'index.html';
+                            } else {
+                                alert("登入失敗！");
+                            }
+                        },
+                        error: function () {
+                            console.log('fail');
+                            alert("無法連線到伺服器！");
+                        },
+                });
+            }  
+
+
+
+        // function login(){
+        //     let email = document.getElementById('email').value;
+        //     let password = document.getElementById('password').value;
+        //     if(email == storedEmail && password == storedPassword){
+        //         alert('登入成功');
+        //         localStorage.setItem('loggedInUser', JSON.stringify({name: storedName,phone: storedPhone,email: storedEmail,password: storedPassword}));
+        //         window.location.href = 'index.html';
+        //     }else{
+        //         alert('登入失敗');
+        //     }
+        // }
 
         document.getElementById('submit').addEventListener('click',function(event){
             event.preventDefault();

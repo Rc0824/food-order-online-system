@@ -10,4 +10,14 @@
         <servlet-name>User_Controller</servlet-name>
         <url-pattern>/api/user</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Login_Controller</servlet-name>
+        <servlet-class>controller.Login_Controller</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Login_Controller</servlet-name>
+        <url-pattern>/api/login</url-pattern>
+    </servlet-mapping>
 </web-app>

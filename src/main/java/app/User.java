@@ -2,7 +2,7 @@ package app;
 
 import java.sql.*;
 import java.time.LocalDateTime;
-
+import javax.servlet.http.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -34,6 +34,11 @@ public class User {
         this.password = password;
         this.name = name;
         this.phone = phone;
+    }
+
+    public User(String email, String password){
+        this.email = email;
+        this.password = password;
     }
 
     public int getId() {
@@ -283,6 +288,99 @@ public class User {
 
         return response;
     }
+
+    public boolean login(Member m){
+        /** 紀錄SQL總行數，若為「-1」代表資料庫檢索尚未完成 */
+        int row = -1;
+        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        ResultSet rs = null;
+        
+        try {
+            /** 取得資料庫之連線 */
+            conn = DBMgr.getConnection();
+            /** SQL指令 */
+            String sql = "SELECT count(*) FROM tbl_user WHERE `user_email` = ? AND `user_password` = ?";
+            
+            /** 取得所需之參數 */
+            String email = m.getEmail();
+            String password = m.getPassword();
+            
+            /** 將參數回填至SQL指令當中 */
+            pres = conn.prepareStatement(sql);
+            pres.setString(1, email);
+            pres.setString(2, password);
+            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            rs = pres.executeQuery();
+
+            /** 讓指標移往最後一列，取得目前有幾行在資料庫內 */
+            rs.next();
+            row = rs.getInt("count(*)");
+            System.out.print(row);
+
+        } catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            DBMgr.close(rs, pres, conn);
+        }
+        
+        /** 
+         * 判斷是否已經有一筆該電子郵件信箱之資料
+         * 若無一筆則回傳False，否則回傳True 
+         */
+        return (row == 0) ? false : true;
+    }
+
+    // public JSONObject login(HttpServletRequest request, String email, String password){
+    //     String sql = "SELECT * FROM tbl_user WHERE user_email = ? AND user_password = ?";
+    //     String exexcute_sql = "";
+    //     ResultSet rs = null;
+    //     JSONObject response = new JSONObject();
+    //     JSONArray jsa = new JSONArray();
+    //     /** 紀錄程式開始執行時間 */
+    //     long start_time = System.nanoTime();
+    //     /** 紀錄SQL總行數 */
+    //     int row = 0;
+    
+    //     try {
+    //         conn = DBMgr.getConnection();
+    //         pres = conn.prepareStatement(sql);
+    //         pres.setString(1, email);
+    //         pres.setString(2, password);
+    //         row = pres.executeUpdate();
+    //         rs = pres.executeQuery();
+            
+    //         exexcute_sql = pres.toString();
+    //         System.out.println(exexcute_sql);
+
+    //     } catch (SQLException e) {
+    //         /** 印出JDBC SQL指令錯誤 **/
+    //         System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+    //     } catch (Exception e) {
+    //         /** 若錯誤則印出錯誤訊息 */
+    //         e.printStackTrace();
+    //     } finally {
+    //         /** 關閉連線並釋放所有資料庫相關之資源 **/
+    //         DBMgr.close(pres, conn);
+    //     }
+        
+    //     /** 紀錄程式結束執行時間 */
+    //     long end_time = System.nanoTime();
+    //     /** 紀錄程式執行時間 */
+    //     long duration = (end_time - start_time);
+        
+    //     /** 將SQL指令、花費時間與影響行數，封裝成JSONObject回傳 */
+    //     response.put("sql", exexcute_sql);
+    //     response.put("row", row);
+    //     response.put("time", duration);
+    //     response.put("data", jsa);
+
+    //     return response;
+    // }
 
 }
 

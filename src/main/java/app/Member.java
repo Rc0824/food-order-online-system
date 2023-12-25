@@ -25,6 +25,10 @@ public class Member extends User{
         super(email, password, name, phone);
     }
 
+    public Member(String email, String password){
+        super(email, password);
+    }
+
     public Member(){
         super(0,"", "", "", "",null ,"");
     }
