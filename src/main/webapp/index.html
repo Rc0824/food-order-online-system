@@ -37,15 +37,25 @@
 
         <section id="menu">
             <h2>菜單</h2>
-            <!-- 在這裡添加您的菜單內容 -->
-            
             <ul id="menuList">                
-                <li><a href="meal1.html">白飯</a></li>
-                <li><a href="meal2.html">白麵</a></li>
-                <li><a href="#meal3">餐點 3</a></li>
-                <!-- 舉例，您可以用li標籤列出各種餐點 -->
+                <li><a href="#" class="meal-link" data-meal="白飯">白飯</a></li>
+                <li><a href="#" class="meal-link" data-meal="白麵">白麵</a></li>
+                <li><a href="#" class="meal-link" data-meal="餐點3">餐點 3</a></li>
             </ul>
         </section>
+        
+        <div class="modal" id="mealModal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="mealTitle"></h2>
+                <p id="mealDescription"></p>
+                <div class="order-section" id="cartSection">
+                    <label for="quantity">數量：</label>
+                    <input type="number" id="quantityModal" name="quantity" value="1" min="1">
+                    <button onclick="addToCartModal()">加入購物車</button>
+                </div>
+            </div>
+        </div>
 
         <section id="order">
             <h2>訂單</h2>
@@ -117,6 +127,58 @@
             }
         });
 
+        // 在你的 JavaScript 文件中添加以下代碼：
+
+        const modal = document.getElementById('mealModal');
+        const mealLinks = document.querySelectorAll('.meal-link');
+        const mealTitle = document.getElementById('mealTitle');
+        const mealDescription = document.getElementById('mealDescription');
+        const closeBtn = document.getElementsByClassName('close')[0];
+        const cartSection = document.getElementById('cartSection');
+
+        mealLinks.forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                const meal = this.dataset.meal;
+
+                mealTitle.textContent = meal;
+                mealDescription.textContent = `這是${meal}的描述。`;
+
+                modal.style.display = 'block';
+                cartSection.style.display = 'block'; // 顯示加入購物車部分
+            });
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            cartSection.style.display = 'none'; // 隱藏加入購物車部分
+        });
+
+        function addToCartModal() {
+            const quantity = document.getElementById('quantityModal').value;
+            const itemName = mealTitle.textContent; // 取得餐點名稱
+            const itemPrice = 15; // 餐點價格，可以根據實際情況修改
+
+            // 在這裡可以把餐點加入購物車，例如使用 localStorage 存儲購物車信息
+            // 這裡僅為示例，具體的實現需要與後端交互或使用資料庫
+            const cartItem = {
+                name: itemName,
+                price: itemPrice,
+                quantity: parseInt(quantity)
+            };
+
+            // 範例：將餐點添加至購物車（使用 localStorage）
+            let cart = localStorage.getItem('cart');
+            if (!cart) {
+                cart = [];
+            } else {
+                cart = JSON.parse(cart);
+            }
+            cart.push(cartItem);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            alert('已加入購物車');
+        }
     </script>
 
 </body>
