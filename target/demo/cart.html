@@ -13,10 +13,8 @@
         <nav>
             <ul>     
                 <li class="left-link"><a href="index.html">首頁</a></li>               
-                <li class="left-link"><a href="#order">訂單</a></li>
-                <li class="left-link"><a href="#about">關於我們</a></li>
-                <li class="left-link"><a href="#contact">聯繫我們</a></li>
                 <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+                <li class="left-link"><a id="historyLink" href="history.html">歷史訂單</a></li>
                 <li class="left-link"><a href="check.html">查看會員</a></li>
             </ul>
 
@@ -36,7 +34,11 @@
 
     <p id="emptyCartMessage"></p>
 
-    <button id="clearCartBtn">清除購物車</button>
+    <button id="clearCartBtn" style="display: none;">清除購物車</button>
+
+    <p id="emptyCartMessage"></p>
+
+    <button id="payBtn" style="display: none;">確認訂單</button>
 
     <footer>
         <p>版權所有 &copy; 2023 XX線上訂餐系統</p>
@@ -63,12 +65,14 @@
                 profileLink.style.display = 'inline';
                 logoutLink.style.display = 'inline';
                 cartLink.style.display = 'inline';
+                historyLink.style.display = 'inline';
             } else {              
                 registerLink.style.display = 'inline';
                 loginLink.style.display = 'inline';
                 profileLink.style.display = 'none';
                 logoutLink.style.display = 'none'; 
                 cartLink.style.display = 'none';
+                historyLink.style.display = 'none';
             }
         };
 
@@ -84,41 +88,54 @@
             return JSON.parse(localStorage.getItem('loggedInUser'));
         }
 
+        document.getElementById('payBtn').addEventListener('click', function() {
+            window.location.href = 'confirmation.html'; // 導向到確認訂單頁面
+        });
+
         // 取得購物車內容
         let cart = localStorage.getItem('cart');
         if (cart) {
             cart = JSON.parse(cart);
-        
+
             const cartItemsDiv = document.getElementById('cart-items');
             let totalPrice = 0;
-        
+
             // 顯示購物車內容並計算總價
             cart.forEach(item => {
                 const cartItemDiv = document.createElement('div');
                 cartItemDiv.textContent = `餐點名稱：${item.name} - 價格：$${item.price} - 數量：${item.quantity}`;
                 cartItemsDiv.appendChild(cartItemDiv);
-        
+
                 // 計算總價
                 totalPrice += item.price * item.quantity;
             });
-        
+
             // 顯示總價
             const totalDiv = document.createElement('div');
             totalDiv.textContent = `總計：$${totalPrice.toFixed(2)}`;
             cartItemsDiv.appendChild(totalDiv);
+
+            // 顯示清除購物車按鈕
+            const clearCartBtn = document.getElementById('clearCartBtn');
+            clearCartBtn.style.display = 'block';
+            
+            // 顯示前往結帳按鈕
+            const payBtn = document.getElementById('payBtn');
+            payBtn.style.display = 'block';
+
+            // 監聽清除購物車按鈕的點擊事件
+            clearCartBtn.addEventListener('click', function() {
+                // 清除購物車資料
+                localStorage.removeItem('cart');
+
+                // 重新載入或重整頁面
+                location.reload();
+            });
         } else {
             const emptyCartMessage = document.createElement('p');
             emptyCartMessage.textContent = '購物車是空的';
             document.body.appendChild(emptyCartMessage);
         }
-
-        document.getElementById('clearCartBtn').addEventListener('click', function() {
-            // 清除購物車資料
-            localStorage.removeItem('cart');
-        
-            // 重新載入或重整頁面
-            location.reload();
-        });
     </script>
 </body>
 

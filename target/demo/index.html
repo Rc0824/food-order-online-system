@@ -13,10 +13,8 @@
         <nav>
             <ul>     
                 <li class="left-link"><a href="#home">首頁</a></li>               
-                <li class="left-link"><a href="#order">訂單</a></li>
-                <li class="left-link"><a href="#about">關於我們</a></li>
-                <li class="left-link"><a href="#contact">聯繫我們</a></li>
                 <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+                <li class="left-link"><a id="historyLink" href="history.html">歷史訂單</a></li>
                 <li class="left-link"><a href="check.html">查看會員</a></li>
             </ul>
 
@@ -53,16 +51,6 @@
             <h2>訂單</h2>
             <!-- 在這裡添加訂單表格或訂購功能 -->
         </section>
-
-        <section id="about">
-            <h2>關於我們</h2>
-            <p>在這裡介紹您的餐廳或服務的相關資訊。</p>
-        </section>
-
-        <section id="contact">
-            <h2>聯繫我們</h2>
-            <!-- 在這裡添加您的聯繫資訊和表單 -->
-        </section>
     </main>
 
     <footer>
@@ -90,12 +78,14 @@
                 profileLink.style.display = 'inline';
                 logoutLink.style.display = 'inline';
                 cartLink.style.display = 'inline';
+                historyLink.style.display = 'inline';
             } else {              
                 registerLink.style.display = 'inline';
                 loginLink.style.display = 'inline';
                 profileLink.style.display = 'none';
                 logoutLink.style.display = 'none'; 
                 cartLink.style.display = 'none';
+                historyLink.style.display = 'none';
             }
         };
 
@@ -108,6 +98,25 @@
         function getLoggedInUser() {
             return JSON.parse(localStorage.getItem('loggedInUser'));
         }
+
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchValue = this.value.toLowerCase().trim(); // 取得輸入值並轉為小寫
+        
+            const menuList = document.getElementById('menuList');
+            const menuItems = menuList.getElementsByTagName('li');
+        
+            for (let i = 0; i < menuItems.length; i++) {
+                const menuItem = menuItems[i];
+                const itemText = menuItem.textContent.toLowerCase(); // 取得餐點項目的文字並轉為小寫
+        
+                if (itemText.includes(searchValue)) {
+                    menuItem.style.display = 'block'; // 顯示符合條件的餐點項目
+                } else {
+                    menuItem.style.display = 'none'; // 隱藏不符合條件的餐點項目
+                }
+            }
+        });
+
     </script>
 
 </body>

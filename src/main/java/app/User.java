@@ -335,52 +335,43 @@ public class User {
         return (row == 0) ? false : true;
     }
 
-    // public JSONObject login(HttpServletRequest request, String email, String password){
-    //     String sql = "SELECT * FROM tbl_user WHERE user_email = ? AND user_password = ?";
-    //     String exexcute_sql = "";
-    //     ResultSet rs = null;
-    //     JSONObject response = new JSONObject();
-    //     JSONArray jsa = new JSONArray();
-    //     /** 紀錄程式開始執行時間 */
-    //     long start_time = System.nanoTime();
-    //     /** 紀錄SQL總行數 */
-    //     int row = 0;
+    public JSONObject getDataByEmail(String email){
+        // 建立一個新的 JSONObject 來儲存用戶資料
+        JSONObject userData = new JSONObject();
     
-    //     try {
-    //         conn = DBMgr.getConnection();
-    //         pres = conn.prepareStatement(sql);
-    //         pres.setString(1, email);
-    //         pres.setString(2, password);
-    //         row = pres.executeUpdate();
-    //         rs = pres.executeQuery();
-            
-    //         exexcute_sql = pres.toString();
-    //         System.out.println(exexcute_sql);
-
-    //     } catch (SQLException e) {
-    //         /** 印出JDBC SQL指令錯誤 **/
-    //         System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
-    //     } catch (Exception e) {
-    //         /** 若錯誤則印出錯誤訊息 */
-    //         e.printStackTrace();
-    //     } finally {
-    //         /** 關閉連線並釋放所有資料庫相關之資源 **/
-    //         DBMgr.close(pres, conn);
-    //     }
-        
-    //     /** 紀錄程式結束執行時間 */
-    //     long end_time = System.nanoTime();
-    //     /** 紀錄程式執行時間 */
-    //     long duration = (end_time - start_time);
-        
-    //     /** 將SQL指令、花費時間與影響行數，封裝成JSONObject回傳 */
-    //     response.put("sql", exexcute_sql);
-    //     response.put("row", row);
-    //     response.put("time", duration);
-    //     response.put("data", jsa);
-
-    //     return response;
-    // }
+        try {
+            // 建立與資料庫的連接
+            conn = DBMgr.getConnection();
+            // 建立 SQL 查詢
+            String sql = "SELECT * FROM tbl_user WHERE user_email = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, email);
+    
+            // 執行查詢並獲取結果
+            ResultSet rs = pstmt.executeQuery();
+    
+            // 如果查詢結果不為空，將用戶資料儲存到 JSONObject
+            if (rs.next()) {
+                userData.put("user_id", rs.getInt("user_id"));
+                userData.put("user_email", rs.getString("user_email"));
+                userData.put("user_password", rs.getString("user_password"));
+                userData.put("user_name", rs.getString("user_name"));
+                userData.put("user_phone", rs.getString("user_phone"));
+                userData.put("user_update_time", rs.getTimestamp("user_update_time"));
+                userData.put("user_role", rs.getString("user_role"));
+            }
+    
+            // 關閉連接
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    
+        // 返回用戶資料
+        return userData;
+    }
 
 }
 

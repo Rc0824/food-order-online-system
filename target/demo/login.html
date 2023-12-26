@@ -15,9 +15,6 @@
             <div class="left-links">
                 <ul>
                     <li><a href="index.html">首頁</a></li>               
-                    <li><a href="#order">訂單</a></li>
-                    <li><a href="#about">關於我們</a></li>
-                    <li><a href="#contact">聯繫我們</a></li>
                 </ul>
             </div>
             <div class="right-links">
@@ -36,10 +33,10 @@
         <h2>登入</h2>
         <form id="loginForm">
             <label for="email">電子郵件：</label>
-            <input type="email" id="email" name="email" required><br><br>
+            <input type="email" id="user_email" name="email" required><br><br>
 
             <label for="password">密碼：</label>
-            <input type="password" id="password" name="password" required><br><br>
+            <input type="password" id="user_password" name="password" required><br><br>
 
             <input type="submit" value="確認登入" id="submit">
             <p id="loginMessage"></p>
@@ -60,6 +57,14 @@
         // const storedEmail = localStorage.getItem('userEmail');
         // const storedPassword = localStorage.getItem('userPassword');
 
+        $('#loginForm').on('submit', function(e) {
+            if (!submit()) {
+                e.preventDefault();
+                $('#user_email').val('');
+                $('#user_password').val('');
+            }
+        });
+
         function login() {
             var email = $('#user_email').val();
             var password = $('#user_password').val();
@@ -78,17 +83,17 @@
                         url: "api/login",
                         data: data_string,
                         crossDomain: true,
-                        cache: false,
+                        cache: true,
                         dataType: 'json',
                         timeout: 5000,
                         success: function (response) {
                             console.log('success');
                             console.log(response);
                             if (response.status == 200) {
-                                alert(responser.message);
+                                alert(response.message+response.response.user_name);
                                 window.location.href = 'index.html';
                             } else {
-                                alert("登入失敗！");
+                                alert(response.message);
                             }
                         },
                         error: function () {

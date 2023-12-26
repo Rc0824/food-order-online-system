@@ -21,7 +21,7 @@ h1 {
     background-color: #f9f9f9;
 }
 
-#clearCartBtn{
+#clearCartBtn, #payBtn{
     width: 5%; /* 讓提交按鈕填滿整個寬度 */
     padding: 10px; /* 調整按鈕的內邊距 */
     border: none; /* 移除按鈕邊框 */
@@ -36,6 +36,10 @@ h1 {
 }
 
 #clearCartBtn:hover {
+    background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
+}
+
+#payBtn:hover {
     background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
 }
 

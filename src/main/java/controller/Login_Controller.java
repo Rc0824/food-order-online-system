@@ -9,6 +9,10 @@ import app.*;
 
 public class Login_Controller extends HttpServlet{
 
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+    }
+
     
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
@@ -29,9 +33,10 @@ public class Login_Controller extends HttpServlet{
             /** 透過JsonReader物件回傳到前端（以字串方式） */
             jsr.response(resp, response);
         }
-        else if(!m.login(m)){
+        else if(m.login(m)){
 
-            JSONObject data = m.getData();
+            JSONObject data = m.getDataByEmail(email);
+            String dataString = data.toString();
 
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
             JSONObject resp = new JSONObject();
@@ -51,7 +56,7 @@ public class Login_Controller extends HttpServlet{
         }
         else{
             /** 以字串組出JSON格式之資料 */
-            String resp = "{\"status\": \'400\', \"message\": \'登入失敗\', \'response\': \'\'}";
+            String resp = "{\"status\": \'400\', \"message\": \'登入失敗，帳號或密碼錯誤\', \'response\': \'\'}";
             /** 透過JsonReader物件回傳到前端（以字串方式） */
             jsr.response(resp, response);
         }
