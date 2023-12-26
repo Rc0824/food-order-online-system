@@ -8,20 +8,11 @@ body {
     margin: 0;
 }
 
-/* @media screen and (max-hight: 900px) {
+@media screen and (max-height: 900px) {
     body {
-        padding-top: 60px; 
-        padding-bottom: 60px; 
+        padding-top: 20%; 
+        padding-bottom: 20%; 
     }
-} */
-
-@media screen and (max-height: 800px) {
-    body {
-        overflow-y: scroll;
-        padding-top: 150px; 
-        padding-bottom: 150px; 
-    }
-
 }
 
 h1 {
@@ -33,6 +24,8 @@ h1 {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    flex-direction: row; /* 将元素水平排列 */
+    gap: 20px; /* 可选：定义各个元素之间的间距 */
 }
 
 #order-details {
@@ -42,6 +35,7 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
+    display: inline-block;
 }
 
 #order-details div {
