@@ -22,7 +22,7 @@ public class Cart {
         this.id = cart_id;
         this.price = price;
         this.quantity = quantity;
-        this.subtotal = subtotal;
+        this.subtotal = this.price * this.quantity;
         getFoodFromDB(food_id);
     }
 

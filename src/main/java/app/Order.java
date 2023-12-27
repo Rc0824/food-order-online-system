@@ -48,10 +48,10 @@ public class Order {
 
     public JSONObject getOrderInfo() {
         JSONObject jso = new JSONObject();
-        jso.put("id", getId());
+        jso.put("order_id", getId());
         jso.put("order_time", getOrder_time());
-        jso.put("total", getTotal());
-        jso.put("captcha", getCaptcha());
+        jso.put("order_total", getTotal());
+        jso.put("order_captcha", getCaptcha());
         jso.put("food", getFood().getData());
         return jso;
     }
