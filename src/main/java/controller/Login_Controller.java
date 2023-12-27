@@ -4,13 +4,15 @@ import javax.servlet.http.*;
 import org.json.JSONObject;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import tools.JsonReader;
 import app.*;
 
 public class Login_Controller extends HttpServlet{
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
     }
 
     
@@ -36,7 +38,6 @@ public class Login_Controller extends HttpServlet{
         else if(m.login(m)){
 
             JSONObject data = m.getDataByEmail(email);
-            String dataString = data.toString();
 
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
             JSONObject resp = new JSONObject();
@@ -45,7 +46,10 @@ public class Login_Controller extends HttpServlet{
             resp.put("response", data);
 
             /** 建立一個新的 Cookie */
-            Cookie loginCookie = new Cookie("user_email", email);
+            String dataString = URLEncoder.encode(data.toString(), "UTF-8");
+            Cookie loginCookie = new Cookie("user_data", dataString);
+            loginCookie.setPath("/demo/");
+
             // 設定 cookie 的壽命為 30 分鐘
             loginCookie.setMaxAge(30*60);
             // 將 cookie 加入 response
