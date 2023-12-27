@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>線上訂餐系統</title>
     <link rel="stylesheet" href="styles/stylesInd.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -38,9 +39,9 @@
         <section id="menu">
             <h2>菜單</h2>
             <ul id="menuList">                
-                <li><a href="#" class="meal-link" data-meal="白飯">白飯</a></li>
+                <!-- <li><a href="#" class="meal-link" data-meal="白飯">白飯</a></li>
                 <li><a href="#" class="meal-link" data-meal="白麵">白麵</a></li>
-                <li><a href="#" class="meal-link" data-meal="餐點3">餐點 3</a></li>
+                <li><a href="#" class="meal-link" data-meal="餐點3">餐點 3</a></li> -->
             </ul>
         </section>
         
@@ -90,6 +91,7 @@
                 cartLink.style.display = 'none';
                 historyLink.style.display = 'none';
             }
+            getFood();
         };
 
         function getCookie(name) {
@@ -110,9 +112,64 @@
             }, 500); // 延遲 1 秒
         }
 
-        // 假設此函數從 localStorage 中獲取已登入用戶信息
-        function getLoggedInUser() {
-            return JSON.parse(localStorage.getItem('loggedInUser'));
+        function getFood(){
+            $.ajax({
+                type: "GET",
+                url: "api/food",
+                crossDomain: true,
+                cache: false,
+                dataType: "json",
+                timeout: 5000,
+                success: function(response){
+                    if(response.status == 200){
+                        var foodData = response.response.data;
+                        var menuList = document.getElementById('menuList');
+                        var modal = document.getElementById('mealModal');
+                        var mealTitle = document.getElementById('mealTitle');
+                        var mealDescription = document.getElementById('mealDescription');
+                        var cartSection = document.getElementById('cartSection');
+                        var closeBtn = document.getElementsByClassName('close')[0];
+
+                        foodData.forEach(function(food) {
+                            var li = document.createElement('li');
+                            var a = document.createElement('a');
+                            a.href = "#";
+                            a.className = "meal-link";
+                            a.dataset.meal = food.food_name;
+                            a.textContent = food.food_name;
+                            a.addEventListener('click', function(event) {
+                                event.preventDefault();
+                                const meal = this.dataset.meal;
+
+                                mealTitle.textContent = meal;
+                                mealDescription.textContent = `${food.food_description}`;
+
+                                var img = document.createElement('img');
+                                img.src = food.food_photo;
+                                img.width = 300; 
+                                img.height = 200; 
+                                var br = document.createElement('br');
+                                mealDescription.appendChild(br);
+                                mealDescription.appendChild(img);
+
+                                modal.style.display = 'block';
+                                cartSection.style.display = 'block'; // 顯示加入購物車部分
+                            });
+                            li.appendChild(a);
+                            menuList.appendChild(li);
+                        });
+
+
+                        closeBtn.addEventListener('click', function() {
+                            modal.style.display = 'none';
+                            cartSection.style.display = 'none'; // 隱藏加入購物車部分
+                        });
+                    }
+                },
+                error: function(response){
+                    alert("Get food data failed")
+                }
+            });
         }
 
         document.getElementById('searchInput').addEventListener('input', function() {
@@ -133,32 +190,6 @@
             }
         });
 
-        // 在你的 JavaScript 文件中添加以下代碼：
-
-        const modal = document.getElementById('mealModal');
-        const mealLinks = document.querySelectorAll('.meal-link');
-        const mealTitle = document.getElementById('mealTitle');
-        const mealDescription = document.getElementById('mealDescription');
-        const closeBtn = document.getElementsByClassName('close')[0];
-        const cartSection = document.getElementById('cartSection');
-
-        mealLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                const meal = this.dataset.meal;
-
-                mealTitle.textContent = meal;
-                mealDescription.textContent = `這是${meal}的描述。`;
-
-                modal.style.display = 'block';
-                cartSection.style.display = 'block'; // 顯示加入購物車部分
-            });
-        });
-
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-            cartSection.style.display = 'none'; // 隱藏加入購物車部分
-        });
 
         function addToCartModal() {
             const quantity = document.getElementById('quantityModal').value;
