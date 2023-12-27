@@ -25,9 +25,9 @@
                     console.log("Get member data successfully");
                     var table = '<table border="1">';
                     response.response.data.forEach(function(member) {
-                        table += '<tr><td>' + member.user_id + '</td><td>' + member.user_name + '</td><td>' + member.user_gmail + '</td><td>' 
+                        table += '<tr><td>' + member.user_id + '</td><td>' + member.user_name + '</td><td>' + member.user_email + '</td><td>' 
                         + member.user_password + '</td><td>' + member.user_phone + '</td><td>' + member.user_update_time + '</td><td>' 
-                        + member.user_role + '</td></tr>';
+                        + member.user_role + '</td></td>'+ memeber.shop_user_status + '</td><tr>' ;
                     });
                     table += '</table>';
                     document.getElementById('memberTable').innerHTML = table;

@@ -31,5 +31,15 @@
         <url-pattern>/api/food</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Order_Controller</servlet-name>
+        <servlet-class>controller.Order_Controller</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Order_Controller</servlet-name>
+        <url-pattern>/api/order</url-pattern>
+    </servlet-mapping>
+
     
 </web-app>

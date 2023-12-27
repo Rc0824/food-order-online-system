@@ -11,9 +11,35 @@
     </style>
 </head>
 <body>
+    <header>
+        <nav>
+            <ul>     
+                <li class="left-link"><a href="#home">首頁</a></li>               
+                <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+                <li class="left-link"><a id="historyLink" href="history.html">歷史訂單</a></li>
+                <li class="left-link"><a href="check.html">查看會員</a></li>
+            </ul>
+
+            <ul>
+                <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
+                <li class="right-link"><a id="registerLink" href="register.html">註冊會員</a></li>
+                <li class="right-link"><a id="loginLink" href="login.html">會員登入</a></li>
+                <li class="right-link"><div id="user-info"><!-- 這裡會顯示用戶名稱，初始為空 --></div></li> 
+                <li class="right-link"><a id="cartLink" href="cart.html">購物車</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
     <h1>歷史訂單</h1>
     <div id="order-history">
     </div>
+    
+    </main>
+    
+    <footer>
+        <p>版權所有 &copy; 2023 線上訂餐系統</p>
+    </footer>
 
     <script>
         window.onload = function() {

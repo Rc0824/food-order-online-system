@@ -81,7 +81,7 @@ public class Food {
     /**
      * 取得產品價格
      *
-     * @return double 回傳產品價格
+     * @return int 回傳產品價格
      */
 	public int getPrice() {
 		return this.price;

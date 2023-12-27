@@ -20,6 +20,7 @@ h1 {
 }
 
 .order-container {
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,7 +71,7 @@ h1 {
 
 .shop_manage_button_container {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
 }
@@ -78,8 +79,8 @@ h1 {
 #viewHistoryBtn,
 #changeStatusBtn,
 #viewFoodBtn {
-    display: block;
-    margin: 30px 5px;
+    display: inline-block;
+    margin: 0 5px; /* 调整按钮之间的间距 */
     padding: 10px 20px;
     border: none;
     border-radius: 10px;
@@ -101,8 +102,58 @@ h1 {
     background-color: #aaaaaa;
 }
 
+/* 新增的 CSS 樣式來美化開關按鈕 */
+.changeStatusBtn {
+    position: relative; width: 100px;
+    /* -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none; */
+}
+.changeStatusBtn-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+.changeStatusBtn-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+.changeStatusBtn-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.changeStatusBtn-inner:before, .changeStatusBtn-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.changeStatusBtn-inner:before {
+    content: "OPEN";
+    padding-left: 10px;
+    background-color: #34A7C1; color: #FFFFFF;
+}
+.changeStatusBtn-inner:after {
+    content: "CLOSE";
+    padding-right: 10px;
+    background-color: #EEEEEE; color: #999999;
+    text-align: right;
+}
+.changeStatusBtn-switch {
+    display: block; width: 18px; margin: 6px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 65px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.3s ease-in 0s; 
+}
+.changeStatusBtn-checkbox:checked + .changeStatusBtn-label .changeStatusBtn-inner {
+    margin-left: 0px;
+}
+.changeStatusBtn-checkbox:checked + .changeStatusBtn-label .changeStatusBtn-switch {
+    right: 0px; 
+}
+
+
 header {
-    background-color: #333;
+    background-color: #134f6c;
     color: #fff;
     padding: 20px;
     position: fixed;
@@ -152,7 +203,7 @@ nav ul li div {
 }
 
 footer {
-    background-color: #333;
+    background-color: #134f6c;
     color: #fff;
     text-align: center;
     padding: 5px;
