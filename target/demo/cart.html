@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車</title>
+    <link rel="stylesheet" href="styles/stylesCar.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>     
+                <li class="left-link"><a href="index.html">首頁</a></li>               
+                <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+                <li class="left-link"><a id="historyLink" href="history.html">歷史訂單</a></li>
+                <li class="left-link"><a href="check.html">查看會員</a></li>
+            </ul>
+
+            <ul>
+                <li class="right-link"><a id="registerLink" href="register.html">註冊會員</a></li>
+                <li class="right-link"><a id="loginLink" href="login.html">會員登入</a></li>
+                <li class="right-link"><div id="user-info"><!-- 這裡會顯示用戶名稱，初始為空 --></div></li>
+                <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
+            </ul>
+        </nav>
+    </header>
+    <h1>購物車</h1>
+
+    <div id="cart-items">
+        <!-- 這裡將顯示購物車內容 -->
+    </div>
+
+    <p id="emptyCartMessage"></p>
+
+    <button id="clearCartBtn" style="display: none;">清除購物車</button>
+
+    <p id="emptyCartMessage"></p>
+
+    <button id="payBtn" style="display: none;">確認訂單</button>
+
+    <footer>
+        <p>版權所有 &copy; 2023 XX線上訂餐系統</p>
+    </footer>
+
+    <script>
+        window.onload = function () {
+            const header = document.getElementById('header');
+            const userInfo = document.getElementById('user-info');
+
+            const registerLink = document.getElementById('registerLink');
+            const loginLink = document.getElementById('loginLink');
+            const logoutLink = document.getElementById('logoutLink');
+            
+            // 在此處檢查用戶是否已登入，並顯示相應的內容
+            const loggedInUser = getLoggedInUser(); // 假設此函數從 localStorage 中獲取已登入用戶信息
+            
+            if (loggedInUser) {
+                // 用戶已登入，顯示歡迎信息
+                userInfo.textContent = `歡迎回來，${loggedInUser.name}！`; // 顯示用戶名稱
+
+                registerLink.style.display = 'none';
+                loginLink.style.display = 'none';
+                profileLink.style.display = 'inline';
+                logoutLink.style.display = 'inline';
+                cartLink.style.display = 'inline';
+                historyLink.style.display = 'inline';
+            } else {              
+                registerLink.style.display = 'inline';
+                loginLink.style.display = 'inline';
+                profileLink.style.display = 'none';
+                logoutLink.style.display = 'none'; 
+                cartLink.style.display = 'none';
+                historyLink.style.display = 'none';
+            }
+        };
+
+        function logout() {
+            localStorage.removeItem('loggedInUser'); // 移除登入信息
+            location.reload(); // 重新加載頁面
+            window.location.href = 'index.html'; // 返回index.html
+            localStorage.removeItem('cart'); // 移除購物車內容
+        }
+
+        // 假設此函數從 localStorage 中獲取已登入用戶信息
+        function getLoggedInUser() {
+            return JSON.parse(localStorage.getItem('loggedInUser'));
+        }
+
+        document.getElementById('payBtn').addEventListener('click', function() {
+            window.location.href = 'confirmation.html'; // 導向到確認訂單頁面
+        });
+
+        // 取得購物車內容
+        let cart = localStorage.getItem('cart');
+        if (cart) {
+            cart = JSON.parse(cart);
+
+            const cartItemsDiv = document.getElementById('cart-items');
+            let totalPrice = 0;
+
+            // 顯示購物車內容並計算總價
+            cart.forEach(item => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.textContent = `餐點名稱：${item.name} - 價格：$${item.price} - 數量：${item.quantity}`;
+                cartItemsDiv.appendChild(cartItemDiv);
+
+                // 計算總價
+                totalPrice += item.price * item.quantity;
+            });
+
+            // 顯示總價
+            const totalDiv = document.createElement('div');
+            totalDiv.textContent = `總計：$${totalPrice.toFixed(2)}`;
+            cartItemsDiv.appendChild(totalDiv);
+
+            // 顯示清除購物車按鈕
+            const clearCartBtn = document.getElementById('clearCartBtn');
+            clearCartBtn.style.display = 'block';
+            
+            // 顯示前往結帳按鈕
+            const payBtn = document.getElementById('payBtn');
+            payBtn.style.display = 'block';
+
+            // 監聽清除購物車按鈕的點擊事件
+            clearCartBtn.addEventListener('click', function() {
+                // 清除購物車資料
+                localStorage.removeItem('cart');
+
+                // 重新載入或重整頁面
+                location.reload();
+            });
+        } else {
+            const emptyCartMessage = document.createElement('p');
+            emptyCartMessage.textContent = '購物車是空的';
+            document.body.appendChild(emptyCartMessage);
+        }
+    </script>
+</body>
+
+</html>
