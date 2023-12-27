@@ -69,6 +69,8 @@
     </footer>
 
     <script>
+         var sfood = [];
+
         window.onload = function () {
 
             if (document.cookie.indexOf('user_data') >= 0) { // 如果有 user_data cookie，表示用戶已登入
@@ -122,6 +124,7 @@
                 timeout: 5000,
                 success: function(response){
                     if(response.status == 200){
+                        sfood = response.response.data;
                         var foodData = response.response.data;
                         var menuList = document.getElementById('menuList');
                         var modal = document.getElementById('mealModal');
@@ -172,22 +175,42 @@
             });
         }
 
-        document.getElementById('searchInput').addEventListener('input', function() {
-            const searchValue = this.value.toLowerCase().trim(); // 取得輸入值並轉為小寫
-        
-            const menuList = document.getElementById('menuList');
-            const menuItems = menuList.getElementsByTagName('li');
-        
-            for (let i = 0; i < menuItems.length; i++) {
-                const menuItem = menuItems[i];
-                const itemText = menuItem.textContent.toLowerCase(); // 取得餐點項目的文字並轉為小寫
-        
-                if (itemText.includes(searchValue)) {
-                    menuItem.style.display = 'block'; // 顯示符合條件的餐點項目
-                } else {
-                    menuItem.style.display = 'none'; // 隱藏不符合條件的餐點項目
-                }
+        var searchInput = document.getElementById('searchInput');
+
+        searchInput.addEventListener('keyup', function(event) {
+            var searchString = event.target.value.toLowerCase();
+
+            var filteredFoods = sfood.filter(function(food) {
+                return food.food_name.toLowerCase().includes(searchString);
+            });
+
+            // 清空原有的餐點列表
+            var foodList = document.getElementById('menuList');
+            while (foodList.firstChild) {
+                foodList.removeChild(foodList.firstChild);
             }
+
+            // 顯示過濾後的餐點列表
+            filteredFoods.forEach(function(food) {
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                a.href = "#";
+                a.className = "meal-link";
+                a.dataset.meal = food.food_name;
+                a.textContent = food.food_name;
+                a.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const meal = this.dataset.meal;
+
+                    mealTitle.textContent = meal;
+                    mealDescription.textContent = `${food.food_description}`;
+
+                    var img = document.createElement('img');
+                    img.src = food.food_photo;
+                });
+                li.appendChild(a);
+                foodList.appendChild(li);
+            });
         });
 
         function addToCartModal() {
