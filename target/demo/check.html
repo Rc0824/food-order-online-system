@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>查看會員</h1>
+<button id="getAllMemberButton" onclick="getAllMember()">查看所有會員</button>
+<div id="memberTable"></div>
+</body>
+<script>
+    function getAllMember(){
+        $.ajax({
+            type: "GET",
+            url: "api/user",
+            crossDomain: true,
+            cache: false,
+            dataType: "json",
+            timeout: 5000,
+            success: function(response){
+                console.log(response.response.data);
+                if(response.status == 200){
+                    console.log("Get member data successfully");
+                    var table = '<table border="1">';
+                    response.response.data.forEach(function(member) {
+                        table += '<tr><td>' + member.user_id + '</td><td>' + member.user_name + '</td><td>' + member.user_email + '</td><td>' 
+                        + member.user_password + '</td><td>' + member.user_phone + '</td><td>' + member.user_update_time + '</td><td>' 
+                        + member.user_role + '</td></td>'+ memeber.shop_user_status + '</td><tr>' ;
+                    });
+                    table += '</table>';
+                    document.getElementById('memberTable').innerHTML = table;
+                }
+            },
+            error: function(response){
+                alert("Get member data failed")
+            }
+        });
+    }
+</script>
+</html>

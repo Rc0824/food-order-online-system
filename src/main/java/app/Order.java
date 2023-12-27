@@ -10,13 +10,20 @@ public class Order {
     private Timestamp order_time;
     private int total;
     private String captcha;
-    private ArrayList<Cart> orderlist;
+    private Food food;
+    private FoodHelper fh = FoodHelper.getHelper();
 
-    public Order(int id, Timestamp order_time, int total, String captcha) {
+    public Order(int id, Timestamp order_time, int total, String captcha, int food_id) {
         this.id = id;
         this.order_time = order_time;
         this.total = total;
         this.captcha = captcha;
+        getFoodFromDB(food_id);
+    }
+
+    public void getFoodFromDB(int food_id) {
+        String id = String.valueOf(food_id);
+        this.food = fh.getByID(id);
     }
 
     public int getId() {
@@ -35,8 +42,8 @@ public class Order {
         return captcha;
     }
 
-    public ArrayList<Cart> getOrderList() {
-        return orderlist;
+    public Food getFood() {
+        return food;
     }
 
     public JSONObject getOrderInfo() {
@@ -45,6 +52,7 @@ public class Order {
         jso.put("order_time", getOrder_time());
         jso.put("total", getTotal());
         jso.put("captcha", getCaptcha());
+        jso.put("food", getFood().getData());
         return jso;
     }
 

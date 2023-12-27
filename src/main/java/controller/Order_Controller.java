@@ -18,14 +18,11 @@ public class Order_Controller extends HttpServlet{
         /** 透過 JsonReader 類別將 Request 之 JSON 格式資料解析並取回 */
         JsonReader jsr = new JsonReader(request);
 
-        /** 取出經解析到 JsonReader 之 Request 參數 */
-        String id = jsr.getParameter("id");
-
         /** 新建一個 JSONObject 用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();
 
         /** 透過 orderHelper 物件的 getByID() 方法自資料庫取回該筆訂單之資料，回傳之資料為 JSONObject 物件 */
-        JSONObject data = oh.getFood();
+        JSONObject data = oh.getAll();
         resp.put("status", "200");
         resp.put("message", "單筆訂單資料取得成功");
         resp.put("response", data);
