@@ -14,7 +14,7 @@ body {
 }
 
 header {
-    background-color: #333;
+    background-color: #134f6c;
     color: #fff;
     padding: 20px;
     position: fixed;
@@ -57,7 +57,7 @@ nav ul li a {
 }
 
 footer {
-    background-color: #333;
+    background-color: #134f6c;
     color: #fff;
     text-align: center;
     padding: 5px;

@@ -94,5 +94,59 @@ public class FoodHelper {
 
         return response;
     }
+
+    public Food getByID(String id) {
+        /** 新建一個 Product 物件之 m 變數，用於紀錄每一位查詢回之商品資料 */
+    	Food f = null;
+        /** 記錄實際執行之SQL指令 */
+        String exexcute_sql = "";
+        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        ResultSet rs = null;
+        
+        try {
+            /** 取得資料庫之連線 */
+            conn = DBMgr.getConnection();
+            /** SQL指令 */
+            String sql = "SELECT * FROM `tbl_food` WHERE `food_id` = ?";
+            
+            /** 將參數回填至SQL指令當中 */
+            pres = conn.prepareStatement(sql);
+            pres.setString(1, id);
+            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            rs = pres.executeQuery();
+
+            /** 紀錄真實執行的SQL指令，並印出 **/
+            exexcute_sql = pres.toString();
+            System.out.println(exexcute_sql);
+            
+            /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
+            while (rs.next()) {
+                
+                /** 將 ResultSet 之資料取出 */
+                int food_id = rs.getInt("food_id");
+                String name = rs.getString("food_name");
+                int price = rs.getInt("food_price");
+                String photo = rs.getString("food_photo");
+                String description = rs.getString("food_description");
+                int shop_user_id = rs.getInt("shop_user_id");
+                
+                /** 將每一筆商品資料產生一名新Product物件 */
+                f = new Food(food_id, name, price, photo, description, shop_user_id);
+
+            }
+
+        } catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            DBMgr.close(rs, pres, conn);
+        }
+
+        return f;
+    }
     
 }
