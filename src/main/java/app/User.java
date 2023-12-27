@@ -16,10 +16,11 @@ public class User {
     private String phone;
     private String role;
     private Timestamp update_time;
+    private String shop_user_status;
     private Connection conn = null;
     private PreparedStatement pres = null;
 
-    public User(int id,String name, String email, String password, String phone, Timestamp update_time ,String role) {
+    public User(int id,String name, String email, String password, String phone, Timestamp update_time ,String role, String shop_user_status) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -27,6 +28,7 @@ public class User {
         this.phone = phone;
         this.update_time = update_time;
         this.role = role;
+        this.shop_user_status = shop_user_status;
     }
 
     public User(String email, String password, String name, String phone){
@@ -67,6 +69,10 @@ public class User {
 
     public String getRole() {
         return role;
+    }
+
+    public String getShop_user_status() {
+        return shop_user_status;
     }
 
     public boolean checkDuplicate(Member m){
@@ -359,6 +365,7 @@ public class User {
                 userData.put("user_phone", rs.getString("user_phone"));
                 userData.put("user_update_time", rs.getTimestamp("user_update_time"));
                 userData.put("user_role", rs.getString("user_role"));
+                userData.put("shop_user_status", rs.getString("shop_user_status"));
             }
     
             // 關閉連接

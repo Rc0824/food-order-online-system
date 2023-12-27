@@ -69,19 +69,12 @@
 
     <script>
         window.onload = function () {
-            const header = document.getElementById('header');
-            const userInfo = document.getElementById('user-info');
 
-            const registerLink = document.getElementById('registerLink');
-            const loginLink = document.getElementById('loginLink');
-            const logoutLink = document.getElementById('logoutLink');
-            
-            // 在此處檢查用戶是否已登入，並顯示相應的內容
-            const loggedInUser = getLoggedInUser(); // 假設此函數從 localStorage 中獲取已登入用戶信息
-            
-            if (loggedInUser) {
+            if (document.cookie.indexOf('user_data') >= 0) { // 如果有 user_data cookie，表示用戶已登入
+                var userData = JSON.parse(decodeURIComponent(getCookie("user_data")));
+                var userName = userData.user_name;
                 // 用戶已登入，顯示歡迎信息
-                userInfo.textContent = `歡迎回來，${loggedInUser.name}！`; // 顯示用戶名稱
+                userInfo.textContent = `歡迎回來，${userName}！`; // 顯示用戶名稱
 
                 registerLink.style.display = 'none';
                 loginLink.style.display = 'none';
@@ -99,9 +92,22 @@
             }
         };
 
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
         function logout() {
-            localStorage.removeItem('loggedInUser'); // 移除登入信息
-            location.reload(); // 重新加載頁面
+            document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/demo/;";
+            setTimeout(function() {
+                location.reload(); // 重新加載頁面
+            }, 500); // 延遲 1 秒
         }
 
         // 假設此函數從 localStorage 中獲取已登入用戶信息

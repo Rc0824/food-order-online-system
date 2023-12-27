@@ -28,10 +28,6 @@
     </div>
 
     <div id="profile">
-        <h2>會員資料</h2>
-        <div id="userInfo">0
-            <!-- 用戶資料將會動態顯示在這裡 -->
-        </div>
 
         <h3>編輯會員資料</h3>
         <form id="editForm">
@@ -71,9 +67,6 @@
         }
 
         function getMemberData(){
-            console.log("getMemberData");
-            console.log(document.cookie);
-            const userInfoDiv = document.getElementById('userInfo');
             var userData = JSON.parse(decodeURIComponent(getCookie("user_data")));
             var userEmail = userData.user_email;
             var userPhone = userData.user_phone;
@@ -125,6 +118,9 @@
                         $('#flashMessage').show();
                         if(response.status == 200){
                             alert(response.message);
+                            document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/demo/;";
+                            var dataString = encodeURIComponent(JSON.stringify(response.response));
+                            document.cookie = "user_data=" + dataString + "; path=/demo/; max-age=" + (30 * 60) + ";";
                             location.reload(); // 重新加載頁面
                         }
                     },
@@ -151,9 +147,10 @@
         });
 
         function logout() {
-
-            location.reload(); // 重新加載頁面
-            window.location.href = 'index.html'; // 返回index.html
+            document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/demo/;";
+            setTimeout(function() {
+                location.reload(); // 重新加載頁面
+            }, 500); // 延遲 1 秒
         }
 
     </script>

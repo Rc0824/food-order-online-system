@@ -99,10 +99,10 @@
         };
 
         function logout() {
-            localStorage.removeItem('loggedInUser'); // 移除登入信息
-            location.reload(); // 重新加載頁面
-            window.location.href = 'index.html'; // 返回index.html
-            localStorage.removeItem('cart'); // 移除購物車內容
+            document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/demo/;";
+            setTimeout(function() {
+                location.reload(); // 重新加載頁面
+            }, 500); // 延遲 1 秒
         }
 
         document.addEventListener("DOMContentLoaded", function() {

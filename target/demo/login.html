@@ -52,10 +52,18 @@
         function goBack() {
             window.location.href = 'index.html'; // 返回index.html
         }
-        // const storedName = localStorage.getItem('userName');
-        // const storedPhone = localStorage.getItem('userPhone');
-        // const storedEmail = localStorage.getItem('userEmail');
-        // const storedPassword = localStorage.getItem('userPassword');
+        
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
 
         $('#loginForm').on('submit', function(e) {
             if (!submit()) {
@@ -91,7 +99,15 @@
                             console.log(response);
                             if (response.status == 200) {
                                 alert(response.message);
-                                window.location.href = 'index.html';
+                                var userData = JSON.parse(decodeURIComponent(getCookie("user_data")));
+                                var userRole = userData.user_role;
+                                if (userRole == "member") {
+                                    window.location.href = 'index.html';
+                                } else if (userRole == "shop"){
+                                    window.location.href = 'index_shop.html';
+                                } else if (userRole == "admin"){
+                                    window.location.href = 'check.html';
+                                }
                             } else {
                                 alert(response.message);
                             }

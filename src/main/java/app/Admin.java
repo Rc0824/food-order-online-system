@@ -12,11 +12,11 @@ public class Admin extends User{
     private PreparedStatement pres = null;
 
     public Admin() {
-        super(0,"", "", "", "",null ,"");
+        super(0,"", "", "", "",null ,"","");
     }
 
-    public Admin(int id , String name, String email, String password, String phone,Timestamp update_time ,String role) {
-        super(id,name, email, password, phone,update_time ,role);
+    public Admin(int id , String name, String email, String password, String phone,Timestamp update_time ,String role,String shop_user_status) {
+        super(id,name, email, password, phone,update_time ,role,shop_user_status);
     }
     
     public JSONObject getAll() {
@@ -61,9 +61,10 @@ public class Admin extends User{
                 String phone = rs.getString("user_phone");
                 Timestamp update_time = rs.getTimestamp("user_update_time");
                 String role = rs.getString("user_role");
+                String shop_user_status = rs.getString("shop_user_status");
                 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member(id, name, email, password, phone, update_time, role);
+                m = new Member(id, name, email, password, phone, update_time, role,shop_user_status);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }

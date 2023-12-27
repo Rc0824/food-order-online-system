@@ -17,8 +17,8 @@ public class Member extends User{
     private Connection conn = null;
     private PreparedStatement pres = null;
 
-    public Member(int id , String name, String email, String password, String phone, Timestamp update_time ,String role) {
-        super(id,name, email, password, phone, update_time ,role);
+    public Member(int id , String name, String email, String password, String phone, Timestamp update_time ,String role, String shop_user_status) {
+        super(id,name, email, password, phone, update_time ,role,shop_user_status);
     }
     
     public Member(String email, String password, String name, String phone){
@@ -30,7 +30,7 @@ public class Member extends User{
     }
 
     public Member(){
-        super(0,"", "", "", "",null ,"");
+        super(0,"", "", "", "",null ,"","");
     }
 
     public JSONObject getData() {
@@ -43,6 +43,8 @@ public class Member extends User{
         jso.put("user_phone", getPhone());
         jso.put("user_update_time", getUpdate_time());
         jso.put("user_role", getRole());
+        jso.put("shop_user_status", getShop_user_status());
+
         return jso;
     }
 
