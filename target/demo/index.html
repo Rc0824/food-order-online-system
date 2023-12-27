@@ -190,12 +190,11 @@
             }
         });
 
-
         function addToCartModal() {
             const quantity = document.getElementById('quantityModal').value;
             const itemName = mealTitle.textContent; // 取得餐點名稱
             const itemPrice = 15; // 餐點價格，可以根據實際情況修改
-
+        
             // 在這裡可以把餐點加入購物車，例如使用 localStorage 存儲購物車信息
             // 這裡僅為示例，具體的實現需要與後端交互或使用資料庫
             const cartItem = {
@@ -203,7 +202,7 @@
                 price: itemPrice,
                 quantity: parseInt(quantity)
             };
-
+        
             // 範例：將餐點添加至購物車（使用 localStorage）
             let cart = localStorage.getItem('cart');
             if (!cart) {
@@ -213,7 +212,7 @@
             }
             cart.push(cartItem);
             localStorage.setItem('cart', JSON.stringify(cart));
-
+        
             alert('已加入購物車');
         }
     </script>
