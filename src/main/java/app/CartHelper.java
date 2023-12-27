@@ -39,7 +39,7 @@ public class CartHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `tbl_cart`, `tbl_cart_food_connect`, `tbl_food` WHERE `tbl_cart`.`cart_id` = `tbl_cart_food_connect`.`cart_id_con` AND `tbl_cart_food_connect`.`food_id_con` = `tbl_food`.`food_id`";
+            String sql = "SELECT * FROM `tbl_cart` JOIN `tbl_cart_food_connect` ON `tbl_cart`.`cart_id` = `tbl_cart_food_connect`.`cart_id_con` JOIN `tbl_food` ON `tbl_cart_food_connect`.`food_id_con` = `tbl_food`.`food_id`";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -61,7 +61,7 @@ public class CartHelper {
                 int food_id = rs.getInt("food_id_con");
                 int price = rs.getInt("food_price");
                 int quantity = rs.getInt("food_num");
-                int subtotal = rs.getInt("cart_total");
+                int subtotal = rs.getInt("cart_note");
                 
                 /** 將每一筆商品資料產生一名新Product物件 */
                 c = new Cart(id, food_id, price, quantity, subtotal);
