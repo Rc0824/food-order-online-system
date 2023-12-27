@@ -1,4 +1,5 @@
 controller\Order_Controller.class
+app\OrderHelper.class
 app\Order.class
 controller\User_Controller.class
 tools\JsonReader.class
