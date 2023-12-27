@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>線上訂餐系統</title>
     <link rel="stylesheet" href="styles/stylesPro.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -28,7 +29,7 @@
 
     <div id="profile">
         <h2>會員資料</h2>
-        <div id="userInfo">
+        <div id="userInfo">0
             <!-- 用戶資料將會動態顯示在這裡 -->
         </div>
 
@@ -57,64 +58,104 @@
     </footer>
 
     <script>
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+        function getMemberData(){
+            console.log("getMemberData");
+            console.log(document.cookie);
+            const userInfoDiv = document.getElementById('userInfo');
+            var userData = JSON.parse(decodeURIComponent(getCookie("user_data")));
+            var userEmail = userData.user_email;
+            var userPhone = userData.user_phone;
+            var userName = userData.user_name;
+            var userPassword = userData.user_password;
+            console.log(userEmail, userPhone, userName, userPassword);
+            if (userEmail != null && userPhone != null && userName != null && userPassword != null) {
+                document.getElementById('name').value = userName;
+                document.getElementById('email').value = userEmail;
+                document.getElementById('phone').value = userPhone;
+                document.getElementById('password').value = userPassword;
+            }
+        }
+
+        function updateMember() {
+            var name = $('#name').val();
+            var email = $('#email').val();
+            var password = $('#password').val();
+            var phone = $('#phone').val();
+
+            var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+            if(!password_rule.test(password)) {
+                alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
+            }
+            else {
+                 // 將資料組成JSON格式
+                 var data_object = {
+                    "user_name": name,
+                    "user_email": email,
+                    "user_password": password,
+                    "user_phone" : phone
+                };
+
+                // 將JSON格式轉換成字串
+                var data_string = JSON.stringify(data_object);
+
+                // 發出POST的PUT請求
+                $.ajax({
+                    type: "PUT",
+                    url: "api/user",
+                    data: data_string,
+                    crossDomain: true,
+                    cache: false,
+                    dataType: 'json',
+                    timeout: 5000,
+                    success: function (response) {
+                        $('#flashMessage').html(response.message);
+                        $('#flashMessage').show();
+                        if(response.status == 200){
+                            alert(response.message);
+                            location.reload(); // 重新加載頁面
+                        }
+                    },
+                    error: function () {
+                        alert("無法連線到伺服器！");
+                    }
+                });
+            }
+        }
+
         function goBack() {
             window.location.href = 'index.html'; // 返回index.html
         }
 
         window.onload = function () {
-            const userInfo = getLoggedInUser(); // 假設此函數從 localStorage 中獲取已登入用戶信息
-            displayUserInfo(userInfo); // 顯示用戶資料
+            getMemberData(); // 顯示用戶資料
         };
 
-        function displayUserInfo(userInfo) {
-            const userInfoDiv = document.getElementById('userInfo');
-            userInfoDiv.innerHTML = `
-                <p><strong>姓名：</strong> ${userInfo.name}</p>
-                <p><strong>電子郵件：</strong> ${userInfo.email}</p>
-                <p><strong>電話：</strong> ${userInfo.phone}</p>
-                <p><strong>密碼：</strong> ********</p>
-            `;
-
-            // 將用戶資料填入編輯表單
-            document.getElementById('name').value = userInfo.name;
-            document.getElementById('email').value = userInfo.email;
-            document.getElementById('phone').value = userInfo.phone;
-            document.getElementById('password').value = userInfo.password;
-        }
 
         // 提交編輯表單時的操作（保存修改後的用戶資料）
         document.getElementById('editForm').addEventListener('submit', function (event) {
             event.preventDefault(); // 防止表單提交後刷新頁面，這裡只是示例，實際操作需要與後端交互
-
-            const updatedInfo = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                password: document.getElementById('password').value
-            };
-            
-            // 此處應該與後端交互，更新用戶資料
-
-            // 更新用戶資料後，重新顯示用戶資料
-            displayUserInfo(updatedInfo);
-            saveToLocalStorage(updatedInfo);
-            alert('資料已更新！');
+            updateMember(); // 更新用戶資料
         });
 
         function logout() {
-            localStorage.removeItem('loggedInUser'); // 移除登入信息
+
             location.reload(); // 重新加載頁面
             window.location.href = 'index.html'; // 返回index.html
         }
 
-        // 假設此函數從 localStorage 中獲取已登入用戶信息
-        function getLoggedInUser() {
-            return JSON.parse(localStorage.getItem('loggedInUser'));
-        }
-
-        function saveToLocalStorage(updatedInfo) {
-            localStorage.setItem('loggedInUser', JSON.stringify(updatedInfo));
-        }
     </script>
 </body>
 

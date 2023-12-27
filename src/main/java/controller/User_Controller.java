@@ -3,9 +3,12 @@ package controller;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Cookie;
 import org.json.JSONObject;
 import javax.servlet.ServletException;
 import java.io.IOException;
+import java.net.URLEncoder;
+
 import tools.JsonReader;
 import app.*;
 
@@ -100,7 +103,6 @@ public class User_Controller extends HttpServlet {
         JSONObject jso = jsr.getObject();
         
         /** 取出經解析到JSONObject之Request參數 */
-        int id = jso.getInt("user_id");
         String email = jso.getString("user_email");
         String password = jso.getString("user_password");
         String name = jso.getString("user_name");
@@ -110,7 +112,7 @@ public class User_Controller extends HttpServlet {
         Member m = new Member(email, password, name, phone);
         
         JSONObject data = new JSONObject(); // Initialize the data variable
-        if(id != 0) {
+        if(email != null) {
             data = m.update(m);
         }
         /** 透過Member物件的update()方法至資料庫更新該名會員資料，回傳之資料為JSONObject物件 */
