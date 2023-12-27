@@ -20,4 +20,16 @@
         <servlet-name>Login_Controller</servlet-name>
         <url-pattern>/api/login</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Food_Controller</servlet-name>
+        <servlet-class>controller.Food_Controller</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Food_Controller</servlet-name>
+        <url-pattern>/api/food</url-pattern>
+    </servlet-mapping>
+
+    
 </web-app>
