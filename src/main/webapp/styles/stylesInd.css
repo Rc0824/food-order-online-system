@@ -117,3 +117,40 @@ footer {
     text-decoration: none;
     cursor: pointer;
 }
+
+.meal-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* 餐點之間的間距 */
+}
+
+.meal-item {
+    width: 300px; /* 每個餐點容器的寬度 */
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+.meal-item img {
+    width: 100%; /* 圖片寬度填滿容器 */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.btn{
+    width: 100%; /* 讓提交按鈕填滿整個寬度 */
+    padding: 10px; /* 調整按鈕的內邊距 */
+    border: none; /* 移除按鈕邊框 */
+    background-color: #c7c7c7; /* 按鈕背景顏色為灰色 */
+    color: black; /* 文字顏色 */
+    border-radius: 10px; /* 圓角 */
+    cursor: pointer; /* 鼠標指針 */
+    transition: background-color 0.3s; /* 平滑過渡效果 */
+
+    font-weight: bold; /* 變為粗體 */
+    font-size: 14px; /* 調大文字大小 */
+}
+
+.btn:hover {
+    background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
+}
