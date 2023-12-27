@@ -1,3 +1,4 @@
+controller\Cart_Controller.class
 controller\Order_Controller.class
 app\Order.class
 controller\User_Controller.class
@@ -9,6 +10,7 @@ app\Admin.class
 app\User.class
 app\Shop.class
 app\Member.class
+app\CartHelper.class
 util\DBMgr.class
 app\Food.class
 controller\Login_Controller.class
