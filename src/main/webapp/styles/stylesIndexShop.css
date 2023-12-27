@@ -10,8 +10,8 @@ body {
 
 @media screen and (max-height: 900px) {
     body {
-        padding-top: 20%; 
-        padding-bottom: 20%; 
+        padding-top: 20%;
+        padding-bottom: 20%;
     }
 }
 
@@ -24,8 +24,10 @@ h1 {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    flex-direction: row; /* 将元素水平排列 */
-    gap: 20px; /* 可选：定义各个元素之间的间距 */
+    flex-direction: row;
+    /* 将元素水平排列 */
+    gap: 20px;
+    /* 可选：定义各个元素之间的间距 */
 }
 
 #order-details {
@@ -49,7 +51,8 @@ h1 {
     flex-wrap: wrap;
 }
 
-#deleteOrderBtn, #checkOrderBtn {
+#deleteOrderBtn,
+#finishOrderBtn {
     display: block;
     margin: 20px auto;
     padding: 10px 20px;
@@ -58,9 +61,11 @@ h1 {
     background-color: #c7c7c7;
     color: black;
     font-size: 14px;
-    font-weight: bold; /* 變為粗體 */
+    font-weight: bold;
+    /* 變為粗體 */
     cursor: pointer;
-    transition: background-color 0.3s; /* 平滑過渡效果 */
+    transition: background-color 0.3s;
+    /* 平滑過渡效果 */
 }
 
 .shop_manage_button_container {
@@ -70,7 +75,9 @@ h1 {
     flex-wrap: wrap;
 }
 
-#viewHistoryBtn, #changeStatusBtn, #viewFoodBtn {
+#viewHistoryBtn,
+#changeStatusBtn,
+#viewFoodBtn {
     display: block;
     margin: 30px 5px;
     padding: 10px 20px;
@@ -79,12 +86,18 @@ h1 {
     background-color: #c7c7c7;
     color: black;
     font-size: 14px;
-    font-weight: bold; /* 變為粗體 */
+    font-weight: bold;
+    /* 變為粗體 */
     cursor: pointer;
-    transition: background-color 0.3s; /* 平滑過渡效果 */
+    transition: background-color 0.3s;
+    /* 平滑過渡效果 */
 }
 
-#deleteOrderBtn:hover, #checkOrderBtn:hover , #viewHistoryBtn:hover, #changeStatusBtn:hover, #viewFoodBtn:hover {
+#deleteOrderBtn:hover,
+#finishOrderBtn:hover,
+#viewHistoryBtn:hover,
+#changeStatusBtn:hover,
+#viewFoodBtn:hover {
     background-color: #aaaaaa;
 }
 
@@ -133,7 +146,7 @@ nav ul li a {
     text-decoration: none;
 }
 
-nav ul li div{
+nav ul li div {
     display: inline;
     padding-right: auto;
 }
