@@ -27,15 +27,7 @@
                     response.response.data.forEach(function(member) {
                         table += '<tr><td>' + member.user_id + '</td><td>' + member.user_name + '</td><td>' + member.user_email + '</td><td>' 
                         + member.user_password + '</td><td>' + member.user_phone + '</td><td>' + member.user_update_time + '</td><td>' 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        + member.user_role + '</td></td>'+ member.shop_user_status + '</td><tr>' ;
-=======
                         + member.user_role + '</td><td>'+ member.shop_user_status + '</td><tr>' ;
->>>>>>> 1ce50ddcbaff3ede7358b72fd049662fda3c56a4
-=======
-                        + member.user_role + '</td><td>'+ member.shop_user_status + '</td><tr>' ;
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
                     });
                     table += '</table>';
                     document.getElementById('memberTable').innerHTML = table;
