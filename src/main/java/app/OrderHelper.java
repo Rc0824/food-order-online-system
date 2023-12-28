@@ -158,5 +158,104 @@ public class OrderHelper {
         return o;
     }
 
+    public JSONObject addOrder(String order_time,int user_id,int total,String captcha,int food_id, int food_num){
+        JSONObject jso = new JSONObject();
+        try {
+            // 建立與資料庫的連接
+            conn = DBMgr.getConnection();
+
+            //if has same captcha and order_total, do not add new order
+            String sql = "SELECT * FROM `db_sa`.`tbl_order` WHERE `order_total` = ? AND `order_captcha` = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, total);
+            pstmt.setString(2, captcha);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            int order_id=0;
+
+            while (rs.next()){
+                order_id = 1;
+                order_id = rs.getInt("order_id");
+            }
+
+            rs.close();
+            pstmt.close();
+
+            if(order_id==0){
+                // 建立 SQL 查詢
+                sql = "INSERT INTO `db_sa`.`tbl_order`(`order_datetime`, `order_total`, `order_captcha`) VALUES (?, ?, ?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, order_time);
+                pstmt.setInt(2, total);
+                pstmt.setString(3, captcha);
+        
+                // 執行新增資料之SQL指令並記錄影響之行數
+                int rows = pstmt.executeUpdate();
+
+                jso.put("order_datetime", order_time);
+                jso.put("order_total", total);
+                jso.put("order_captcha", captcha);
+        
+                // 關閉連線
+                pstmt.close();
+
+                sql = "SELECT * FROM `db_sa`.`tbl_order` WHERE `order_total` = ? AND `order_captcha` = ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, total);
+                pstmt.setString(2, captcha);
+
+                rs = pstmt.executeQuery();
+
+                order_id=0;
+
+                while (rs.next()){
+                    order_id = rs.getInt("order_id");
+                }
+
+                rs.close();
+                pstmt.close();
+            }
+            
+            sql = "INSERT INTO `db_sa`.`tbl_ordr_food_connect`(`order_id_con`, `food_id_con`, `food_num`, `cart_note`) VALUES (?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, order_id);
+            pstmt.setInt(2, food_id);
+            pstmt.setInt(3, food_num);
+            pstmt.setInt(4, total);
+            int rows = pstmt.executeUpdate();
+            pstmt.close();
+
+            sql = "INSERT INTO `db_sa`.`tbl_user_order_connect`(`member_user_id_con`, `shop_user_id_con`, `order_id_con`) VALUES (?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, user_id);
+            pstmt.setInt(2, 1005);
+            pstmt.setInt(3, order_id);
+            rows = pstmt.executeUpdate();
+            pstmt.close();
+            
+        
+            // 回傳SQL執行結果
+            jso.put("result", "新增成功");
+        } catch (SQLException e) {
+            // 印出JDBC SQL指令錯誤
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+    
+            // 回傳SQL錯誤訊息
+            jso.put("result", "新增失敗");
+            jso.put("error_message", e.getMessage());
+        } catch (Exception e) {
+            // 若錯誤則印出錯誤訊息
+            e.printStackTrace();
+    
+            // 回傳錯誤訊息
+            jso.put("result", "新增失敗");
+            jso.put("error_message", e.getMessage());
+        } 
+        
+        return jso;
+    }
+    
+
 
 }

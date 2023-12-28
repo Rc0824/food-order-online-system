@@ -59,6 +59,7 @@ public class Cart {
         JSONObject jso = new JSONObject();
         jso.put("cart_id", getId());
         jso.put("food", getFood().getName());
+        jso.put("food_id", getFood().getID());
         jso.put("price", getPrice());
         jso.put("quantity", getQuantity());
         jso.put("subtotal", getSubtotal());
