@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理員管理系統</title>
+    <link rel="stylesheet" href="styles/stylesIndAdm.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    
+    <header>
+        <nav>
+            <ul>
+                <li class="left-link"><a href="index_shop.html">首頁</a></li>
+                <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+            </ul>
+            <ul>
+                <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li>
+                <li class="right-link">
+                    <div id="user-info">
+                        <!-- 這裡會顯示用戶名稱，初始為空 -->
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+    <h1>管理使用者</h1>
+    <div class="list-container">
+        <div id="userList" class="list">
+
+        </div>
+    </div>
+    
+    <h1>管理店家</h1>
+    <div class="list-container">    
+        <div id="shopList" class="list">
+            <!-- 店家列表內容 -->
+            <!-- <div class="shop">
+                <span>Jane@example.com</span>
+                <button class="editBtn"><img src="pics/edit_icon.png" alt="編輯"></button>
+                <a href="index_shop.html" target="_blank"><button class="goShopBtn"><img src="pics/go_icon.png" alt="前往店家"></button></a>
+            </div> -->
+        </div>
+    </div>
+
+    <h1>檢視歷史訂單</h1>
+    <div class="list-container">    
+        <div id="userHistoryList" class="list">
+            <!-- 店家列表內容 -->
+            <!-- <div class="userHistory">
+                <span>user_id or gmail</span>
+                <button class="viewHistoryBtn"><img src="pics/find_icon.png" alt="檢視歷史訂單"></button>
+            </div> -->
+        </div>
+    </div>
+    </main>
+    
+    <!-- Modal for Editing User -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>編輯用戶</h2>
+            <form id="editForm">
+                <label for="name">姓名:</label>
+                <input type="text" id="name" name="name">
+    
+                <label for="email">電子郵件:</label>
+                <input type="email" id="email" name="email">
+    
+                <label for="phone">電話:</label>
+                <input type="tel" id="phone" name="phone">
+    
+                <label for="password">密碼:</label>
+                <input type="password" id="password" name="password">
+    
+                <button type="submit" id="saveBtn">確認修改</button>
+                <button id="deleteBtn">刪除會員</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>版權所有 &copy; 2023 XX線上訂餐系統</p>
+    </footer>
+
+    <script>
+
+        window.onload = function(){
+            getMember();
+            getHistoryOrder();
+        }
+
+        function getMember(){
+                $.ajax({
+                    type: "GET",
+                    url: "api/user",
+                    crossDomain: true,
+                    cache: false,
+                    dataType: "json",
+                    timeout: 5000,
+                    success: function(response){
+                        console.log(response.response.data);
+                        if(response.status == 200){
+                                var userList = document.getElementById('userList');
+                                var shopList = document.getElementById('shopList');
+                                // 顯示新的使用者列表
+                                response.response.data.forEach(function(user) {
+                                    if (user.user_role === "member") {
+                                    var userDiv = document.createElement('div');
+                                    userDiv.className = "user";
+
+                                    var span = document.createElement('span');
+                                    span.textContent = user.user_email;
+                                    userDiv.appendChild(span);
+
+                                    var editBtn = document.createElement('button');
+                                    editBtn.className = "editBtn";
+                                    editBtn.addEventListener('click', function() {
+                                        // 在modal中填入用戶資料
+                                        const modal = document.getElementById('editModal');
+                                        modal.style.display = 'block'; // 顯示modal
+                                        document.getElementById('name').value = user.user_name;
+                                        document.getElementById('email').value = user.user_email;
+                                        document.getElementById('phone').value = user.user_phone;
+                                        document.getElementById('password').value = user.user_password;
+                                        document.getElementById('deleteBtn').addEventListener('click', function(event) {
+                                            var id = user.user_id;
+                                            var data_object = {
+                                                "user_id": id
+                                            };
+                                            event.preventDefault(); // 阻止表單提交
+                                                $.ajax({
+                                                    type: "DELETE",
+                                                    url: "api/user",
+                                                    data:  JSON.stringify(data_object),
+                                                    crossDomain: true,
+                                                    cache: false,
+                                                    dataType: "json",
+                                                    timeout: 5000,
+                                                    success: function(response){
+                                                        console.log(response.response.data);
+                                                        if(response.status == 200){
+                                                            alert(response.message);
+                                                            location.reload(); // 重新加載頁面
+                                                        }},
+                                                    error: function(response){
+                                                        alert("delete member data failed")
+                                                    }
+                                                });
+                                            });
+                                        });
+
+                                    var img = document.createElement('img');
+                                    img.src = "pics/edit_icon.png";
+                                    img.alt = "編輯";
+                                    editBtn.appendChild(img);
+
+                                    userDiv.appendChild(editBtn);
+
+                                    userList.appendChild(userDiv);
+
+                                    }
+                                    else if (user.user_role === "shop") {
+                                        var shopDiv = document.createElement('div');
+                                        shopDiv.className = "shop";
+
+                                        var span = document.createElement('span');
+                                        span.textContent = user.user_email;
+                                        shopDiv.appendChild(span);
+
+                                        var editBtn = document.createElement('button');
+                                        editBtn.className = "editBtn";
+                                        editBtn.addEventListener('click', function() {
+                                            // 在modal中填入用戶資料
+                                            const modal = document.getElementById('editModal');
+                                            modal.style.display = 'block'; // 顯示modal
+                                            document.getElementById('name').value = user.user_name;
+                                            document.getElementById('email').value = user.user_email;
+                                            document.getElementById('phone').value = user.user_phone;
+                                            document.getElementById('password').value = user.user_password;
+                                            document.getElementById('deleteBtn').addEventListener('click', function(event) {
+                                            var id = user.user_id;
+                                            var data_object = {
+                                                "user_id": id
+                                            };
+                                            event.preventDefault(); // 阻止表單提交
+                                                $.ajax({
+                                                    type: "DELETE",
+                                                    url: "api/user",
+                                                    data:  JSON.stringify(data_object),
+                                                    crossDomain: true,
+                                                    cache: false,
+                                                    dataType: "json",
+                                                    timeout: 5000,
+                                                    success: function(response){
+                                                        console.log(response.response.data);
+                                                        if(response.status == 200){
+                                                            alert(response.message);
+                                                            location.reload(); // 重新加載頁面
+                                                        }},
+                                                    error: function(response){
+                                                        alert("delete member data failed")
+                                                    }
+                                                });
+                                            });
+                                        });
+
+                                        var img = document.createElement('img');
+                                        img.src = "pics/edit_icon.png";
+                                        img.alt = "編輯";
+                                        editBtn.appendChild(img);
+
+                                        shopDiv.appendChild(editBtn);
+
+                                        var goShopBtn = document.createElement('button');
+                                        goShopBtn.className = "goShopBtn";
+                                        goShopBtn.addEventListener('click', function() {
+                                            window.open("index_shop.html");
+                                        });
+
+                                        var img = document.createElement('img');
+                                        img.src = "pics/go_icon.png";
+                                        img.alt = "前往店家";
+                                        goShopBtn.appendChild(img);
+
+                                        shopDiv.appendChild(goShopBtn);
+
+                                        shopList.appendChild(shopDiv);
+                                    }
+                                });
+                        }},
+                    error: function(response){
+                        alert("Get member data failed")
+                    }
+                });
+            }
+
+        function editMember(){
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var phone = document.getElementById('phone').value;
+
+            var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+            if(!password_rule.test(password)) {
+                alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
+            }
+            else {
+                // 將資料組成JSON格式
+                var data_object = {
+                    "user_name": name,
+                    "user_email": email,
+                    "user_password": password,
+                    "user_phone" : phone
+                };
+
+                // 將JSON格式轉換成字串
+                var data_string = JSON.stringify(data_object);
+                $.ajax({
+                    type: "PUT",
+                    url: "api/user",
+                    data: data_string,
+                    crossDomain: true,
+                    cache: false,
+                    dataType: "json",
+                    timeout: 5000,
+                    success: function(response){
+                        console.log(response.response.data);
+                        if(response.status == 200){
+                            alert(response.message);
+                            location.reload(); // 重新加載頁面
+                        }},
+                    error: function(response){
+                        alert("update member data failed")
+                    }
+                });
+            }
+        }
+
+        document.getElementById('saveBtn').addEventListener('click', function(event) {
+            event.preventDefault(); // 阻止表單提交
+            editMember();
+        });
+
+        
+        function deleteMember(){
+            
+        }
+
+
+        function getHistoryOrder(){
+            Promise.all([
+                $.ajax({ type: "GET" ,url: "api/user", dataType: "json" , timeout: 5000, cached: false, crossDomain: true}),
+                $.ajax({ type: "GET", url: "api/order", dataType: "json",timeout: 5000, cached: false, crossDomain: true})
+            ]).then(function(responses) {
+                var userResponse = responses[0];
+                var orderResponse = responses[1];
+
+                if (userResponse.status == 200 && orderResponse.status == 200) {
+                    var userHistoryList = document.getElementById('userHistoryList');
+                    // 顯示新的使用者列表
+                    userResponse.response.data.forEach(function(user) {
+                        if (user.user_role === "member") {
+                        var userHistoryDiv = document.createElement('div');
+                        userHistoryDiv.className = "userHistory";
+
+                        var span = document.createElement('span');
+                        span.textContent = user.user_email;
+                        userHistoryDiv.appendChild(span);
+
+                        var viewHistoryBtn = document.createElement('button');
+                        viewHistoryBtn.className = "viewHistoryBtn";
+
+                        var img = document.createElement('img');
+                        img.src = "pics/find_icon.png";
+                        img.alt = "檢視歷史訂單";
+                        viewHistoryBtn.appendChild(img);
+
+                        userHistoryDiv.appendChild(viewHistoryBtn);
+
+                        userHistoryList.appendChild(userHistoryDiv);
+                        }
+                    });
+                }
+        
+            }).catch(function(error) {
+                console.error("One or more requests failed: ", error);
+            });
+        }
+
+
+        // 登出
+        function logout() {
+            document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/demo/;";
+            setTimeout(function() {
+                location.reload(); // 重新加載頁面
+            }, 500); // 延遲 1 秒
+        }
+        
+        
+
+        const modal = document.getElementById('editModal');
+        const closeBtn = document.getElementsByClassName('close')[0];
+        
+        // 點擊 .close 元素時，關閉 modal
+        closeBtn.onclick = function() {
+          modal.style.display = 'none';
+        };
+        
+        // 點擊 modal 外部區域時，關閉 modal
+        window.onclick = function(event) {
+          if (event.target === modal) {
+            modal.style.display = 'none';
+          }
+        };
+        
+
+        
+    </script>
+</body>
+
+</html>

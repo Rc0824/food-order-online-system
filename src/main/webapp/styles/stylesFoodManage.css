@@ -154,7 +154,9 @@ label {
 input[type="photo"],
 input[type="name"],
 input[type="price"],
-input[type="description"] {
+input[type="description"],
+input[type="text"],
+input[type="int"] {
     width: 100%;
     padding: 8px;
     margin: 4px 0;
@@ -163,7 +165,8 @@ input[type="description"] {
     border-radius: 4px;
 }
 
-button[id="saveBtn"]{
+
+button[type="submit"]{
     width: 100%; /* 讓提交按鈕填滿整個寬度 */
     padding: 10px; /* 調整按鈕的內邊距 */
     border: none; /* 移除按鈕邊框 */
@@ -177,7 +180,7 @@ button[id="saveBtn"]{
     font-size: 14px; /* 調大文字大小 */
 }
 
-button[id="saveBtn"]:hover {
+button[type="submit"]:hover {
     background-color: #aaaaaa;
 }
 
