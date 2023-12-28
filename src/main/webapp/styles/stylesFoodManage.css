@@ -154,7 +154,9 @@ label {
 input[type="photo"],
 input[type="name"],
 input[type="price"],
-input[type="description"] {
+input[type="description"],
+input[type="text"],
+input[type="int"] {
     width: 100%;
     padding: 8px;
     margin: 4px 0;
