@@ -19,6 +19,9 @@ public class User {
     private String shop_user_status;
     private Connection conn = null;
     private PreparedStatement pres = null;
+    private Order order;
+    private OrderHelper oh = OrderHelper.getHelper();
+  
 
     public User(int id,String name, String email, String password, String phone, Timestamp update_time ,String role, String shop_user_status) {
         this.id = id;
@@ -42,6 +45,11 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
+    public User(int id){
+        this.id = id;
+    }   
+
 
     public int getId() {
         return id;
@@ -74,6 +82,11 @@ public class User {
     public String getShop_user_status() {
         return shop_user_status;
     }
+
+    public Order getOrder() {
+        return order;
+    }
+
 
     public boolean checkDuplicate(Member m){
         /** 紀錄SQL總行數，若為「-1」代表資料庫檢索尚未完成 */
