@@ -12,7 +12,6 @@ public class Order_Controller extends HttpServlet{
     private static final long serialVersionUID = 1L;
     private FoodHelper fh =  FoodHelper.getHelper();
 	private OrderHelper oh =  OrderHelper.getHelper();
-    
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /** 透過 JsonReader 類別將 Request 之 JSON 格式資料解析並取回 */
@@ -26,6 +25,7 @@ public class Order_Controller extends HttpServlet{
         resp.put("status", "200");
         resp.put("message", "單筆訂單資料取得成功");
         resp.put("response", data);
+
 
         /** 透過 JsonReader 物件回傳到前端（以 JSONObject 方式） */
         jsr.response(resp, response);
