@@ -27,7 +27,11 @@
                     response.response.data.forEach(function(member) {
                         table += '<tr><td>' + member.user_id + '</td><td>' + member.user_name + '</td><td>' + member.user_email + '</td><td>' 
                         + member.user_password + '</td><td>' + member.user_phone + '</td><td>' + member.user_update_time + '</td><td>' 
+<<<<<<< HEAD
+                        + member.user_role + '</td></td>'+ member.shop_user_status + '</td><tr>' ;
+=======
                         + member.user_role + '</td><td>'+ member.shop_user_status + '</td><tr>' ;
+>>>>>>> 1ce50ddcbaff3ede7358b72fd049662fda3c56a4
                     });
                     table += '</table>';
                     document.getElementById('memberTable').innerHTML = table;
