@@ -114,7 +114,7 @@ public class CartHelper {
 
             int food_id=0, price=0, subtotal=0;
 
-            if (rs.next()){
+            while (rs.next()){
                 food_id = rs.getInt("food_id");
                 price = rs.getInt("food_price");
                 subtotal = price * quantity;
@@ -128,7 +128,7 @@ public class CartHelper {
             pstmt.setInt(1, user_id);
             rs = pstmt.executeQuery();
 
-            if (rs.next()){
+            while (rs.next()){
                 int cart_id = rs.getInt("cart_id");
                 sql = "INSERT INTO `tbl_cart_food_connect`(`cart_id_con`, `food_id_con`, `food_num`, `cart_note`) VALUES (?, ?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);

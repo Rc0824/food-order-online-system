@@ -12,7 +12,6 @@ import tools.*;
 @WebServlet("/api/cart")
 public class Cart_Controller extends HttpServlet{
     private static final long serialVersionUID = 1L;
-    private Food fd = new Food();
 
 	private CartHelper ch = CartHelper.getHelper();
 
@@ -45,7 +44,7 @@ public class Cart_Controller extends HttpServlet{
 
         JSONObject resp = new JSONObject();
 
-        if(jso.has("food_name") && jso.has("food_quantity")){
+        if(jso.has("food_name") && jso.has("food_quantity") && jso.has("user_id")){
             String name = jso.getString("food_name");
             int quantity = jso.getInt("food_quantity");
             int user_id = jso.getInt("user_id");

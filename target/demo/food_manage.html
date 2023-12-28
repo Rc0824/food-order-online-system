@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>餐點管理系統</title>
+    <link rel="stylesheet" href="styles/stylesFoodManage.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="left-link"><a href="index_shop.html">首頁</a></li>
+                <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+            </ul>
+            <ul>
+                <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li>
+                <li class="right-link"><a id="loginLink" href="login.html">會員登入</a></li>
+                <li class="right-link">
+                    <div id="user-info">
+                        <!-- 這裡會顯示用戶名稱，初始為空 -->
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <h1 id="FoodManageTitle">餐點一覽</h1>
+
+    <div class="food-container" id="foodContainer" style="display: block;">
+        <div></div>
+        <!-- 在這裡將顯示餐點內容 -->        
+        <div class="food-details">
+            <div class="food-id">
+                10001
+            </div>
+            <div class="food-photo">
+                fod_photo placeholder
+            </div>
+            <div class="food-name">
+                food123423424
+            </div>
+            <div class="food-price">
+                120
+            </div>  
+            <div class="food-description">
+                food12342adsfasdfasdfasdfasdfsadfasdfasdfasdfasdfasdf3424 is rice
+            </div>           
+            <div class="order-button-container">
+                <button class="editBtn"><img src="pics/edit_icon.png" alt="Edit"></button>
+                <button class="deleteBtn"><img src="pics/delete_icon.png" alt="delete"></button>
+            </div>
+        </div>
+        <div class="food-details">
+            <div class="food-id">
+                10001
+            </div>
+            <div class="food-photo">
+                kals;jf
+            </div>
+            <div class="food-name">
+                food123423424
+            </div>
+            <div class="food-price">
+                12
+            </div>  
+            <div class="food-description">
+                12asdfasdfas
+            </div>           
+            <div class="order-button-container">
+                <button class="editBtn"><img src="pics/edit_icon.png" alt="Edit"></button>
+                <button class="deleteBtn"><img src="pics/delete_icon.png" alt="delete"></button>
+            </div>
+        </div>
+    </div>
+    <h1></h1>
+
+    <!-- Modal for Editing Food -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>編輯餐點</h2>
+            <form id="editForm">
+                <label for="photo">照片位址:</label>
+                <input type="text" id="photo" name="photo">
+    
+                <label for="name">名稱:</label>
+                <input type="text" id="name" name="name">
+    
+                <label for="price">價格:</label>
+                <input type="int" id="price" name="price">
+    
+                <label for="description">敘述:</label>
+                <input type="text" id="description" name="description">
+                <h1></h1>
+
+                <button type="submit" id="saveBtn">確認修改</button>
+            </form>
+        </div>
+    </div>
+
+
+    <footer>
+        <p>版權所有 &copy; 2023 XX線上訂餐系統</p>
+    </footer>
+
+    <script>
+        window.onload = function () {
+            const header = document.getElementById('header');
+            const userInfo = document.getElementById('user-info');
+            const loginLink = document.getElementById('loginLink');
+            const logoutLink = document.getElementById('logoutLink');
+            loginLink.style.display = 'none';
+            profileLink.style.display = 'inline';
+            logoutLink.style.display = 'inline';
+        };
+        
+        const deleteBtns = document.getElementsByClassName('deleteBtn');
+            const editBtns = document.getElementsByClassName('editBtn');
+
+            // 為每個 deleteBtn 添加點擊事件
+            for (let i = 0; i < deleteBtns.length; i++) {
+                deleteBtns[i].addEventListener('click', function(event) {
+                    const foodDetails = this.closest('.food-details');
+                    
+                });
+            }
+
+            // 為每個 editBtn 新增事件監聽器
+            for (let i = 0; i < editBtns.length; i++) {
+                editBtns[i].addEventListener('click', function(event) {
+                    const foodDetails = this.closest('.food-details');
+                    // 取得 food-details 中的相應數據，例如 food id, photo, name, price, description 等
+                    const foodId = foodDetails.querySelector('.food-id').textContent.trim();
+                    const photo = foodDetails.querySelector('.food-photo').textContent.trim();
+                    const name = foodDetails.querySelector('.food-name').textContent.trim();
+                    const price = foodDetails.querySelector('.food-price').textContent.trim();
+                    const description = foodDetails.querySelector('.food-description').textContent.trim();
+                    // 將這些資料填入 modal 中，以便進行編輯
+                    const modal = document.getElementById('editModal');
+                    modal.style.display = 'block';
+                    // 將相應的資料填入 modal 中
+                    document.getElementById('photo').value = photo;
+                    document.getElementById('name').value = name;
+                    document.getElementById('price').value = price;
+                    document.getElementById('description').value = description;
+
+                    // 编辑时需要知道对应的 foodId，以便更新
+                    const saveBtn = document.getElementById('saveBtn');
+                    saveBtn.onclick = function() {                    
+                        const updatedPhoto = document.getElementById('photo').value;
+                        const updatedName = document.getElementById('name').value;
+                        const updatedPrice = document.getElementById('price').value;
+                        const updatedDescription = document.getElementById('description').value;
+                        console.log(`Updating food with ID: ${foodId}`);
+                        // 執行資料的更新
+                        // ...
+                        // 更新完畢後，隱藏modal
+                        modal.style.display = 'none';
+                    };
+                });
+            }
+
+        const modal = document.getElementById('editModal');
+        const closeBtn = document.getElementsByClassName('close')[0];
+        
+        // 點擊 .close 元素時，關閉 modal
+        closeBtn.onclick = function() {
+          modal.style.display = 'none';
+        };
+        
+        // 點擊 modal 外部區域時，關閉 modal
+        window.onclick = function(event) {
+          if (event.target === modal) {
+            modal.style.display = 'none';
+          }
+        };
+        
+        // 添加其他功能按鈕的事件處理
+        // 例如：保存更改和刪除用戶
+        document.getElementById('saveChanges').onclick = function() {
+          // 保存更改的代碼
+        };
+        
+        document.getElementById('deleteUser').onclick = function() {
+          // 刪除用戶的代碼
+        };
+
+
+    </script>
+</body>
+
+</html>
