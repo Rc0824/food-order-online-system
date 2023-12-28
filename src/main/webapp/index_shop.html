@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商家管理系統</title>
     <link rel="stylesheet" href="styles/stylesIndexShop.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -158,6 +159,13 @@
                 }
             });
         });
+
+        function logout() {
+            document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/demo/;";
+            setTimeout(function() {
+                location.reload(); // 重新加載頁面
+            }, 500); // 延遲 1 秒
+        }
 
 
     </script>

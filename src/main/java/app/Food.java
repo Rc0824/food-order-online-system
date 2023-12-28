@@ -74,6 +74,22 @@ public class Food {
         this.shop_user_id = shop_user_id;
 	}
 
+    public Food(String name, int price, String photo, String description, int shop_user_id) {
+        this.name = name;
+        this.price = price;
+        this.photo = photo;
+        this.description = description;
+        this.shop_user_id = shop_user_id;
+    }
+
+    public Food(int id ,String name, int price, String photo, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.photo = photo;
+        this.description = description;
+    }
+
     /**
      * 取得產品編號
      *
