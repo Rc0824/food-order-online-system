@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>確認訂單</title>
     <link rel="stylesheet" href="styles/stylesCon.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -56,6 +57,12 @@
     </footer>
 
     <script>
+        const shop_user_id = '1005'
+        var food_ids = [];
+        var total = 0;
+        var itemCount = 0;
+        var cap = '';
+
         window.onload = function () {
             const header = document.getElementById('header');
             const userInfo = document.getElementById('user-info');
@@ -63,27 +70,44 @@
             const registerLink = document.getElementById('registerLink');
             const loginLink = document.getElementById('loginLink');
             const logoutLink = document.getElementById('logoutLink');
+            const cartItemsDiv = document.getElementById('cart-items');
+            const historyLink = document.getElementById('historyLink');
+            const profileLink = document.getElementById('profileLink');
+
+
             
-            // 在此處檢查用戶是否已登入，並顯示相應的內容
-            const loggedInUser = getLoggedInUser(); // 假設此函數從 localStorage 中獲取已登入用戶信息
             
-            if (loggedInUser) {
+            if (document.cookie.indexOf('user_data') >= 0) { // 如果有 user_data cookie，表示用戶已登入
+                var userData = JSON.parse(decodeURIComponent(getCookie("user_data")));
+                var userName = userData.user_name;
+                var userPhone = userData.user_phone;
                 // 用戶已登入，顯示歡迎信息
-                userInfo.textContent = `歡迎回來，${loggedInUser.name}！`; // 顯示用戶名稱
+                let userInfo = document.getElementById('user-info');
+                userInfo.textContent = `歡迎回來，${userName}！`; // 顯示用戶名稱
 
                 registerLink.style.display = 'none';
                 loginLink.style.display = 'none';
                 profileLink.style.display = 'inline';
                 logoutLink.style.display = 'inline';
-                cartLink.style.display = 'inline';
                 historyLink.style.display = 'inline';
+
+                // 取得購物車內容
+                getCart();
+
+                document.getElementById('memberName').textContent = '會員姓名：' + userName;
+                document.getElementById('memberPhone').textContent = '會員電話：' + userPhone;
+
             } else {              
                 registerLink.style.display = 'inline';
                 loginLink.style.display = 'inline';
                 profileLink.style.display = 'none';
                 logoutLink.style.display = 'none'; 
-                cartLink.style.display = 'none';
                 historyLink.style.display = 'none';
+                cartItemsDiv.style.display = 'none';
+
+                const emptyCartMessage = document.getElementById('emptyCartMessage');
+                emptyCartMessage.textContent = '登入後才能查看訂單喔！';
+                document.body.appendChild(emptyCartMessage);
             }
         };
 
@@ -94,77 +118,181 @@
             localStorage.removeItem('cart'); // 移除購物車內容
         }
 
-        // 假設此函數從 localStorage 中獲取已登入用戶信息
-        function getLoggedInUser() {
-            return JSON.parse(localStorage.getItem('loggedInUser'));
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            // 取得會員姓名和電話資料
-            const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
-            const memberName = loggedInUser ? loggedInUser.name : '';
-            const memberPhone = loggedInUser ? loggedInUser.phone : '';
-        
-            // 顯示會員姓名和電話
-            document.getElementById('memberName').textContent = `會員姓名：${memberName}`;
-            document.getElementById('memberPhone').textContent = `會員電話：${memberPhone}`;
-        });
+        function Captcha() {
+            var chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            var word = '';
+            for (var i = 0; i < 4; i++) {
+                var randomIndex = Math.floor(Math.random() * chars.length);
+                word += chars[randomIndex];
+            }
+            return word;
+        }
 
-        // 取得購物車內容
-        let cart = localStorage.getItem('cart');
-        if (cart) {
-            cart = JSON.parse(cart);
-
-            const cartItemsDiv = document.getElementById('cart-items');
-            let totalPrice = 0;
-
-            // 顯示購物車內容並計算總價
-            cart.forEach(item => {
-                const cartItemDiv = document.createElement('div');
-                cartItemDiv.textContent = `餐點名稱：${item.name} - 價格：$${item.price} - 數量：${item.quantity}`;
-                cartItemsDiv.appendChild(cartItemDiv);
-
-                // 計算總價
-                totalPrice += item.price * item.quantity;
+        function sendOrder(times, itemCount) {
+            return new Promise((resolve, reject) => {
+                const cartItems = document.getElementById('cart-items').innerHTML;
+                const timestamp = new Date().toLocaleString();
+            
+                // 建立訂單物件
+                var orderData = {
+                    order_datetime: '2023-01-16 12:12:00',
+                    user_id: JSON.parse(decodeURIComponent(getCookie("user_data"))).user_id,
+                    food_id: food_ids[times],
+                    order_total: total,
+                    order_captcha: cap,
+                    food_num: itemCount
+                };
+            
+                $.ajax({
+                    type: "POST",
+                    url: "api/order",
+                    crossDomain: true,
+                    cache: false,
+                    dataType: "json",
+                    timeout: 5000,
+                    data: JSON.stringify(orderData),
+                    success: function(response){
+                        if(response.status == 200){
+                            console.log(response);
+                            // alert('訂單已送出！');
+                            console.log('訂單已送出！');
+                            // 導向到其他頁面或做其他操作
+                        }
+                    },
+                    error: function () {
+                        alert("無法送出訂單！");
+                    },
+                    complete: function () {
+                        console.log('complete');
+                        resolve();
+                    }
+                })
             });
 
-            // 顯示總價
-            const totalDiv = document.createElement('div');
-            totalDiv.textContent = `總計：$${totalPrice.toFixed(2)}`;
-            cartItemsDiv.appendChild(totalDiv);
+        }
 
-            // 取得會員姓名和電話並填入 input 欄位
-            const memberName = localStorage.getItem('memberName');
-            const memberPhone = localStorage.getItem('memberPhone');
-
-            document.getElementById('memberName').value = memberName || '';
-            document.getElementById('memberPhone').value = memberPhone || '';
+        async function processOrders() {
+            for (var i = 0; i < itemCount; i++) {
+                console.log('sendOrder is running: '+i);
+                await sendOrder(i, itemCount);
+            }
         }
 
         // 送出訂單按鈕的事件
         document.getElementById('submitOrderBtn').addEventListener('click', function() {
-            const cartItems = document.getElementById('cart-items').innerHTML;
-            const timestamp = new Date().toLocaleString() // 添加時間戳記
-        
-            // 建立訂單物件
-            const orderData = {
-                timestamp: timestamp,
-                cartItems: cartItems
-            };
-        
-            // 取得歷史訂單資料
-            let orderHistory = localStorage.getItem('orderHistory');
-            orderHistory = orderHistory ? JSON.parse(orderHistory) : [];
-        
-            // 新增新訂單到歷史訂單資料
-            orderHistory.push(orderData);
-        
-            // 更新歷史訂單資料到 localStorage 中
-            localStorage.setItem('orderHistory', JSON.stringify(orderHistory));
-
+            cap = Captcha();
+            // Execute a function for each item in the cart
+            processOrders();
             alert('訂單已送出！');
+
             // 導向到其他頁面或做其他操作
+            window.location.href = 'index.html';
         });
+
+        function clearCart() {
+            $.ajax({
+                type: "DELETE",
+                url: "api/cart",
+                crossDomain: true,
+                cache: false,
+                dataType: "json",
+                timeout: 5000,
+                success: function(response){
+                    if(response.status == 200){
+                        alert("購物車已清空！");
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    alert("無法清空購物車！");
+                },
+                complete: function () {
+                    console.log('complete');
+                }
+            })
+        }
+
+
+        function getCart() {
+            console.log('getCart is running');
+            $.ajax({
+                type: "GET",
+                url: "api/cart",
+                crossDomain: true,
+                cache: false,
+                dataType: "json",
+                timeout: 5000,
+                success: function(response){
+                    if(response.status == 200){
+                        var CartData = response.response.data;
+                        console.log(CartData);
+                        itemCount = CartData.length;
+                        var totalPrice = 0;
+                        var cartItemsDiv = document.getElementById('cart-items');
+                        var clearCartBtn = document.getElementById('clearCartBtn');
+                        var payBtn = document.getElementById('submitOrderBtn');
+
+                        CartData.forEach(function(cart){
+
+                            if (cart.cart_id == JSON.parse(decodeURIComponent(getCookie("user_data"))).user_id){
+                                var cartItemDiv = document.createElement('div');
+                                var icon = document.createElement('img');
+                                icon.src = './pics/delete_icon.png';
+
+                                cartItemDiv.textContent = `餐點名稱：${cart.food} - 價格：$${cart.price} - 數量：${cart.quantity}`;
+                                cartItemsDiv.appendChild(cartItemDiv);
+                                food_ids.push(cart.food_id);
+
+
+                                // 計算總價
+                                totalPrice += cart.price * cart.quantity;
+                            }
+                        });
+                        // 顯示總價
+                        var totalDiv = document.createElement('div');
+                        totalDiv.textContent = `總計：$${totalPrice.toFixed(2)}`;
+                        cartItemsDiv.appendChild(totalDiv);
+                        total = totalPrice;
+
+                        if(totalPrice == 0){
+                            cartItemsDiv.style.display = 'none';
+                            payBtn.style.display = 'none';
+
+                            const emptyCartMessage = document.getElementById('emptyCartMessage');
+                            emptyCartMessage.textContent = '購物車是空的，去找些好吃的吧！';
+                            document.body.appendChild(emptyCartMessage);
+                        }
+                        else{
+                            cartItemsDiv.style.display = 'block';
+                            payBtn.style.display = 'block';
+                        }
+
+                    }
+
+                },
+                error: function () {
+                    alert("無法連接購物車！");
+                },
+
+                complete: function () {
+                    console.log('complete');
+                }
+                    
+                    
+            })
+
+        }
     </script>
 </body>
 </html>
