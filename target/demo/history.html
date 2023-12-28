@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歷史訂單</title>
+    <!-- 這裡添加你的樣式表連結或樣式 -->
+    <link rel="stylesheet" href="styles/stylesHis.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        /* 在這裡可以添加自定義的樣式 */
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>     
+                <li class="left-link"><a href="/demo/">首頁</a></li>               
+                <li class="left-link"><a id="profileLink" href="profile.html">會員資料</a></li>
+            </ul>
+
+            <ul>
+                <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li> 
+                <li class="right-link"><div id="user-info"><!-- 這裡會顯示用戶名稱，初始為空 --></div></li> 
+                <li class="right-link"><a id="cartLink" href="cart.html">購物車</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+    <h1>歷史訂單</h1>
+    <div id="order-history">
+    </div>
+    
+    </main>
+    
+    <footer>
+        <p>版權所有 &copy; 2023 線上訂餐系統</p>
+    </footer>
+
+    <script>
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+
+        window.onload = function(){
+            $.ajax({
+                        type: "GET",
+                        url: "api/order",
+                        crossDomain: true,
+                        cache: true,
+                        dataType: 'json',
+                        timeout: 5000,
+                        success: function (response) {
+                            if (response.status == 200) {
+                                var userData = JSON.parse(decodeURIComponent(getCookie("user_data")));
+                                var userID = userData.user_id;
+                                var filteredData = [];
+                                if (response.response && response.response.data) {
+                                    filteredData = response.response.data.filter(function(item) {
+                                        return item.user_id === userID;
+                                    });
+                                }
+                                console.log(filteredData);
+
+                                if (filteredData && filteredData.length > 0) {
+                                    const orderHistoryDiv = document.getElementById('order-history');
+                            
+                                    filteredData.forEach(order => {
+                                        const orderDiv = document.createElement('div');
+                                        orderDiv.classList.add('order-container'); // 新增這行來設置外框
+
+                                        const cartItems = document.createElement('div');
+                                        cartItems.classList.add('order-details'); // 新增這行來設置訂單細節樣式
+                                        const timestamp = document.createElement('div');
+                                        timestamp.classList.add('timestamp'); // 新增這行來設置時間戳樣式
+
+                                        // 新增顯示食物名稱和價格的元素
+                                        const foodName = document.createElement('div');
+                                        foodName.classList.add('food-name'); // 新增這行來設置食物名稱樣式
+                                        const foodPrice = document.createElement('div');
+                                        foodPrice.classList.add('food-price'); // 新增這行來設置食物價格樣式
+
+                                        // cartItems.innerHTML = order.cartItems;
+                                        timestamp.textContent = `訂單時間：${order.order_time}`;
+
+                                        // 設置食物名稱和價格的內容
+                                        foodName.textContent = `食物名稱：${order.food.food_name}`;
+                                        foodPrice.textContent = `食物價格：${order.food.food_price}`;
+
+                                        orderDiv.appendChild(cartItems);
+                                        orderDiv.appendChild(timestamp);
+
+                                        // 將食物名稱和價格的元素添加到訂單元素中
+                                        orderDiv.appendChild(foodName);
+                                        orderDiv.appendChild(foodPrice);
+
+                                        orderHistoryDiv.appendChild(orderDiv);
+                                    });
+                                }
+
+                            }
+                        },
+                        error: function () {
+                            console.log('fail');
+                            alert("無法連線到伺服器！");
+                        },
+                });
+        }        
+
+        // window.onload = function() {
+        //     const orderHistory = JSON.parse(localStorage.getItem('orderHistory'));
+        
+        //     if (orderHistory && orderHistory.length > 0) {
+        //         const orderHistoryDiv = document.getElementById('order-history');
+        
+        //         orderHistory.forEach(order => {
+        //             const orderDiv = document.createElement('div');
+        //             orderDiv.classList.add('order-container'); // 新增這行來設置外框
+        
+        //             const cartItems = document.createElement('div');
+        //             cartItems.classList.add('order-details'); // 新增這行來設置訂單細節樣式
+        //             const timestamp = document.createElement('div');
+        //             timestamp.classList.add('timestamp'); // 新增這行來設置時間戳樣式
+        
+        //             cartItems.innerHTML = order.cartItems;
+        //             timestamp.textContent = `訂單時間：${order.timestamp}`;
+        
+        //             orderDiv.appendChild(cartItems);
+        //             orderDiv.appendChild(timestamp);
+        
+        //             orderHistoryDiv.appendChild(orderDiv);
+        //         });
+        //     }
+        // };
+    </script>
+</body>
+</html>

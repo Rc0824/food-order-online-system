@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+#header {
+    background-color: #134f6c;
+    color: #fff;
+    padding: 20px;
+    text-align: left;
+}
+
+/* 將連結放置在左邊 */
+.left-links {
+    float: left;
+}
+
+/* 將連結放置在右邊 */
+.right-links {
+    float: right;
+}
+
+/* 清除浮動，確保 header 的高度正確 */
+nav:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #134f6c;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+#profile {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="submit"] {
+    width: 97%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+input[type="email"][readonly] {
+    background-color: #dadada; 
+}
+
+input[type="submit"],#editForm button[type="button"] {
+    width: 100%; /* 讓提交按鈕填滿整個寬度 */
+    padding: 10px; /* 調整按鈕的內邊距 */
+    border: none; /* 移除按鈕邊框 */
+    background-color: #c7c7c7; /* 按鈕背景顏色 */
+    color: black; /* 文字顏色 */
+    border-radius: 10px; /* 圓角 */
+    cursor: pointer; /* 鼠標指針 */
+    transition: background-color 0.3s; /* 平滑過渡效果 */
+
+    font-weight: bold; /* 變為粗體 */
+    font-size: 14px; /* 調大文字大小 */
+}
+
+input[type="submit"]:hover {
+    background-color: #aaaaaa;
+}
+
+#editForm button[type="button"]:hover {
+    background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
+}
+
+#userInfo p {
+    margin-bottom: 10px;
+}

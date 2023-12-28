@@ -1,0 +1,267 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+@media screen and (max-height: 900px) {
+    body {
+        padding-top: 20%;
+        padding-bottom: 20%;
+    }
+}
+
+h1 {
+    text-align: center;
+}
+
+header {
+    background-color: #134f6c;
+    color: #fff;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.food-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.food-details {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    margin-bottom: 5px;
+    
+}
+
+.food-details > div {
+    padding: 5px;
+    overflow: hidden;
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
+}
+
+.food-photo {
+    width: 15%;
+    display: inline-block;
+}
+
+.food-id {
+    display: none;
+}
+
+.food-name {
+    width: 20%;
+    display: inline-block;
+    
+}
+
+.food-description {
+    width: 35%;
+    display: inline-block;
+}
+
+.food-price{
+    width: 5%;
+    display: inline-block;
+}
+
+.order-button-container {
+    width : auto;
+    flex: 1 1 5%;
+    text-align: right;
+    display: inline-block;
+
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%;
+    border-radius: 10px;
+}
+
+#photo,
+#name,
+#price,
+#description {
+    height: 40px; /* 設定您希望的高度值 */
+    overflow: auto; /* 使用捲動條，當內容超出範圍時顯示捲動條 */
+    border-radius: 10px;
+    padding-left: 5px;
+    font-size: 16px; /* 調整文字大小 */
+    margin-bottom: 10px;
+}
+
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Optional: Style the form elements */
+#editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="photo"],
+input[type="name"],
+input[type="price"],
+input[type="description"] {
+    width: 100%;
+    padding: 8px;
+    margin: 4px 0;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+button[id="saveBtn"]{
+    width: 100%; /* 讓提交按鈕填滿整個寬度 */
+    padding: 10px; /* 調整按鈕的內邊距 */
+    border: none; /* 移除按鈕邊框 */
+    background-color: #c7c7c7; /* 按鈕背景顏色 */
+    color: black; /* 文字顏色 */
+    border-radius: 10px; /* 圓角 */
+    cursor: pointer; /* 鼠標指針 */
+    transition: background-color 0.3s; /* 平滑過渡效果 */
+
+    font-weight: bold; /* 變為粗體 */
+    font-size: 14px; /* 調大文字大小 */
+}
+
+button[id="addBtn"]{
+    width: 100%; /* 讓提交按鈕填滿整個寬度 */
+    padding: 10px; /* 調整按鈕的內邊距 */
+    border: none; /* 移除按鈕邊框 */
+    background-color: #c7c7c7; /* 按鈕背景顏色 */
+    color: black; /* 文字顏色 */
+    border-radius: 10px; /* 圓角 */
+    cursor: pointer; /* 鼠標指針 */
+    transition: background-color 0.3s; /* 平滑過渡效果 */
+
+    font-weight: bold; /* 變為粗體 */
+    font-size: 14px; /* 調大文字大小 */
+}
+
+button[id="addBtn"]:hover {
+    background-color: #aaaaaa;
+}
+
+button[id="saveBtn"]:hover {
+    background-color: #aaaaaa;
+}
+
+.editBtn,
+.deleteBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-right: 30px; /* 调整按钮间距 */
+}
+
+.editBtn img,
+.deleteBtn img {
+    width: 24px; /* 调整图标宽度 */
+    height: 24px; /* 调整图标高度 */
+}
+
+/* 將連結放置在左邊 */
+.left-link {
+    margin-right: 0;
+    padding-left: 20px;
+    float: left;
+}
+
+/* 將連結放置在右邊 */
+.right-link {
+    padding-right: 0px;
+    float: right;
+}
+
+/* 清除浮動，確保 header 的高度正確 */
+nav:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li div {
+    display: inline;
+    padding-right: auto;
+}
+
+footer {
+    background-color: #134f6c;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

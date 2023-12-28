@@ -19,6 +19,7 @@
             <ul>
                 <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li>
                 <li class="right-link"><a id="loginLink" href="login.html">會員登入</a></li>
+                <li class="right-link"><a id="addFood" onclick="showAddFoodModal()">新增餐點</a></li>
                 <li class="right-link">
                     <div id="user-info">
                         <!-- 這裡會顯示用戶名稱，初始為空 -->
@@ -35,19 +36,19 @@
         <!-- 在這裡將顯示餐點內容 -->        
         <div class="food-details">
             <div class="food-id" id="food_id">
-                10001
+                <!-- 10001 -->
             </div>
             <div class="food-photo" id="food-photo">
-                fod_photo placeholder
+                <!-- fod_photo placeholder -->
             </div>
             <div class="food-name" id="food-name">
-                food123423424
+                <!-- food123423424 -->
             </div>
             <div class="food-price" id="food-price">
-                120
+                <!-- 120 -->
             </div>  
             <div class="food-description" id="food-description">
-                food12342adsfasdfasdfasdfasdfsadfasdfasdfasdfasdfasdf3424 is rice
+                <!-- food12342adsfasdfasdfasdfasdfsadfasdfasdfasdfasdfasdf3424 is rice -->
             </div>           
             <div class="order-button-container">
                 <button class="editBtn"><img src="pics/edit_icon.png" alt="Edit"></button>
@@ -77,6 +78,29 @@
                 <h1></h1>
 
                 <button type="submit" id="saveBtn">確認修改</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>新增餐點</h2>
+            <form id="editForm">
+                <label for="photo">照片位址:</label>
+                <input type="text" id="add-photo" name="photo">
+    
+                <label for="name">名稱:</label>
+                <input type="text" id="add-name" name="name">
+    
+                <label for="price">價格:</label>
+                <input type="int" id="add-price" name="price">
+    
+                <label for="description">敘述:</label>
+                <input type="text" id="add-description" name="description">
+                <h1></h1>
+
+                <button type="submit" id="addBtn">確認新增</button>
             </form>
         </div>
     </div>
@@ -244,66 +268,78 @@
             });
         }
 
+        function showAddFoodModal() {
+            // 清空所有輸入欄位
+            document.getElementById('add-name').value = '';
+            document.getElementById('add-description').value = '';
+            document.getElementById('add-price').value = '';
+            document.getElementById('add-photo').value = '';
+
+            // 顯示模態視窗
+            const modal = document.getElementById('addModal');
+            modal.style.display = 'block';
+
+            // 為儲存按鈕新增點擊事件監聽器
+            const addBtn = document.getElementById('addBtn');
+
+            addBtn.onclick = function() {
+                const photo = document.getElementById('add-photo').value;
+                const name = document.getElementById('add-name').value;
+                const price = document.getElementById('add-price').value;
+                const description = document.getElementById('add-description').value;
+                var data = {
+                    food_photo: photo,
+                    food_name: name,
+                    food_price: price,
+                    food_description: description,
+                    shop_user_id: 1005
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "api/food",
+                    crossDomain: true,
+                    cache: false,
+                    dataType: "json",
+                    timeout: 5000,
+                    data: JSON.stringify(data),
+                    success: function(response){
+                        if(response.status == 200){
+                            alert("新增餐點成功");
+                            location.reload();
+                        }
+                    },
+                    error: function(response){
+                        alert("新增餐點失敗")
+                    }
+                });
+                // 更新完畢後，隱藏modal
+                modal.style.display = 'none';
+            };
+            
+        }
+
         
-        const deleteBtns = document.getElementsByClassName('deleteBtn');
-            const editBtns = document.getElementsByClassName('editBtn');
 
-            // 為每個 deleteBtn 添加點擊事件
-            for (let i = 0; i < deleteBtns.length; i++) {
-                deleteBtns[i].addEventListener('click', function(event) {
-                    const foodDetails = this.closest('.food-details');
-                    
-                });
-            }
-
-            // 為每個 editBtn 新增事件監聽器
-            for (let i = 0; i < editBtns.length; i++) {
-                editBtns[i].addEventListener('click', function(event) {
-                    const foodDetails = this.closest('.food-details');
-                    // 取得 food-details 中的相應數據，例如 food id, photo, name, price, description 等
-                    const foodId = foodDetails.querySelector('.food-id').textContent.trim();
-                    const photo = foodDetails.querySelector('.food-photo').textContent.trim();
-                    const name = foodDetails.querySelector('.food-name').textContent.trim();
-                    const price = foodDetails.querySelector('.food-price').textContent.trim();
-                    const description = foodDetails.querySelector('.food-description').textContent.trim();
-                    // 將這些資料填入 modal 中，以便進行編輯
-                    const modal = document.getElementById('editModal');
-                    modal.style.display = 'block';
-                    // 將相應的資料填入 modal 中
-                    document.getElementById('photo').value = photo;
-                    document.getElementById('name').value = name;
-                    document.getElementById('price').value = price;
-                    document.getElementById('description').value = description;
-
-                    // 编辑时需要知道对应的 foodId，以便更新
-                    const saveBtn = document.getElementById('saveBtn');
-                    saveBtn.onclick = function() {                    
-                        const updatedPhoto = document.getElementById('photo').value;
-                        const updatedName = document.getElementById('name').value;
-                        const updatedPrice = document.getElementById('price').value;
-                        const updatedDescription = document.getElementById('description').value;
-                        console.log(`Updating food with ID: ${foodId}`);
-                        // 執行資料的更新
-                        // ...
-                        // 更新完畢後，隱藏modal
-                        modal.style.display = 'none';
-                    };
-                });
-            }
-
-        const modal = document.getElementById('editModal');
+        const editmodal = document.getElementById('editModal');
+        const addmodal = document.getElementById('addModal');
         const closeBtn = document.getElementsByClassName('close')[0];
+
         
         // 點擊 .close 元素時，關閉 modal
-        closeBtn.onclick = function() {
-          modal.style.display = 'none';
+        closeBtn.onclick = function(event) {
+            editmodal.style.display = 'none';
         };
+
         
         // 點擊 modal 外部區域時，關閉 modal
         window.onclick = function(event) {
-          if (event.target === modal) {
-            modal.style.display = 'none';
+          if (event.target === editmodal) {
+            editmodal.style.display = 'none';
           }
+            if (event.target === addmodal) {
+                addmodal.style.display = 'none';
+            }
         };
         
 
