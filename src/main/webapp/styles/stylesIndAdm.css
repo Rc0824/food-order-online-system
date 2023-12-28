@@ -65,7 +65,13 @@ footer {
     padding: 5px;
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 100%;    
+}
+
+main {
+    overflow-y: auto;
+    padding-top: 50px; /* 使內容遠離header */
+    padding-bottom: 70px; /* 使內容遠離footer */
 }
 
 /* Modal */
