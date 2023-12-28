@@ -104,6 +104,8 @@
             
         </section>
         
+        <div id="message" style="opacity: 0; transition: opacity 2s;">已加入購物車</div>
+
         <div class="modal" id="mealModal">
             <div class="modal-content">
                 <span class="close">&times;</span>
@@ -275,29 +277,53 @@
         });
 
         function addToCartModal() {
-            const quantity = document.getElementById('quantityModal').value;
-            const itemName = mealTitle.textContent; // 取得餐點名稱
-            const itemPrice = 15; // 餐點價格，可以根據實際情況修改
-        
-            // 在這裡可以把餐點加入購物車，例如使用 localStorage 存儲購物車信息
-            // 這裡僅為示例，具體的實現需要與後端交互或使用資料庫
-            const cartItem = {
-                name: itemName,
-                price: itemPrice,
-                quantity: parseInt(quantity)
-            };
-        
-            // 範例：將餐點添加至購物車（使用 localStorage）
-            let cart = localStorage.getItem('cart');
-            if (!cart) {
-                cart = [];
-            } else {
-                cart = JSON.parse(cart);
+            if (document.cookie.indexOf('user_data') >= 0){
+                const quantity = document.getElementById('quantityModal').value;
+                const itemName = mealTitle.textContent; // 取得餐點名稱
+                const itemPrice = 15; // 餐點價格，可以根據實際情況修改
+            
+                // 在這裡可以把餐點加入購物車，例如使用 localStorage 存儲購物車信息
+                // 這裡僅為示例，具體的實現需要與後端交互或使用資料庫
+                var cartItem = {
+                    food_name: itemName,
+                    food_price: itemPrice,
+                    food_quantity: parseInt(quantity),
+                    user_id: JSON.parse(decodeURIComponent(getCookie("user_data"))).user_id
+                };
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "api/cart",
+                    data: JSON.stringify(cartItem),
+                    crossDomain: true,
+                    cache: false,
+                    dataType: "json",
+                    timeout: 5000,
+                    success: function(response){
+                        if(response.status == 200){
+                            console.log(response);
+                            alert("Add to cart success");
+                            var messageDiv = document.getElementById('message');
+                            messageDiv.style.opacity = "1";
+
+                            setTimeout(function() {
+                                messageDiv.style.opacity = "0";
+                            }, 2000);
+                        }
+                    },
+                    error: function(response){
+                        alert("Add to cart failed")
+                    }
+                });
+            
+            } 
+            else {
+                alert("請先登入");
+                window.location.href = 'login.html';
             }
-            cart.push(cartItem);
-            localStorage.setItem('cart', JSON.stringify(cart));
-        
-            alert('已加入購物車');
+            
+            
         }
     </script>
 

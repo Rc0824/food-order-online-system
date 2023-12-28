@@ -98,4 +98,62 @@ public class CartHelper {
         return response;
 
     }
+
+    public JSONObject addCart(String name, int quantity, int user_id){
+        JSONObject jso = new JSONObject();
+        try {
+            // 建立與資料庫的連接
+            conn = DBMgr.getConnection();
+            // 建立 SQL 查詢
+            String sql = "SELECT * FROM tbl_food WHERE food_name = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+    
+            // 執行查詢並獲取結果
+            ResultSet rs = pstmt.executeQuery();
+
+            int food_id=0, price=0, subtotal=0;
+
+            if (rs.next()){
+                food_id = rs.getInt("food_id");
+                price = rs.getInt("food_price");
+                subtotal = price * quantity;
+            }
+
+            rs.close();
+            pstmt.close();
+
+            sql = "SELECT * FROM tbl_cart WHERE member_user_id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, user_id);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                int cart_id = rs.getInt("cart_id");
+                sql = "INSERT INTO `tbl_cart_food_connect`(`cart_id_con`, `food_id_con`, `food_num`, `cart_note`) VALUES (?, ?, ?, ?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, cart_id);
+                pstmt.setInt(2, food_id);
+                pstmt.setInt(3, quantity);
+                pstmt.setInt(4, subtotal);
+                pstmt.executeUpdate();
+                jso.put("food_id", food_id);
+                jso.put("food_name", name);
+                jso.put("food_price", price);
+                jso.put("food_quantity", quantity);
+                jso.put("food_subtotal", subtotal);
+            }
+
+
+    
+            // 關閉連接
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return jso;
+
+    }
 }

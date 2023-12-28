@@ -12,6 +12,7 @@ import tools.*;
 @WebServlet("/api/cart")
 public class Cart_Controller extends HttpServlet{
     private static final long serialVersionUID = 1L;
+    private Food fd = new Food();
 
 	private CartHelper ch = CartHelper.getHelper();
 
@@ -32,6 +33,33 @@ public class Cart_Controller extends HttpServlet{
         resp.put("status", "200");
         resp.put("message", "所有購物車資料取得成功");
         resp.put("response", query);
+
+        jsr.response(resp, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
+        JsonReader jsr = new JsonReader(request);
+        /** 取出經解析到JSONObject之Request參數 */
+        JSONObject jso = jsr.getObject();
+
+        JSONObject resp = new JSONObject();
+
+        if(jso.has("food_name") && jso.has("food_quantity")){
+            String name = jso.getString("food_name");
+            int quantity = jso.getInt("food_quantity");
+            int user_id = jso.getInt("user_id");
+
+            // JSONObject data = fd.getDataByName(name);
+
+            JSONObject query = ch.addCart(name, quantity, user_id);
+            resp.put("status", "200");
+            resp.put("message", "購物車資料新增成功");
+            resp.put("response", query);
+        }else{
+            resp.put("status", "400");
+            resp.put("message", "購物車資料新增失敗");
+        }
 
         jsr.response(resp, response);
     }
