@@ -7,6 +7,7 @@ body {
 header {
     background-color: #134f6c;
     color: #fff;
+    top: 0;
     padding: 20px;
 }
 
@@ -53,8 +54,8 @@ nav ul li div{
 
 main {
     overflow-y: auto;
-    padding-top: 50px; /* 使內容遠離header */
-    padding-bottom: 70px; /* 使內容遠離footer */
+    padding-top: 30px; /* 使內容遠離header */
+    padding-bottom: 150px; /* 使內容遠離footer */
 }
 
 footer {
