@@ -1,0 +1,156 @@
+/* 基本的樣式設定 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #134f6c;
+    color: #fff;
+    padding: 20px;
+}
+
+/* 將連結放置在左邊 */
+.left-link {
+    margin-right: 20px;
+    float: left;
+}
+
+/* 將連結放置在右邊 */
+.right-link {
+    margin-right: 0;
+    margin-left: 20px;
+    float: right;
+}
+
+/* 清除浮動，確保 header 的高度正確 */
+nav:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul li div{
+    display: inline;
+    padding-right: auto;
+}
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #134f6c;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    position:fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#searchInput {
+    display: block;
+    margin: 0 auto;
+    padding: 8px;
+    width: 70%;
+    box-sizing: border-box;
+}
+
+#menuList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#menuList li {
+    margin-bottom: 8px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.meal-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* 餐點之間的間距 */
+}
+
+.meal-item {
+    width: 300px; /* 每個餐點容器的寬度 */
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+.meal-item img {
+    width: 100%; /* 圖片寬度填滿容器 */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.btn{
+    width: 100%; /* 讓提交按鈕填滿整個寬度 */
+    padding: 10px; /* 調整按鈕的內邊距 */
+    border: none; /* 移除按鈕邊框 */
+    background-color: #c7c7c7; /* 按鈕背景顏色為灰色 */
+    color: black; /* 文字顏色 */
+    border-radius: 10px; /* 圓角 */
+    cursor: pointer; /* 鼠標指針 */
+    transition: background-color 0.3s; /* 平滑過渡效果 */
+
+    font-weight: bold; /* 變為粗體 */
+    font-size: 14px; /* 調大文字大小 */
+}
+
+.btn:hover {
+    background-color: #aaaaaa; /* 鼠標懸停時的背景顏色 */
+}

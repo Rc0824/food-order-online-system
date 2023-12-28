@@ -137,12 +137,8 @@
                 var userData = JSON.parse(decodeURIComponent(getCookie("user_data")));
                 var userName = userData.user_name;
                 // 用戶已登入，顯示歡迎信息
-<<<<<<< HEAD
-                // userInfo.textContent = `歡迎回來，${userName}！`; // 顯示用戶名稱
-=======
                 let userInfo = document.getElementById('user-info');
                 userInfo.textContent = `歡迎回來，${userName}！`; // 顯示用戶名稱
->>>>>>> 1ce50ddcbaff3ede7358b72fd049662fda3c56a4
 
                 registerLink.style.display = 'none';
                 loginLink.style.display = 'none';
