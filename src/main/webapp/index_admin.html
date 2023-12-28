@@ -97,31 +97,31 @@
 
         // 編輯按鈕的點擊事件
         userList.addEventListener('click', function(event) {
-            if (event.target.classList.contains('editBtn')) {
-                // 編輯按鈕被點擊
+            if (event.target.tagName === 'IMG') {
+                // 圖片被點擊
                 const modal = document.getElementById('editModal');
                 modal.style.display = 'block'; // 顯示modal
                 // 在modal中填入用戶資料
-                const email = event.target.previousElementSibling.textContent.trim();
+                const email = event.target.parentElement.querySelector('span').textContent.trim();
                 const editForm = document.getElementById('editForm');
                 editForm.elements['email'].value = email;
             }
         });
 
         shopList.addEventListener('click', function(event) {
-            if (event.target.classList.contains('editBtn')) {
-                // 編輯按鈕被點擊
+            if (event.target.tagName === 'IMG') {
+                // 圖片被點擊
                 const modal = document.getElementById('editModal');
                 modal.style.display = 'block'; // 顯示modal
                 // 在modal中填入用戶資料
-                const email = event.target.previousElementSibling.textContent.trim();
+                const email = event.target.parentElement.querySelector('span').textContent.trim();
                 const editForm = document.getElementById('editForm');
                 editForm.elements['email'].value = email;
             }
         });
 
         userHistoryList.addEventListener('click', function(event) {
-            if (event.target.classList.contains('viewHistoryBtn')) {
+            if (event.target.tagName === 'IMG') {
                 //按下檢視歷史訂單按鈕
                 //跳轉到歷史訂單頁面
             }
