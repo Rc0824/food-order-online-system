@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理員管理系統</title>
     <link rel="stylesheet" href="styles/stylesIndAdm.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -17,7 +18,6 @@
             </ul>
             <ul>
                 <li class="right-link"><a id="logoutLink" href="#" onclick="logout()">登出</a></li>
-                <li class="right-link"><a id="loginLink" href="login.html">會員登入</a></li>
                 <li class="right-link">
                     <div id="user-info">
                         <!-- 這裡會顯示用戶名稱，初始為空 -->
@@ -30,11 +30,7 @@
     <h1>管理使用者</h1>
     <div class="list-container">
         <div id="userList" class="list">
-            <!-- 使用者列表內容 -->
-            <div class="user">
-                <span>john@example.com</span>
-                <button class="editBtn"><img src="pics/edit_icon.png" alt="編輯"></button>
-            </div>
+
         </div>
     </div>
     
@@ -42,11 +38,11 @@
     <div class="list-container">    
         <div id="shopList" class="list">
             <!-- 店家列表內容 -->
-            <div class="shop">
+            <!-- <div class="shop">
                 <span>Jane@example.com</span>
                 <button class="editBtn"><img src="pics/edit_icon.png" alt="編輯"></button>
                 <a href="index_shop.html" target="_blank"><button class="goShopBtn"><img src="pics/go_icon.png" alt="前往店家"></button></a>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -90,62 +86,206 @@
     </footer>
 
     <script>
-        // 獲取用戶列表元素
-        const userList = document.getElementById('userList');
-        const shopList = document.getElementById('shopList');
-        const userHistoryList = document.getElementById('userHistoryList');
 
-        // 編輯按鈕的點擊事件
-        userList.addEventListener('click', function(event) {
-            if (event.target.tagName === 'IMG') {
-                // 圖片被點擊
-                const modal = document.getElementById('editModal');
-                modal.style.display = 'block'; // 顯示modal
-                // 在modal中填入用戶資料
-                const email = event.target.parentElement.querySelector('span').textContent.trim();
-                const editForm = document.getElementById('editForm');
-                editForm.elements['email'].value = email;
+        window.onload = function(){
+            getMember();
+            getHistoryOrder();
+        }
+
+        function getMember(){
+                $.ajax({
+                    type: "GET",
+                    url: "api/user",
+                    crossDomain: true,
+                    cache: false,
+                    dataType: "json",
+                    timeout: 5000,
+                    success: function(response){
+                        console.log(response.response.data);
+                        if(response.status == 200){
+                                var userList = document.getElementById('userList');
+                                var shopList = document.getElementById('shopList');
+                                // 顯示新的使用者列表
+                                response.response.data.forEach(function(user) {
+                                    if (user.user_role === "member") {
+                                    var userDiv = document.createElement('div');
+                                    userDiv.className = "user";
+
+                                    var span = document.createElement('span');
+                                    span.textContent = user.user_email;
+                                    userDiv.appendChild(span);
+
+                                    var editBtn = document.createElement('button');
+                                    editBtn.className = "editBtn";
+                                    editBtn.addEventListener('click', function() {
+                                        // 在modal中填入用戶資料
+                                        const modal = document.getElementById('editModal');
+                                        modal.style.display = 'block'; // 顯示modal
+                                        document.getElementById('name').value = user.user_name;
+                                        document.getElementById('email').value = user.user_email;
+                                        document.getElementById('phone').value = user.user_phone;
+                                        document.getElementById('password').value = user.user_password;
+                                    });
+
+                                    var img = document.createElement('img');
+                                    img.src = "pics/edit_icon.png";
+                                    img.alt = "編輯";
+                                    editBtn.appendChild(img);
+
+                                    userDiv.appendChild(editBtn);
+
+                                    userList.appendChild(userDiv);
+
+                                    }
+                                    else if (user.user_role === "shop") {
+                                        var shopDiv = document.createElement('div');
+                                        shopDiv.className = "shop";
+
+                                        var span = document.createElement('span');
+                                        span.textContent = user.user_email;
+                                        shopDiv.appendChild(span);
+
+                                        var editBtn = document.createElement('button');
+                                        editBtn.className = "editBtn";
+                                        editBtn.addEventListener('click', function() {
+                                            // 在modal中填入用戶資料
+                                            const modal = document.getElementById('editModal');
+                                            modal.style.display = 'block'; // 顯示modal
+                                            document.getElementById('name').value = user.user_name;
+                                            document.getElementById('email').value = user.user_email;
+                                            document.getElementById('phone').value = user.user_phone;
+                                            document.getElementById('password').value = user.user_password;
+                                        });
+
+                                        var img = document.createElement('img');
+                                        img.src = "pics/edit_icon.png";
+                                        img.alt = "編輯";
+                                        editBtn.appendChild(img);
+
+                                        shopDiv.appendChild(editBtn);
+
+                                        var goShopBtn = document.createElement('button');
+                                        goShopBtn.className = "goShopBtn";
+                                        goShopBtn.addEventListener('click', function() {
+                                            window.open("index_shop.html");
+                                        });
+
+                                        var img = document.createElement('img');
+                                        img.src = "pics/go_icon.png";
+                                        img.alt = "前往店家";
+                                        goShopBtn.appendChild(img);
+
+                                        shopDiv.appendChild(goShopBtn);
+
+                                        shopList.appendChild(shopDiv);
+                                    }
+                                });
+                        }},
+                    error: function(response){
+                        alert("Get member data failed")
+                    }
+                });
             }
-        });
 
-        shopList.addEventListener('click', function(event) {
-            if (event.target.tagName === 'IMG') {
-                // 圖片被點擊
-                const modal = document.getElementById('editModal');
-                modal.style.display = 'block'; // 顯示modal
-                // 在modal中填入用戶資料
-                const email = event.target.parentElement.querySelector('span').textContent.trim();
-                const editForm = document.getElementById('editForm');
-                editForm.elements['email'].value = email;
+        function editMember(){
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var phone = document.getElementById('phone').value;
+
+            var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+            if(!password_rule.test(password)) {
+                alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
             }
-        });
+            else {
+                // 將資料組成JSON格式
+                var data_object = {
+                    "user_name": name,
+                    "user_email": email,
+                    "user_password": password,
+                    "user_phone" : phone
+                };
 
-        userHistoryList.addEventListener('click', function(event) {
-            if (event.target.tagName === 'IMG') {
-                //按下檢視歷史訂單按鈕
-                //跳轉到歷史訂單頁面
+                // 將JSON格式轉換成字串
+                var data_string = JSON.stringify(data_object);
+                $.ajax({
+                    type: "PUT",
+                    url: "api/user",
+                    data: data_string,
+                    crossDomain: true,
+                    cache: false,
+                    dataType: "json",
+                    timeout: 5000,
+                    success: function(response){
+                        console.log(response.response.data);
+                        if(response.status == 200){
+                            alert(response.message);
+                            location.reload(); // 重新加載頁面
+                        }},
+                    error: function(response){
+                        alert("update member data failed")
+                    }
+                });
             }
+        }
+
+        document.getElementById('saveBtn').addEventListener('click', function(event) {
+            event.preventDefault(); // 阻止表單提交
+            editMember();
         });
 
-        // 保存按鈕的點擊事件
-        const saveBtn = document.getElementById('saveBtn');
-        saveBtn.addEventListener('click', function(event) {
-            event.preventDefault();
-            // 這裡需要將編輯後的資料保存
-            // 譬如從表單中獲取資料並進行更新
-            const editForm = document.getElementById('editForm');
-            const updatedName = editForm.elements['name'].value;
-            const updatedEmail = editForm.elements['email'].value;
-            const updatedPhone = editForm.elements['phone'].value;
-            const updatedPassword = editForm.elements['password'].value;
+        
 
-            // 執行資料的更新
-            // ...
+        function getHistoryOrder(){
+            Promise.all([
+                $.ajax({ type: "GET" ,url: "api/user", dataType: "json" , timeout: 5000, cached: false, crossDomain: true}),
+                $.ajax({ type: "GET", url: "api/order", dataType: "json",timeout: 5000, cached: false, crossDomain: true})
+            ]).then(function(responses) {
+                var userResponse = responses[0];
+                var orderResponse = responses[1];
 
-            // 更新完畢後，隱藏modal
-            const modal = document.getElementById('editModal');
-            modal.style.display = 'none';
-        });
+                if (userResponse.status == 200 && orderResponse.status == 200) {
+                    var userHistoryList = document.getElementById('userHistoryList');
+                    // 顯示新的使用者列表
+                    userResponse.response.data.forEach(function(user) {
+                        if (user.user_role === "member") {
+                        var userHistoryDiv = document.createElement('div');
+                        userHistoryDiv.className = "userHistory";
+
+                        var span = document.createElement('span');
+                        span.textContent = user.user_email;
+                        userHistoryDiv.appendChild(span);
+
+                        var viewHistoryBtn = document.createElement('button');
+                        viewHistoryBtn.className = "viewHistoryBtn";
+
+                        var img = document.createElement('img');
+                        img.src = "pics/find_icon.png";
+                        img.alt = "檢視歷史訂單";
+                        viewHistoryBtn.appendChild(img);
+
+                        userHistoryDiv.appendChild(viewHistoryBtn);
+
+                        userHistoryList.appendChild(userHistoryDiv);
+                        }
+                    });
+                }
+        
+            }).catch(function(error) {
+                console.error("One or more requests failed: ", error);
+            });
+        }
+
+
+        // 登出
+        function logout() {
+            document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/demo/;";
+            setTimeout(function() {
+                location.reload(); // 重新加載頁面
+            }, 500); // 延遲 1 秒
+        }
+        
 
         // 刪除按鈕的點擊事件
         const deleteBtn = document.getElementById('deleteBtn');
@@ -169,15 +309,8 @@
           }
         };
         
-        // 添加其他功能按鈕的事件處理
-        // 例如：保存更改和刪除用戶
-        document.getElementById('saveChanges').onclick = function() {
-          // 保存更改的代碼
-        };
+
         
-        document.getElementById('deleteUser').onclick = function() {
-          // 刪除用戶的代碼
-        };
     </script>
 </body>
 
