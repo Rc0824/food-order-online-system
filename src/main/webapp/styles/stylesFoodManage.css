@@ -59,23 +59,34 @@ header {
     text-overflow: ellipsis; 
 }
 
+.food-photo {
+    width: 15%;
+    box-sizing: border-box; 
+}
+
 .food-id {
     display: none;
 }
 
 .food-name {
-    width: 30%;
+    width: 20%;
     box-sizing: border-box; 
     
 }
 
-.food-id, .food-price{
+.food-description {
+    width: 30%;
+    box-sizing: border-box; 
+}
+
+.food-price{
     max-width: 10%;
     box-sizing: border-box; 
 }
 
 .order-button-container {
-    flex: 1 1 40%;
+    width : auto;
+    flex: 1 1 5%;
     text-align: right;
 }
 
