@@ -169,6 +169,21 @@ button[id="saveBtn"]:hover {
     background-color: #aaaaaa;
 }
 
+.editBtn,
+.deleteBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-right: 30px; /* 调整按钮间距 */
+}
+
+.editBtn img,
+.deleteBtn img {
+    width: 24px; /* 调整图标宽度 */
+    height: 24px; /* 调整图标高度 */
+}
+
 /* 將連結放置在左邊 */
 .left-link {
     margin-right: 0;
