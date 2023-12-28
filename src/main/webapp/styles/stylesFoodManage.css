@@ -52,7 +52,6 @@ header {
 }
 
 .food-details > div {
-    width: 20%;
     padding: 5px;
     overflow: hidden;
     white-space: nowrap; 
@@ -61,7 +60,7 @@ header {
 
 .food-photo {
     width: 15%;
-    box-sizing: border-box; 
+    display: inline-block;
 }
 
 .food-id {
@@ -70,24 +69,26 @@ header {
 
 .food-name {
     width: 20%;
-    box-sizing: border-box; 
+    display: inline-block;
     
 }
 
 .food-description {
-    width: 30%;
-    box-sizing: border-box; 
+    width: 35%;
+    display: inline-block;
 }
 
 .food-price{
-    max-width: 10%;
-    box-sizing: border-box; 
+    width: 5%;
+    display: inline-block;
 }
 
 .order-button-container {
     width : auto;
     flex: 1 1 5%;
     text-align: right;
+    display: inline-block;
+
 }
 
 /* Modal */
