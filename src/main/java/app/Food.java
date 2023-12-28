@@ -1,6 +1,13 @@
 package app;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.json.JSONObject;
+
+import util.DBMgr;
 
 public class Food {
 
@@ -16,6 +23,13 @@ public class Food {
 	private String description;
     /** id，餐廳以及會員編號 */
     private int shop_user_id;
+    private Connection conn = null;
+    private PreparedStatement pres = null;
+
+
+    public Food() {
+        
+    }
 
     /**
      * 實例化（Instantiates）一個新的（new）Product 物件<br>
@@ -123,6 +137,40 @@ public class Food {
         jso.put("food_photo", getPhoto());
         jso.put("food_description", getDescription());
         jso.put("shop_user_id", getShopUserId());
+
+        return jso;
+    }
+
+    public JSONObject getDataByName(String name){
+        JSONObject jso = new JSONObject();
+        try {
+            // 建立與資料庫的連接
+            conn = DBMgr.getConnection();
+            // 建立 SQL 查詢
+            String sql = "SELECT * FROM tbl_food WHERE food_name = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+    
+            // 執行查詢並獲取結果
+            ResultSet rs = pstmt.executeQuery();
+    
+            // 如果查詢結果不為空，將用戶資料儲存到 JSONObject
+            if (rs.next()) {
+                jso.put("food_id", rs.getInt("food_id"));
+                jso.put("food_name", rs.getString("food_email"));
+                jso.put("food_price", rs.getString("food_price"));
+                jso.put("food_photo", rs.getString("food_photo"));
+                jso.put("food_description", rs.getString("food_description"));
+                jso.put("shop_user_id", rs.getTimestamp("shop_user_id"));
+            }
+    
+            // 關閉連接
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return jso;
     }
