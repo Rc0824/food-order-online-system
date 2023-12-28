@@ -35,9 +35,7 @@
 
     <p id="emptyCartMessage"></p>
 
-    <button id="clearCartBtn" style="display: none;">清除購物車</button>
-
-    <p id="emptyCartMessage"></p>
+    <!-- <button id="clearCartBtn" style="display: none;">清除購物車</button> -->
 
     <button id="payBtn" style="display: none;">確認訂單</button>
 
@@ -46,6 +44,8 @@
     </footer>
 
     <script>
+
+        const shop_user_id = '1005'
         window.onload = function () {
             const header = document.getElementById('header');
             const userInfo = document.getElementById('user-info');
@@ -78,7 +78,7 @@
                 historyLink.style.display = 'none';
                 cartItemsDiv.style.display = 'none';
 
-                const emptyCartMessage = document.createElement('p');
+                const emptyCartMessage = document.getElementById('emptyCartMessage');
                 emptyCartMessage.textContent = '登入後才能查看購物車喔！';
                 document.body.appendChild(emptyCartMessage);
             }
@@ -126,12 +126,20 @@
                         var payBtn = document.getElementById('payBtn');
 
                         CartData.forEach(function(cart){
-                            console.log(cart.cart_id);
-                            console.log(JSON.parse(decodeURIComponent(getCookie("user_data"))).user_id);
+
                             if (cart.cart_id == JSON.parse(decodeURIComponent(getCookie("user_data"))).user_id){
                                 var cartItemDiv = document.createElement('div');
+                                var icon = document.createElement('img');
+                                icon.src = './pics/delete_icon.png';
+
                                 cartItemDiv.textContent = `餐點名稱：${cart.food} - 價格：$${cart.price} - 數量：${cart.quantity}`;
+                                cartItemDiv.appendChild(icon);
                                 cartItemsDiv.appendChild(cartItemDiv);
+
+                                icon.addEventListener('click', function(event) {
+                                    cartItemsDiv.removeChild(cartItemDiv);
+                                    delCart(cart.cart_id, cart.food);
+                                });
 
                                 // 計算總價
                                 totalPrice += cart.price * cart.quantity;
@@ -142,18 +150,31 @@
                         totalDiv.textContent = `總計：$${totalPrice.toFixed(2)}`;
                         cartItemsDiv.appendChild(totalDiv);
 
-                        clearCartBtn.style.display = 'block';
-                        payBtn.style.display = 'block';
-                        clearCartBtn.addEventListener('click', function() {
-                            // 清除購物車資料
+                        if(totalPrice == 0){
                             cartItemsDiv.style.display = 'none';
-                            clearCartBtn.style.display = 'none';
                             payBtn.style.display = 'none';
-    
-                            const emptyCartMessage = document.createElement('p');
+
+                            const emptyCartMessage = document.getElementById('emptyCartMessage');
                             emptyCartMessage.textContent = '購物車是空的，去找些好吃的吧！';
                             document.body.appendChild(emptyCartMessage);
-                        });
+                        }
+                        else{
+                            cartItemsDiv.style.display = 'block';
+                            payBtn.style.display = 'block';
+                        }
+
+                        // clearCartBtn.style.display = 'block';
+                        // payBtn.style.display = 'block';
+                        // clearCartBtn.addEventListener('click', function() {
+                        //     // 清除購物車資料
+                        //     cartItemsDiv.style.display = 'none';
+                        //     clearCartBtn.style.display = 'none';
+                        //     payBtn.style.display = 'none';
+    
+                        //     const emptyCartMessage = document.createElement('p');
+                        //     emptyCartMessage.textContent = '購物車是空的，去找些好吃的吧！';
+                        //     document.body.appendChild(emptyCartMessage);
+                        // });
 
                     }
 
@@ -169,6 +190,44 @@
                     
             })
 
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function delCart(cart_id, name){
+
+            var delItem = {
+                food_name: name,
+                cart_id: cart_id,
+                shop_user_id: shop_user_id
+            };
+
+            $.ajax({
+                type: "DELETE",
+                url: "api/cart",
+                data: JSON.stringify(delItem),
+                crossDomain: true,
+                cache: false,
+                dataType: "json",
+                timeout: 5000,
+                success: function(response){
+                    if(response.status == 200){
+                        alert("刪除成功！");
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    alert("刪除失敗！");
+                },
+
+                complete: function () {
+                    console.log('complete');
+                }
+                    
+                    
+            })
         }
 
 

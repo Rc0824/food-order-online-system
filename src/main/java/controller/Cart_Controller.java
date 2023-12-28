@@ -48,10 +48,11 @@ public class Cart_Controller extends HttpServlet{
             String name = jso.getString("food_name");
             int quantity = jso.getInt("food_quantity");
             int user_id = jso.getInt("user_id");
+            int shop_user_id = jso.getInt("shop_user_id");
 
             // JSONObject data = fd.getDataByName(name);
 
-            JSONObject query = ch.addCart(name, quantity, user_id);
+            JSONObject query = ch.addCart(name, quantity, user_id, shop_user_id);
             resp.put("status", "200");
             resp.put("message", "購物車資料新增成功");
             resp.put("response", query);
@@ -62,4 +63,29 @@ public class Cart_Controller extends HttpServlet{
 
         jsr.response(resp, response);
     }
+
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        JsonReader jsr = new JsonReader(request);
+        JSONObject jso = jsr.getObject();
+
+        JSONObject resp = new JSONObject();
+
+        if(jso.has("cart_id") && jso.has("food_name")){
+            int cart_id = jso.getInt("cart_id");
+            String food_name = jso.getString("food_name");
+            int shop_user_id = jso.getInt("shop_user_id");
+
+            JSONObject query = ch.deleteCart(cart_id, food_name, shop_user_id);
+            resp.put("status", "200");
+            resp.put("message", "購物車資料刪除成功");
+            resp.put("response", query);
+        }else{
+            resp.put("status", "400");
+            resp.put("message", "購物車資料刪除失敗");
+        }
+
+        jsr.response(resp, response);
+    }
+
+    
 }

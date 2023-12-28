@@ -78,6 +78,7 @@
 
     <script>
         var sfood = [];
+        const shop_user_id = '1005';
 
         window.onload = function () {
 
@@ -145,7 +146,7 @@
 
                         foodData.forEach(function(food) {
 
-                            if (food.shop_user_id == '1006'){
+                            if (food.shop_user_id == shop_user_id){
                                 // 創建一個新的 div 並設定其 class 為 "meal-item"
                                 let mealItem = document.createElement("button");
                                 mealItem.className = "meal-item";
@@ -208,7 +209,7 @@
 
                             // 顯示過濾後的餐點列表
                             filteredFoods.forEach(function(food) {
-                                if (food.shop_user_id == '1006'){
+                                if (food.shop_user_id == shop_user_id){
 
                                     // 創建一個新的 div 並設定其 class 為 "meal-item"
                                     let mealItem = document.createElement("button");
@@ -273,7 +274,8 @@
                     food_name: itemName,
                     food_price: itemPrice,
                     food_quantity: parseInt(quantity),
-                    user_id: JSON.parse(decodeURIComponent(getCookie("user_data"))).user_id
+                    user_id: JSON.parse(decodeURIComponent(getCookie("user_data"))).user_id,
+                    shop_user_id: shop_user_id
                 };
 
 
