@@ -20,7 +20,7 @@ h1 {
 }
 
 header {
-    background-color: #333;
+    background-color: #134f6c;
     color: #fff;
     padding: 20px;
     position: fixed;
@@ -46,16 +46,21 @@ header {
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: white;
+    margin-bottom: 5px;
     
 }
 
 .food-details > div {
-    width: 20%;
     padding: 5px;
     overflow: hidden;
     white-space: nowrap; 
     text-overflow: ellipsis; 
+}
+
+.food-photo {
+    width: 15%;
+    display: inline-block;
 }
 
 .food-id {
@@ -63,19 +68,27 @@ header {
 }
 
 .food-name {
-    width: 30%;
-    box-sizing: border-box; 
+    width: 20%;
+    display: inline-block;
     
 }
 
-.food-id, .food-price{
-    max-width: 10%;
-    box-sizing: border-box; 
+.food-description {
+    width: 35%;
+    display: inline-block;
+}
+
+.food-price{
+    width: 5%;
+    display: inline-block;
 }
 
 .order-button-container {
-    flex: 1 1 40%;
+    width : auto;
+    flex: 1 1 5%;
     text-align: right;
+    display: inline-block;
+
 }
 
 /* Modal */
@@ -97,6 +110,7 @@ header {
     padding: 20px;
     border: 1px solid #888;
     width: 40%;
+    border-radius: 10px;
 }
 
 #photo,
@@ -105,13 +119,17 @@ header {
 #description {
     height: 40px; /* 設定您希望的高度值 */
     overflow: auto; /* 使用捲動條，當內容超出範圍時顯示捲動條 */
+    border-radius: 10px;
+    padding-left: 5px;
+    font-size: 16px; /* 調整文字大小 */
+    margin-bottom: 10px;
 }
 
 
 .close {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 40px;
     font-weight: bold;
 }
 
@@ -163,6 +181,21 @@ button[id="saveBtn"]:hover {
     background-color: #aaaaaa;
 }
 
+.editBtn,
+.deleteBtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-right: 30px; /* 调整按钮间距 */
+}
+
+.editBtn img,
+.deleteBtn img {
+    width: 24px; /* 调整图标宽度 */
+    height: 24px; /* 调整图标高度 */
+}
+
 /* 將連結放置在左邊 */
 .left-link {
     margin-right: 0;
@@ -205,7 +238,7 @@ nav ul li div {
 }
 
 footer {
-    background-color: #333;
+    background-color: #134f6c;
     color: #fff;
     text-align: center;
     padding: 5px;
