@@ -113,3 +113,13 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
+#cart-items img {
+    height: 1em; /* 1em is the size of the current font */
+    padding: 2px;
+    vertical-align: middle;
+    margin-left: 10px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    
+}

@@ -99,15 +99,16 @@ public class CartHelper {
 
     }
 
-    public JSONObject addCart(String name, int quantity, int user_id){
+    public JSONObject addCart(String name, int quantity, int user_id, int shop_user_id){
         JSONObject jso = new JSONObject();
         try {
             // 建立與資料庫的連接
             conn = DBMgr.getConnection();
             // 建立 SQL 查詢
-            String sql = "SELECT * FROM tbl_food WHERE food_name = ?";
+            String sql = "SELECT * FROM tbl_food WHERE food_name = ? AND shop_user_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
+            pstmt.setInt(2, shop_user_id);
     
             // 執行查詢並獲取結果
             ResultSet rs = pstmt.executeQuery();
@@ -184,6 +185,67 @@ public class CartHelper {
             e.printStackTrace();
         }
         return jso;
+
+    }
+
+    public  JSONObject deleteCart(int cart_id, String food_name, int shop_user_id){
+        JSONObject jso = new JSONObject();
+        try {
+            // 建立與資料庫的連接
+            conn = DBMgr.getConnection();
+            // 建立 SQL 查詢
+            String sql = "SELECT * FROM tbl_food WHERE food_name = ? AND shop_user_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, food_name);
+            pstmt.setInt(2, shop_user_id);
+    
+            // 執行查詢並獲取結果
+            ResultSet rs = pstmt.executeQuery();
+
+            int food_id=0, price=0, subtotal=0;
+
+            while (rs.next()){
+                food_id = rs.getInt("food_id");
+                price = rs.getInt("food_price");
+            }
+
+            rs.close();
+            pstmt.close();
+
+            sql = "SELECT * FROM tbl_cart_food_connect WHERE food_id_con = ? AND cart_id_con = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, food_id);
+            pstmt.setInt(2, cart_id);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()){
+                int old_quantity = rs.getInt("food_num");
+                subtotal = price * old_quantity;
+            }
+
+            rs.close();
+            pstmt.close();
+
+            sql = "DELETE FROM `tbl_cart_food_connect` WHERE `tbl_cart_food_connect`.`food_id_con` = ? AND `tbl_cart_food_connect`.`cart_id_con` = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, food_id);
+            pstmt.setInt(2, cart_id);
+            pstmt.executeUpdate();
+
+            jso.put("food_id", food_id);
+            jso.put("food_name", food_name);
+            jso.put("food_price", price);
+            jso.put("food_quantity", 0);
+            jso.put("food_subtotal", subtotal);
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return jso;
+
 
     }
 }
