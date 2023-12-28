@@ -112,7 +112,7 @@ public class CartHelper {
             // 執行查詢並獲取結果
             ResultSet rs = pstmt.executeQuery();
 
-            int food_id=0, price=0, subtotal=0;
+            int food_id=0, price=0, subtotal=0, cart_id=0;
 
             while (rs.next()){
                 food_id = rs.getInt("food_id");
@@ -129,7 +129,39 @@ public class CartHelper {
             rs = pstmt.executeQuery();
 
             while (rs.next()){
-                int cart_id = rs.getInt("cart_id");
+                cart_id = rs.getInt("cart_id");
+            }
+    
+            // 關閉連接
+            rs.close();
+            pstmt.close();
+
+            sql = "SELECT * FROM tbl_cart_food_connect WHERE food_id_con = ? AND cart_id_con = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, food_id);
+            pstmt.setInt(2, cart_id);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()){
+                int old_quantity = rs.getInt("food_num");
+                quantity += old_quantity;
+                subtotal = price * quantity;
+
+                sql = "UPDATE `tbl_cart_food_connect` SET `food_num` = ?, `cart_note` = ? WHERE `tbl_cart_food_connect`.`food_id_con` = ? AND `tbl_cart_food_connect`.`cart_id_con` = ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, quantity);
+                pstmt.setInt(2, subtotal);
+                pstmt.setInt(3, food_id);
+                pstmt.setInt(4, cart_id);
+                pstmt.executeUpdate();
+                jso.put("food_id", food_id);
+                jso.put("food_name", name);
+                jso.put("food_price", price);
+                jso.put("food_quantity", quantity);
+                jso.put("food_subtotal", subtotal);
+
+            }
+            else {
                 sql = "INSERT INTO `tbl_cart_food_connect`(`cart_id_con`, `food_id_con`, `food_num`, `cart_note`) VALUES (?, ?, ?, ?)";
                 pstmt = conn.prepareStatement(sql);
                 pstmt.setInt(1, cart_id);
@@ -142,11 +174,9 @@ public class CartHelper {
                 jso.put("food_price", price);
                 jso.put("food_quantity", quantity);
                 jso.put("food_subtotal", subtotal);
+                
             }
 
-
-    
-            // 關閉連接
             rs.close();
             pstmt.close();
             conn.close();

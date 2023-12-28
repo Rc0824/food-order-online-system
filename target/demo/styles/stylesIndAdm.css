@@ -144,11 +144,6 @@ button[id="saveBtn"]:hover,button[id="deleteBtn"]:hover {
     background-color: #aaaaaa;
 }
 
-<<<<<<< HEAD
-.list-container {
-    border: 1px solid #ccc;
-    padding: 10px;
-=======
 .editBtn,
 .goShopBtn,
 .viewHistoryBtn {
@@ -182,7 +177,6 @@ button[id="saveBtn"]:hover,button[id="deleteBtn"]:hover {
 .history-view-container {
     border: 1px solid #ccc;
     padding: 10px;
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
     margin-bottom: 20px;
     width: 300px; /* 這裡設定容器寬度，根據需要調整 */
 }
@@ -210,10 +204,6 @@ button[id="saveBtn"]:hover,button[id="deleteBtn"]:hover {
 
 /* 讓按鈕靠右對齊 */
 .user button,
-<<<<<<< HEAD
-.shop button {
-
-=======
 .shop button
 .userHistory button{
     writing-mode: horizontal-tb;
@@ -235,7 +225,6 @@ button[id="saveBtn"]:hover,button[id="deleteBtn"]:hover {
 
 /* 讓按鈕靠右對齊 */
 .userHistory button {
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
     writing-mode: horizontal-tb;
     text-align: right;
 }

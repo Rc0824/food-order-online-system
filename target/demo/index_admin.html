@@ -33,11 +33,7 @@
             <!-- 使用者列表內容 -->
             <div class="user">
                 <span>john@example.com</span>
-<<<<<<< HEAD
-                <button class="editBtn">編輯</button>
-=======
                 <button class="editBtn"><img src="pics/edit_icon.png" alt="編輯"></button>
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
             </div>
         </div>
     </div>
@@ -48,10 +44,6 @@
             <!-- 店家列表內容 -->
             <div class="shop">
                 <span>Jane@example.com</span>
-<<<<<<< HEAD
-                <button class="editBtn">編輯</button>
-                <a href="index_shop.html" target="_blank"><button>前往店家</button></a>
-=======
                 <button class="editBtn"><img src="pics/edit_icon.png" alt="編輯"></button>
                 <a href="index_shop.html" target="_blank"><button class="goShopBtn"><img src="pics/go_icon.png" alt="前往店家"></button></a>
             </div>
@@ -65,7 +57,6 @@
             <div class="userHistory">
                 <span>user_id or gmail</span>
                 <button class="viewHistoryBtn"><img src="pics/find_icon.png" alt="檢視歷史訂單"></button>
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
             </div>
         </div>
     </div>
@@ -102,17 +93,6 @@
         // 獲取用戶列表元素
         const userList = document.getElementById('userList');
         const shopList = document.getElementById('shopList');
-<<<<<<< HEAD
-
-        // 編輯按鈕的點擊事件
-        userList.addEventListener('click', function(event) {
-            if (event.target.classList.contains('editBtn')) {
-                // 編輯按鈕被點擊
-                const modal = document.getElementById('editModal');
-                modal.style.display = 'block'; // 顯示modal
-                // 在modal中填入用戶資料
-                const email = event.target.previousElementSibling.textContent.trim();
-=======
         const userHistoryList = document.getElementById('userHistoryList');
 
         // 編輯按鈕的點擊事件
@@ -123,35 +103,23 @@
                 modal.style.display = 'block'; // 顯示modal
                 // 在modal中填入用戶資料
                 const email = event.target.parentElement.querySelector('span').textContent.trim();
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
                 const editForm = document.getElementById('editForm');
                 editForm.elements['email'].value = email;
             }
         });
 
         shopList.addEventListener('click', function(event) {
-<<<<<<< HEAD
-            if (event.target.classList.contains('editBtn')) {
-                // 編輯按鈕被點擊
-                const modal = document.getElementById('editModal');
-                modal.style.display = 'block'; // 顯示modal
-                // 在modal中填入用戶資料
-                const email = event.target.previousElementSibling.textContent.trim();
-=======
             if (event.target.tagName === 'IMG') {
                 // 圖片被點擊
                 const modal = document.getElementById('editModal');
                 modal.style.display = 'block'; // 顯示modal
                 // 在modal中填入用戶資料
                 const email = event.target.parentElement.querySelector('span').textContent.trim();
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
                 const editForm = document.getElementById('editForm');
                 editForm.elements['email'].value = email;
             }
         });
 
-<<<<<<< HEAD
-=======
         userHistoryList.addEventListener('click', function(event) {
             if (event.target.tagName === 'IMG') {
                 //按下檢視歷史訂單按鈕
@@ -159,7 +127,6 @@
             }
         });
 
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
         // 保存按鈕的點擊事件
         const saveBtn = document.getElementById('saveBtn');
         saveBtn.addEventListener('click', function(event) {

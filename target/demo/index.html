@@ -40,74 +40,12 @@
             <h2>菜單</h2>
             <!--以下測試用-->
             <div class="meal-container">
-<<<<<<< HEAD
-                <div class="meal-item">
-=======
                 <!--  <div class="meal-item">
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
                     <img src="pics/meal1.jpg" alt="白飯圖片">
                     <h3>白飯</h3>
                     <p>價格：$15</p>
                     <button class="meal-link btn" data-meal="白飯">訂購餐點</button>
-<<<<<<< HEAD
-                </div>
-                <div class="meal-item">
-                        <img src="pics/meal2.jpg" alt="白麵圖片">
-                        <h3>白麵</h3>
-                        <p>價格：$15</p>
-                        <button class="meal-link btn" data-meal="白麵">訂購餐點</button>
-                </div>
-                <div class="meal-item">
-                    <img src="pics/meal1.jpg" alt="白飯圖片">
-                    <h3>白飯</h3>
-                    <p>價格：$15</p>
-                    <button class="meal-link btn" data-meal="白飯">訂購餐點</button>
-                </div>
-                <div class="meal-item">
-                        <img src="pics/meal2.jpg" alt="白麵圖片">
-                        <h3>白麵</h3>
-                        <p>價格：$15</p>
-                        <button class="meal-link btn" data-meal="白麵">訂購餐點</button>
-                </div>
-                <div class="meal-item">
-                    <img src="pics/meal1.jpg" alt="白飯圖片">
-                    <h3>白飯</h3>
-                    <p>價格：$15</p>
-                    <button class="meal-link btn" data-meal="白飯">訂購餐點</button>
-                </div>
-                <div class="meal-item">
-                        <img src="pics/meal2.jpg" alt="白麵圖片">
-                        <h3>白麵</h3>
-                        <p>價格：$15</p>
-                        <button class="meal-link btn" data-meal="白麵">訂購餐點</button>
-                </div>
-                <div class="meal-item">
-                    <img src="pics/meal1.jpg" alt="白飯圖片">
-                    <h3>白飯</h3>
-                    <p>價格：$15</p>
-                    <button class="meal-link btn" data-meal="白飯">訂購餐點</button>
-                </div>
-                <div class="meal-item">
-                        <img src="pics/meal2.jpg" alt="白麵圖片">
-                        <h3>白麵</h3>
-                        <p>價格：$15</p>
-                        <button class="meal-link btn" data-meal="白麵">訂購餐點</button>
-                </div>
-                <div class="meal-item">
-                    <img src="pics/meal1.jpg" alt="白飯圖片">
-                    <h3>白飯</h3>
-                    <p>價格：$15</p>
-                    <button class="meal-link btn" data-meal="白飯">訂購餐點</button>
-                </div>
-                <div class="meal-item">
-                        <img src="pics/meal2.jpg" alt="白麵圖片">
-                        <h3>白麵</h3>
-                        <p>價格：$15</p>
-                        <button class="meal-link btn" data-meal="白麵">訂購餐點</button>
-                </div>
-=======
                 </div> -->
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
             </div>
             
         </section>
@@ -129,7 +67,7 @@
         
         
         <section id="order">
-            <h2>1</h2>
+            <h2></h2>
         </section>
         
     </main>
@@ -139,20 +77,7 @@
     </footer>
 
     <script>
-<<<<<<< HEAD
         var sfood = [];
-
-        var button = document.querySelector('.meal-link');
-        var modal = document.getElementById('mealModal');
-        var cartSection = document.getElementById('cartSection');
-
-        button.addEventListener('click', function(event) {
-            modal.style.display = 'block';
-            cartSection.style.display = 'block'; 
-        });
-=======
-         var sfood = [];
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
 
         window.onload = function () {
 
@@ -216,93 +141,60 @@
                         var mealDescription = document.getElementById('mealDescription');
                         var cartSection = document.getElementById('cartSection');
                         var closeBtn = document.getElementsByClassName('close')[0];
-<<<<<<< HEAD
-
-                        foodData.forEach(function(food) {
-                            var li = document.createElement('li');
-                            var a = document.createElement('a');
-                            a.href = "#";
-                            a.className = "meal-link";
-                            a.dataset.meal = food.food_name;
-                            a.textContent = food.food_name;
-                            a.addEventListener('click', function(event) {
-                                event.preventDefault();
-                                const meal = this.dataset.meal;
-
-                                mealTitle.textContent = meal;
-                                mealDescription.textContent = `${food.food_description}`;
-
-                                var img = document.createElement('img');
-                                img.src = food.food_photo;
-                                img.width = 300; 
-                                img.height = 200; 
-                                var br = document.createElement('br');
-                                mealDescription.appendChild(br);
-                                mealDescription.appendChild(img);
-
-                                modal.style.display = 'block';
-                                cartSection.style.display = 'block'; // 顯示加入購物車部分
-                            });
-                            li.appendChild(a);
-                            menuList.appendChild(li);
-                        });
-
-=======
                         var mealContainer = document.getElementsByClassName('meal-container')[0];
 
                         foodData.forEach(function(food) {
-                            // 創建一個新的 div 並設定其 class 為 "meal-item"
-                            let mealItem = document.createElement("button");
-                            mealItem.className = "meal-item";
+                            console.log("test");
+                            console.log(food.shop_user_id);
+                            if (food.shop_user_id == '1006'){
+                                // 創建一個新的 div 並設定其 class 為 "meal-item"
+                                let mealItem = document.createElement("button");
+                                mealItem.className = "meal-item";
 
-                            // 創建餐點名稱的元素並添加到 mealItem
-                            let mealName = document.createElement("h2");
-                            mealName.textContent = food.food_name;
-                            mealItem.appendChild(mealName);
+                                // 創建餐點名稱的元素並添加到 mealItem
+                                let mealName = document.createElement("h2");
+                                mealName.textContent = food.food_name;
+                                mealItem.appendChild(mealName);
 
-                            // 創建餐點圖片的元素並添加到 mealItem
-                            let mealImage = document.createElement("img");
-                            mealImage.src = food.food_photo;
-                            mealItem.appendChild(mealImage);
+                                // 創建餐點圖片的元素並添加到 mealItem
+                                let mealImage = document.createElement("img");
+                                mealImage.src = food.food_photo;
+                                mealItem.appendChild(mealImage);
 
-                            // 創建餐點價格的元素並添加到 mealItem
-                            let mealPrice = document.createElement("p");
-                            mealPrice.textContent = `價格：$${food.food_price}`;
-                            mealItem.appendChild(mealPrice);
+                                // 創建餐點價格的元素並添加到 mealItem
+                                let mealPrice = document.createElement("p");
+                                mealPrice.textContent = `價格：$${food.food_price}`;
+                                mealItem.appendChild(mealPrice);
 
-                            // 為 mealItem 添加 click 事件監聽器
-                            mealItem.addEventListener('click', function() {
-                                modal.style.display = 'block';
-                                cartSection.style.display = 'block'; // 顯示加入購物車部分
+                                // 為 mealItem 添加 click 事件監聽器
+                                mealItem.addEventListener('click', function() {
+                                    modal.style.display = 'block';
+                                    cartSection.style.display = 'block'; // 顯示加入購物車部分
 
-                                mealTitle.textContent = food.food_name;
-                                mealDescription.textContent = food.food_description;
-                                var img = document.createElement('img');
-                                img.src = food.food_photo;
-                                img.width = "300";
-                                img.height = "200";
-                                var br = document.createElement('br');
-                                mealDescription.appendChild(br);
-                                mealDescription.appendChild(img);
-                                  
-                            });
+                                    mealTitle.textContent = food.food_name;
+                                    mealDescription.textContent = food.food_description;
+                                    var img = document.createElement('img');
+                                    img.src = food.food_photo;
+                                    img.width = "300";
+                                    img.height = "200";
+                                    var br = document.createElement('br');
+                                    mealDescription.appendChild(br);
+                                    mealDescription.appendChild(img);
+                                    
+                                });
 
-                            // 將 mealItem 添加到 mealContainer
-                            mealContainer.appendChild(mealItem);
+                                // 將 mealItem 添加到 mealContainer
+                                mealContainer.appendChild(mealItem);
+                                }
+
                         });
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
 
                         closeBtn.addEventListener('click', function() {
                             modal.style.display = 'none';
                             cartSection.style.display = 'none'; // 隱藏加入購物車部分
                         });
-<<<<<<< HEAD
-                    }
-                },
-=======
                         }
                     },
->>>>>>> 0cfec3bc8ba161eb69897f14597ef8a2b7cef943
                 error: function(response){
                     alert("Get food data failed")
                 }
