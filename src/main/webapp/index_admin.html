@@ -50,10 +50,10 @@
     <div class="list-container">    
         <div id="userHistoryList" class="list">
             <!-- 店家列表內容 -->
-            <div class="userHistory">
+            <!-- <div class="userHistory">
                 <span>user_id or gmail</span>
                 <button class="viewHistoryBtn"><img src="pics/find_icon.png" alt="檢視歷史訂單"></button>
-            </div>
+            </div> -->
         </div>
     </div>
     
@@ -125,7 +125,32 @@
                                         document.getElementById('email').value = user.user_email;
                                         document.getElementById('phone').value = user.user_phone;
                                         document.getElementById('password').value = user.user_password;
-                                    });
+                                        document.getElementById('deleteBtn').addEventListener('click', function(event) {
+                                            var id = user.user_id;
+                                            var data_object = {
+                                                "user_id": id
+                                            };
+                                            event.preventDefault(); // 阻止表單提交
+                                                $.ajax({
+                                                    type: "DELETE",
+                                                    url: "api/user",
+                                                    data:  JSON.stringify(data_object),
+                                                    crossDomain: true,
+                                                    cache: false,
+                                                    dataType: "json",
+                                                    timeout: 5000,
+                                                    success: function(response){
+                                                        console.log(response.response.data);
+                                                        if(response.status == 200){
+                                                            alert(response.message);
+                                                            location.reload(); // 重新加載頁面
+                                                        }},
+                                                    error: function(response){
+                                                        alert("delete member data failed")
+                                                    }
+                                                });
+                                            });
+                                        });
 
                                     var img = document.createElement('img');
                                     img.src = "pics/edit_icon.png";
@@ -155,6 +180,31 @@
                                             document.getElementById('email').value = user.user_email;
                                             document.getElementById('phone').value = user.user_phone;
                                             document.getElementById('password').value = user.user_password;
+                                            document.getElementById('deleteBtn').addEventListener('click', function(event) {
+                                            var id = user.user_id;
+                                            var data_object = {
+                                                "user_id": id
+                                            };
+                                            event.preventDefault(); // 阻止表單提交
+                                                $.ajax({
+                                                    type: "DELETE",
+                                                    url: "api/user",
+                                                    data:  JSON.stringify(data_object),
+                                                    crossDomain: true,
+                                                    cache: false,
+                                                    dataType: "json",
+                                                    timeout: 5000,
+                                                    success: function(response){
+                                                        console.log(response.response.data);
+                                                        if(response.status == 200){
+                                                            alert(response.message);
+                                                            location.reload(); // 重新加載頁面
+                                                        }},
+                                                    error: function(response){
+                                                        alert("delete member data failed")
+                                                    }
+                                                });
+                                            });
                                         });
 
                                         var img = document.createElement('img');
@@ -236,6 +286,10 @@
         });
 
         
+        function deleteMember(){
+            
+        }
+
 
         function getHistoryOrder(){
             Promise.all([
@@ -286,13 +340,7 @@
             }, 500); // 延遲 1 秒
         }
         
-
-        // 刪除按鈕的點擊事件
-        const deleteBtn = document.getElementById('deleteBtn');
-        deleteBtn.addEventListener('click', function(event) {
-            // 這裡可以執行刪除用戶的操作
-            // ...
-        });
+        
 
         const modal = document.getElementById('editModal');
         const closeBtn = document.getElementsByClassName('close')[0];
