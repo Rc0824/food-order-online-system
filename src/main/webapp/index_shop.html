@@ -101,8 +101,8 @@
             // 在此處檢查用戶是否已登入，並顯示相應的內容
             // const loggedInUser = getLoggedInUser(); // 假設此函數從 localStorage 中獲取已登入用戶信息
 
-            if (1) {
-                // 用戶已登入，顯示歡迎信息
+            if (document.cookie.indexOf('user_data') >= 0) { // 如果有 user_data cookie，表示用戶已登入
+                var userData = JSON.parse(decodeURIComponent(getCookie("user_data")));
                 //userInfo.textContent = `歡迎回來，${loggedInUser.name}！`; // 顯示用戶名稱
 
                 loginLink.style.display = 'none';
@@ -120,20 +120,15 @@
                 orderTitle.style.display = 'block'; // 顯示提示訊息
                 orderContainer.style.display = 'none'; // 隱藏訂單容器
             }
-        };
 
-        function logout() {
-            document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/demo/;";
-            setTimeout(function() {
-                location.reload(); // 重新加載頁面
-            }, 500); // 延遲 1 秒
-        }
+            getCart();
+        };
 
         document.addEventListener("DOMContentLoaded", function () {
             // 處理viewHistortBtn
             const viewHistoryBtn = document.getElementById('viewHistoryBtn');
             viewHistoryBtn.addEventListener('click', function () {
-                window.location.href = 'History.html'; // 到History.html
+                window.location.href = 'shop_history.html'; // 到History.html
             });
 
             // 處理viewFoodBtn
@@ -160,11 +155,26 @@
             });
         });
 
+        function getCart() {
+            
+        }
+
         function logout() {
             document.cookie = "user_data=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/demo/;";
             setTimeout(function() {
                 location.reload(); // 重新加載頁面
             }, 500); // 延遲 1 秒
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
         }
 
 

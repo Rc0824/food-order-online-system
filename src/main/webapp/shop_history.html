@@ -61,20 +61,9 @@
                         timeout: 5000,
                         success: function (response) {
                             if (response.status == 200) {
-                                var userData = JSON.parse(decodeURIComponent(getCookie("user_data")));
-                                var userID = userData.user_id;
-                                var filteredData = [];
-                                if (response.response && response.response.data) {
-                                    filteredData = response.response.data.filter(function(item) {
-                                        return item.user_id === userID;
-                                    });
-                                }
-                                console.log(filteredData);
-
-                                if (filteredData && filteredData.length > 0) {
                                     const orderHistoryDiv = document.getElementById('order-history');
-                            
-                                    filteredData.forEach(order => {
+                
+                                    response.response.data.forEach(order => {
                                         const orderDiv = document.createElement('div');
                                         orderDiv.classList.add('order-container'); // 新增這行來設置外框
 
@@ -105,7 +94,6 @@
 
                                         orderHistoryDiv.appendChild(orderDiv);
                                     });
-                                }
 
                             }
                         },
@@ -115,7 +103,6 @@
                         },
                 });
         }        
-
     </script>
 </body>
 </html>
