@@ -248,4 +248,25 @@ public class CartHelper {
 
 
     }
+
+    public JSONObject deleteCartAll(){
+        JSONObject jso = new JSONObject();
+        try {
+            // 建立與資料庫的連接
+            conn = DBMgr.getConnection();
+            // 建立 SQL 查詢
+            String sql = "DELETE FROM `tbl_cart_food_connect`";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+
+            jso.put("status", "200");
+            jso.put("message", "購物車資料刪除成功");
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return jso;
+    }
 }

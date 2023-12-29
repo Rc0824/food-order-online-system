@@ -139,14 +139,27 @@
             return word;
         }
 
+        function formatDateTime(date) {
+            var year = date.getFullYear();
+            var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-based in JavaScript
+            var day = date.getDate().toString().padStart(2, '0');
+            var hours = date.getHours().toString().padStart(2, '0');
+            var minutes = date.getMinutes().toString().padStart(2, '0');
+            var seconds = date.getSeconds().toString().padStart(2, '0');
+
+            return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+        }
+
         function sendOrder(times, itemCount) {
             return new Promise((resolve, reject) => {
                 const cartItems = document.getElementById('cart-items').innerHTML;
-                const timestamp = new Date().toLocaleString();
+                var date = new Date();
+                var formattedDate = formatDateTime(date);
+                console.log('sendOrder is running at: ' + formattedDate);
             
                 // 建立訂單物件
                 var orderData = {
-                    order_datetime: '2023-01-16 12:12:00',
+                    order_datetime: formattedDate,
                     user_id: JSON.parse(decodeURIComponent(getCookie("user_data"))).user_id,
                     food_id: food_ids[times],
                     order_total: total,
@@ -194,6 +207,7 @@
             cap = Captcha();
             // Execute a function for each item in the cart
             processOrders();
+            // clearCart();
             alert('訂單已送出！');
 
             // 導向到其他頁面或做其他操作
@@ -203,7 +217,7 @@
         function clearCart() {
             $.ajax({
                 type: "DELETE",
-                url: "api/cart",
+                url: "api/item",
                 crossDomain: true,
                 cache: false,
                 dataType: "json",
@@ -218,7 +232,7 @@
                     alert("無法清空購物車！");
                 },
                 complete: function () {
-                    console.log('complete');
+                    console.log('clear complete');
                 }
             })
         }
